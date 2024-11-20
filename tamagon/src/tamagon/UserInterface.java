@@ -198,10 +198,10 @@ public class UserInterface {
 		
 		//Render game instructions
 		g.setColor(new Color(248, 144, 32));
-		g.drawImage(wkey, Game.width / 3, Game.height - 16*Game.scale, 16*Game.scale, 16*Game.scale,  null);
-		g.drawImage(skey, Game.width / 2, Game.height - 16*Game.scale, 16*Game.scale, 16*Game.scale, null);
-		g.drawString(": UP",Game.width / 3 + 16 * Game.scale, Game.height - 4*Game.scale);
-		g.drawString(": DOWN",Game.width / 2 + 16 * Game.scale, Game.height - 4*Game.scale);
+		g.drawImage(wkey, Game.width - 128 * Game.scale, Game.height - 16*Game.scale, 16*Game.scale, 16*Game.scale,  null);
+		g.drawImage(skey, Game.width - 64 * Game.scale, Game.height - 16*Game.scale, 16*Game.scale, 16*Game.scale, null);
+		g.drawString(": UP",Game.width - 112 * Game.scale, Game.height - 5*Game.scale);
+		g.drawString(": DOWN",Game.width - 48 * Game.scale, Game.height - 5*Game.scale);
 
 		// If the screen is faded in, then fade it out!
 		if (fadedIn) {

@@ -19,7 +19,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	/**
 	 * Screen scale, width and height
 	 */
-	static int scale = 4, width = 320 * scale, height = 224 * scale;
+	static int scale = 1, width = 320 * scale, height = 224 * scale;
 
 	/**
 	 * frames per second
@@ -49,7 +49,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	/**
 	 * Current game state
 	 */
-	static String gameState = "logo";
+	static String gameState = "title";
 
 	/**
 	 * Game's highest score
@@ -65,6 +65,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	 * Game version
 	 */
 	static String version = "1.0.0";
+	
+	/**
+	 * Game sounds
+	 */
+	private Sound sounds;
 
 	/**
 	 * Initializes game's objects
@@ -85,9 +90,13 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 			String hiscore = bufferedReader.readLine();
 			highscore = Integer.valueOf(hiscore);
+			inputStream.close();
 		} catch (IOException | NumberFormatException e) {
 			e.printStackTrace();
 		}
+		
+		//Initializes game sounds
+		sounds = new Sound();
 
 		// Initializes the game's interfaces
 		this.ui = new UserInterface();
@@ -131,6 +140,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	 * Game logic
 	 */
 	private void update() {
+		if(Game.gameState.equals("title")) {
+			sounds.titlescreen.play();
+		}
 
 	}
 
@@ -196,8 +208,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 			if (arg0.getKeyCode() == KeyEvent.VK_W) {
 				ui.cursor = 0;
+				sounds.cursor.play();
 			} else if (arg0.getKeyCode() == KeyEvent.VK_S) {
 				ui.cursor = 1;
+				sounds.cursor.play();
 			}
 
 		}
