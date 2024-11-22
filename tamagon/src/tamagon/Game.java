@@ -5,12 +5,16 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 import javax.swing.JFrame;
 
@@ -19,7 +23,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	/**
 	 * Screen scale, width and height
 	 */
-	static int scale = 1, width = 320 * scale, height = 224 * scale;
+	static int scale = 2, width, height;
 
 	/**
 	 * frames per second
@@ -44,7 +48,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	/**
 	 * Renders the user's interface
 	 */
-	private UserInterface ui;
+	static UserInterface ui;
 
 	/**
 	 * Current game state
@@ -57,19 +61,24 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	static int highscore = 0;
 
 	/**
-	 * For writing and reading files
-	 */
-	private BufferedReader bufferedReader;
-
-	/**
 	 * Game version
 	 */
 	static String version = "1.0.0";
-	
+
 	/**
 	 * Game sounds
 	 */
 	private Sound sounds;
+
+	/**
+	 * Music options
+	 */
+	static boolean music = true, sfx = true;
+
+	/**
+	 * For toggling music on/off
+	 */
+	private AudioClip currentSong;
 
 	/**
 	 * Initializes game's objects
@@ -78,28 +87,71 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		// Makes the game listen to keyboard events
 		this.addKeyListener(this);
 
+		// Gets player's settings
+		try {
+
+			File file = new File("data/settings.txt");
+			if (!file.exists()) {
+				// If file doesn't exist, create the directory and file
+
+				File dir = new File("data");
+				if (!dir.exists()) {
+					dir.mkdirs();
+				}
+
+				BufferedWriter bw = new BufferedWriter(new FileWriter("data/settings.txt", false));
+
+				// Create high score
+				bw.write("0");
+				bw.newLine();
+
+				// Create music setting
+				bw.write("true");
+				bw.newLine();
+
+				// Create sound effects setting
+				bw.write("true");
+				bw.newLine();
+				
+				//Create screen size setting
+				bw.write("2");
+				bw.close();
+
+			} else {
+				// If file exists, just read it from it
+				BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
+
+				String hiscore = br.readLine();
+				String msc = br.readLine();
+				String efc = br.readLine();
+				String scr = br.readLine();
+
+				highscore = Integer.valueOf(hiscore);
+				music = Boolean.valueOf(msc);
+				sfx = Boolean.valueOf(efc);
+				scale = Integer.valueOf(scr);
+
+				br.close();
+			}
+		} catch (IOException | NumberFormatException e) {
+			e.printStackTrace();
+		}
+		
+		//Setting screen scale
+		width = 320 * scale;
+		height = 224 * scale;
+
 		// setting up the screen size
 		this.setPreferredSize(new Dimension(width, height));
 
 		// sets up the game's canvas
 		this.gameCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-		// Gets player's high score
-		try {
-			InputStream inputStream = Game.class.getClassLoader().getResourceAsStream("hiscore.txt");
-			bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-			String hiscore = bufferedReader.readLine();
-			highscore = Integer.valueOf(hiscore);
-			inputStream.close();
-		} catch (IOException | NumberFormatException e) {
-			e.printStackTrace();
-		}
-		
-		//Initializes game sounds
+		// Initializes game sounds
 		sounds = new Sound();
 
 		// Initializes the game's interfaces
-		this.ui = new UserInterface();
+		ui = new UserInterface();
 	}
 
 	/**
@@ -110,6 +162,35 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static void main(String[] args) {
 		Game game = new Game();
 		JFrame window = new JFrame();
+
+		// Save game settings before closing
+		window.addWindowListener(new WindowAdapter() {
+
+			public void windowClosing(WindowEvent e) {
+				try {
+					BufferedWriter bw = new BufferedWriter(new FileWriter("data/settings.txt", false));
+
+					// Save high score
+					bw.write(String.valueOf(highscore));
+					bw.newLine();
+
+					// Save music setting
+					bw.write(String.valueOf(music));
+					bw.newLine();
+
+					// Save sound effects setting
+					bw.write(String.valueOf(sfx));
+					bw.newLine();
+					
+					// Save screen settings
+					bw.write(String.valueOf(ui.resolution+1));
+					bw.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+
+		});
 
 		// Adding the game application to the window
 		window.add(game);
@@ -140,8 +221,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	 * Game logic
 	 */
 	private void update() {
-		if(Game.gameState.equals("title")) {
-			sounds.titlescreen.play();
+
+		// Music control
+		if (music) {
+			if (Game.gameState.equals("title") || Game.gameState.equals("options")) {
+				sounds.titlescreen.play();
+				currentSong = sounds.titlescreen;
+			}
+		} else {
+			if (currentSong != null)
+				currentSong.stop();
 		}
 
 	}
@@ -165,7 +254,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		Graphics graphics = gameCanvas.getGraphics();
 
 		// Renders the graphic interface
-		this.ui.render(graphics);
+		ui.render(graphics);
 
 		// Clears rendered resources
 		graphics.dispose();
@@ -206,26 +295,58 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		// Title screen commands
 		if (gameState.equals("title")) {
 
+			// Navigates title menu
 			if (arg0.getKeyCode() == KeyEvent.VK_W) {
 				ui.cursor = 0;
-				sounds.cursor.play();
+				if (sfx)
+					sounds.cursor.play();
 			} else if (arg0.getKeyCode() == KeyEvent.VK_S) {
 				ui.cursor = 1;
-				sounds.cursor.play();
+				if (sfx)
+					sounds.cursor.play();
 			}
 
+		} else if (gameState.equals("options")) {
+
+			// Navigates option menu
+			if (arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+
+				// Goes back to title menu
+				gameState = "title";
+				ui.cursor = 0;
+			} else if (arg0.getKeyCode() == KeyEvent.VK_W) {
+				ui.cursor -= 1;
+				if (sfx)
+					sounds.cursor.play();
+			} else if (arg0.getKeyCode() == KeyEvent.VK_S) {
+				ui.cursor += 1;
+				if (sfx)
+					sounds.cursor.play();
+			}
 		}
 
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-
+		if (arg0.getKeyCode() == KeyEvent.VK_SPACE && gameState.equals("options")) {
+			// Music and SFX toggles
+			if (ui.cursor == 0) {
+				music = (music) ? false : true;
+			} else if (ui.cursor == 1) {
+				sfx = (sfx) ? false : true;
+			} else if (ui.cursor == 2) {
+				ui.resolution+=1;
+			}
+		} else if (arg0.getKeyCode() == KeyEvent.VK_SPACE && gameState.equals("title") && ui.cursor == 1) {
+			// Enters the options menu
+			gameState = "options";
+			ui.cursor = 0;
+		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
