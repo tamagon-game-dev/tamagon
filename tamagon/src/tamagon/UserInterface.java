@@ -83,10 +83,12 @@ public class UserInterface {
 
 		if (Game.gameState.equals("logo")) {
 			renderLogo(g);
-		} else if (Game.gameState.equals("title")) {
+		} else if (Game.gameState.equals("title") || Game.gameState.equals("starting")) {
 			renderTitle(g);
 		} else if (Game.gameState.equals("options")) {
 			renderOptions(g);
+		} else if (Game.gameState.equals("playing")) {
+			renderPlaying(g);
 		}
 
 	}
@@ -133,7 +135,7 @@ public class UserInterface {
 			// Color black for fade in
 			g.setColor(new Color(0, 0, 0, fadeIn));
 
-			// Black background for fade un
+			// Black background for fade in
 			g.fillRect(0, 0, Game.width, Game.height);
 
 			// Makes the black background fade in
@@ -228,7 +230,34 @@ public class UserInterface {
 			if (fadeOut == fadeIn) {
 				fadedIn = false;
 				fadeOut = 255;
+				fadedOut = true;
 			}
+		}
+
+		// If player started the game, lets fade in!
+		if (Game.gameState.equals("starting") && !fadedIn) {
+
+			// Color black for fade in
+			g.setColor(new Color(0, 0, 0, fadeIn));
+
+			// Black background for fade in
+			g.fillRect(0, 0, Game.width, Game.height);
+
+			// Makes the black background fade in
+			if (fadeIn < fadeOut) {
+				fadeIn += 3;
+			}
+
+			// Completes the fade in animation
+			if (fadeIn == fadeOut) {
+				fadedOut = false;
+				fadedIn = true;
+				fadeOut = 255;
+				fadeIn = 0;
+				Game.level = new Level("test");
+				Game.gameState = "playing";
+			}
+
 		}
 
 	}
@@ -292,6 +321,35 @@ public class UserInterface {
 		g.drawString(sfx, Game.width - 128 * Game.scale, Game.height - (32 * Game.scale) * 4);
 		g.drawString(resolutionOptions[resolution], Game.width - 128 * Game.scale, Game.height - (32 * Game.scale) * 2);
 		g.drawString("->", Game.width / 5 - 16 * Game.scale, cursorY[cursor]);
+	}
+
+	/**
+	 * Renders while the game is being played
+	 * 
+	 * @param g
+	 */
+	private void renderPlaying(Graphics g) {
+		// If the screen is faded in, then fade it out!
+		if (fadedIn) {
+
+			// Color black for fade out
+			g.setColor(new Color(0, 0, 0, fadeOut));
+
+			// Black background for fade out
+			g.fillRect(0, 0, Game.width, Game.height);
+
+			// Makes the black background fade out
+			if (fadeOut > fadeIn) {
+				fadeOut -= 3;
+			}
+
+			// Completes the fade out animation
+			if (fadeOut == fadeIn) {
+				fadedIn = false;
+				fadeOut = 255;
+				fadedOut = true;
+			}
+		}
 	}
 
 	/**

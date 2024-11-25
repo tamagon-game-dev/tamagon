@@ -81,6 +81,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private AudioClip currentSong;
 
 	/**
+	 * Game levels
+	 */
+	static Level level;
+
+	/**
 	 * Initializes game's objects
 	 */
 	public Game() {
@@ -112,8 +117,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				// Create sound effects setting
 				bw.write("true");
 				bw.newLine();
-				
-				//Create screen size setting
+
+				// Create screen size setting
 				bw.write("2");
 				bw.close();
 
@@ -136,8 +141,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		} catch (IOException | NumberFormatException e) {
 			e.printStackTrace();
 		}
-		
-		//Setting screen scale
+
+		// Setting screen scale
 		width = 320 * scale;
 		height = 224 * scale;
 
@@ -152,6 +157,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 		// Initializes the game's interfaces
 		ui = new UserInterface();
+
+		// Initializes the game's level
+		level = new Level("title");
 	}
 
 	/**
@@ -181,9 +189,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 					// Save sound effects setting
 					bw.write(String.valueOf(sfx));
 					bw.newLine();
-					
+
 					// Save screen settings
-					bw.write(String.valueOf(ui.resolution+1));
+					bw.write(String.valueOf(ui.resolution + 1));
 					bw.close();
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -253,8 +261,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		// Gets the canva's graphics
 		Graphics graphics = gameCanvas.getGraphics();
 
+		// Renders the level
+		if (Game.gameState.equals("playing"))
+			level.render(graphics);
+		
 		// Renders the graphic interface
-		ui.render(graphics);
+				ui.render(graphics);
 
 		// Clears rendered resources
 		graphics.dispose();
@@ -336,12 +348,17 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			} else if (ui.cursor == 1) {
 				sfx = (sfx) ? false : true;
 			} else if (ui.cursor == 2) {
-				ui.resolution+=1;
+				ui.resolution += 1;
 			}
-		} else if (arg0.getKeyCode() == KeyEvent.VK_SPACE && gameState.equals("title") && ui.cursor == 1) {
+		} else if (arg0.getKeyCode() == KeyEvent.VK_SPACE && gameState.equals("title")) {
 			// Enters the options menu
-			gameState = "options";
-			ui.cursor = 0;
+			if (ui.cursor == 1) {
+				gameState = "options";
+				ui.cursor = 0;
+			} else if (ui.cursor == 0) {
+				// Starts the game
+				gameState = "starting";
+			}
 		}
 	}
 
