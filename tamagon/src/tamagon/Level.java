@@ -34,6 +34,11 @@ public class Level {
 	 * @param name - level name
 	 */
 	public Level(String name) {
+		//Stops any music if there's one
+		if(Game.music && Game.currentSong != null)
+			Game.currentSong.stop();
+		
+		//Load level
 		if (name.equals("test")) {
 			levelTest();
 		}else {
@@ -74,6 +79,14 @@ public class Level {
 					if (currentPixel == 0xFF000068) {
 						// Test tile
 						tiles[x + (y * levelW)] = new Collider(x*dimension, y*dimension, Tile.testTile);
+					}else if (currentPixel == 0xFF004810) {
+						//THE PLAYER
+						tiles[x + (y * levelW)] = new Collider(x*dimension, y*dimension, Tile.transparent);
+						Player player = new Player(x*dimension, y*dimension, dimension, dimension);
+						Game.entities.add(player);
+					}else {
+						//Transparent tile (avoids crazy blur effect)
+						tiles[x + (y * levelW)] = new Collider(x*dimension, y*dimension, Tile.transparent);
 					}
 				}
 			}

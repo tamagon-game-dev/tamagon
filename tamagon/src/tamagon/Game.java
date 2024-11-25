@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.FileWriter;
 
@@ -78,12 +79,17 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	/**
 	 * For toggling music on/off
 	 */
-	private AudioClip currentSong;
+	static AudioClip currentSong;
 
 	/**
 	 * Game levels
 	 */
 	static Level level;
+
+	/**
+	 * Game entities
+	 */
+	public static ArrayList<Entity> entities;
 
 	/**
 	 * Initializes game's objects
@@ -157,6 +163,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 		// Initializes the game's interfaces
 		ui = new UserInterface();
+
+		// Initializes the game's entities
+		entities = new ArrayList<Entity>();
 
 		// Initializes the game's level
 		level = new Level("title");
@@ -241,6 +250,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				currentSong.stop();
 		}
 
+		// Entity control
+		if (gameState.equals("playing")) {
+			// Entity logic
+			for (int i = 0; i < entities.size(); i++) {
+				entities.get(i).update();
+			}
+
+		}
+
 	}
 
 	/**
@@ -261,12 +279,21 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		// Gets the canva's graphics
 		Graphics graphics = gameCanvas.getGraphics();
 
-		// Renders the level
-		if (Game.gameState.equals("playing"))
-			level.render(graphics);
 		
+		if (Game.gameState.equals("playing")) {
+			
+			// Renders the level
+			level.render(graphics);
+			
+			//Renders the entities
+			for (int i = 0; i < entities.size(); i++) {
+				entities.get(i).render(graphics);
+			}
+			
+		}
+
 		// Renders the graphic interface
-				ui.render(graphics);
+		ui.render(graphics);
 
 		// Clears rendered resources
 		graphics.dispose();
