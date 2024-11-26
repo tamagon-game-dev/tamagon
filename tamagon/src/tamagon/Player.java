@@ -14,10 +14,9 @@ public class Player extends Entity {
 	}
 	
 	//Player's logic 
-	public void update() {
-		this.x++;
-		Camera.x = (this.x * Game.scale) - (Game.width/2);
-		Camera.y = (this.y * Game.scale) - (Game.height/2);
+	public void update() {	
+		Camera.x = Camera.clampCamera((this.x * Game.scale), 0, Level.levelW * (Level.dimension * Game.scale) - Game.width);
+		Camera.y = Camera.clampCamera((this.y * Game.scale), 0, Level.levelH * (Level.dimension * Game.scale) - Game.height);
 	}
 
 }

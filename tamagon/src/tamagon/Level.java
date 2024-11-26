@@ -21,7 +21,7 @@ public class Level {
 	/**
 	 * Level width and height
 	 */
-	private int levelW, levelH;
+	static int levelW, levelH;
 	
 	/**
 	 * Level sprite dimension
@@ -100,9 +100,21 @@ public class Level {
 	 * @param g - Graphic component
 	 */
 	public void render(Graphics g) {
+		//Rendering optimization
+		int xStart = Camera.x / (dimension*Game.scale);
+		int yStart = Camera.y / (dimension*Game.scale);
+		
+		int xEnd = xStart + (Game.width / (dimension*Game.scale));
+		int yEnd = xStart + (Game.width / (dimension*Game.scale));
+		
 		//Iterating over level's tiles
-		for (int x = 0; x < levelW; x++) {
-			for (int y = 0; y < levelH; y++) {
+		for (int x = xStart; x <= xEnd; x++) {
+			for (int y = yStart; y <= yEnd; y++) {
+				
+				//Preventing array out of bounds
+				if(x < 0 || y < 0 || x >= levelW || y >= levelH)
+					continue;
+				
 				//Grab current tile
 				Tile tile = tiles[x + (y * levelW)];
 				
