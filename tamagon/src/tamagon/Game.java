@@ -71,7 +71,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	/**
 	 * Game sounds
 	 */
-	private Sound sounds;
+	static Sound sounds;
 
 	/**
 	 * Music options
@@ -410,7 +410,20 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 				Player.left = false;
 			} else if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
 				Player.jump = true;
+				
+				//jump sound
+				if (sfx) {
+					if(Player.jumpCounter == 0) {
+						sounds.jump1.play();
+					} else if(Player.jumpCounter == 1) {
+						sounds.jump2.play();
+					} else if(Player.jumpCounter == 2) {
+						sounds.jump3.play();
+					}
+				}
+				
 				Player.jumpCounter++;
+				
 			}
 
 		}

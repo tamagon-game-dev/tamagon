@@ -1,14 +1,57 @@
 package tamagon;
 
-public class Fireball extends Entity{
-	
+import java.awt.Graphics;
+import java.awt.Image;
+
+public class Fireball extends Entity {
+
 	/**
 	 * Fire ball direction
 	 */
 	public int direction = 1;
+	/**
+	 * Fire ball sprite
+	 */
+	private Image[] sprites = SpriteLoader.fireball;
+
+	/**
+	 * Animation index
+	 */
+	private int animationIndex = 0;
+
+	/**
+	 * horizontal offset
+	 */
+	private int offsetX = 0;
+
+	/**
+	 * width offset
+	 */
+	private int offsetW = 0;
+	
+	/**
+	 * Animation frames
+	 */
+	private int animationFrames = 0;
+	
+	/**
+	 * Max animation frame
+	 */
+	private int maxFrame = 4;
+	
+	/**
+	 * Max animation index
+	 */
+	private int maxIndex = 1;
+	
+	/**
+	 * Plays before exploding
+	 */
+	private boolean finalAnimation = false;
 
 	/**
 	 * Player shoots these
+	 * 
 	 * @param x
 	 * @param y
 	 * @param w
@@ -18,19 +61,54 @@ public class Fireball extends Entity{
 		super(x, y, w, h);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public void update() {
-		if (direction == 1 && !checkTileCollision(x+4,y)) {
-			//Fly right
-			x+=4;
-		} else if (direction == -1 && !checkTileCollision(x-4,y)) {
-			//Fly left
-			x-=4;
+		if (direction == 1 && !checkTileCollision(x + 4, y)) {
+			// Fly right
+			x += 4;
+
+			// Invert sprite
+			offsetW = w * Game.scale;
+			offsetX = 0;
+		} else if (direction == -1 && !checkTileCollision(x - 4, y)) {
+			// Fly left
+			x -= 4;
+
+			// Invert sprite
+			offsetW = -(w * Game.scale);
+			offsetX = (w * Game.scale);
 		} else {
-			//Destroy self
-			Player.canAttack = true;
-			Game.entities.remove(this);
+			// Destroy self
+			if (!finalAnimation) {
+				finalAnimation = true;
+				animationFrames = 0;
+				animationIndex = 0;
+				sprites = SpriteLoader.fireballCollide;
+			}
 		}
+	}
+
+	@Override
+	public void render(Graphics g) {
+		animationFrames++;
+		
+		// Animation frames
+		if (animationFrames > maxFrame) {
+			animationFrames = 0;
+			animationIndex++;
+			if (animationIndex > maxIndex) {
+				//Exploding animation
+				if(finalAnimation) {
+					if (Game.sfx) Game.sounds.hit.play();
+					Player.canAttack = true;
+					Game.entities.remove(this);
+				}
+				animationIndex = 0;
+			}
+		}
+
+		g.drawImage(sprites[animationIndex], (x * Game.scale - Camera.x) + offsetX, y * Game.scale - Camera.y, offsetW,
+				h * Game.scale, null);
 	}
 }

@@ -18,8 +18,13 @@ public class Player extends Entity {
 	/**
 	 * Jump duration and animation control
 	 */
-	private int jumpHeight = 64, jumpFrames = 0, animationFrames = 0, maxFrame = 1, animationIndex = 0, maxIndex = 1,
+	private int jumpHeight = 64, jumpFrames = 0, animationFrames = 0, maxFrame = 8, animationIndex = 0, maxIndex = 1,
 			offsetW = w * Game.scale, offsetX = 0;
+
+	/**
+	 * Detects motion
+	 */
+	private boolean isMoving = false;
 
 	/**
 	 * Animations
@@ -46,7 +51,11 @@ public class Player extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		// frame control
+		// Animation control
+		if (jump || isMoving)
+			animationFrames++;
+
+		// Animation frames
 		if (animationFrames > maxFrame) {
 			animationFrames = 0;
 			animationIndex++;
@@ -65,8 +74,14 @@ public class Player extends Entity {
 	 */
 	private void movement() {
 		// Check if player is grounded
-		if (checkTileCollision(x, y + gravity))
+		if (checkTileCollision(x, y + gravity)) {
+			
+			//Moving sound
+			if (isMoving)
+				if (Game.sfx) Game.sounds.walk.play();
+			
 			jumpCounter = 0;
+		}
 
 		// If player is airborne and its not jumping, then proceed to fall (gravity)
 		if (!checkTileCollision(x, y + gravity) && !jump)
@@ -79,9 +94,14 @@ public class Player extends Entity {
 			direction = 1;
 
 			// Animation
-			sprites = SpriteLoader.playerWalk;
+			if (!jump && canAttack) {
+				sprites = SpriteLoader.playerWalk;
+			} else if (!canAttack) {
+				sprites = SpriteLoader.playerWalkATK;
+			}
+
 			maxFrame = 1;
-			animationFrames++;
+			isMoving = true;
 
 			// Invert sprite
 			offsetW = w * Game.scale;
@@ -92,17 +112,29 @@ public class Player extends Entity {
 			direction = -1;
 
 			// Animation
-			sprites = SpriteLoader.playerWalk;
+			if (!jump && canAttack) {
+				sprites = SpriteLoader.playerWalk;
+			} else if (!canAttack) {
+				sprites = SpriteLoader.playerWalkATK;
+			}
+
 			maxFrame = 1;
-			animationFrames++;
+			isMoving = true;
 
 			// Invert sprite
 			offsetW = -(w * Game.scale);
 			offsetX = (w * Game.scale);
+		} else {
+			isMoving = false;
+			if(!canAttack) sprites = SpriteLoader.playerWalkATK;
 		}
 
 		// Jump control
 		if (jump) {
+
+			// Animation
+			sprites = (canAttack) ? SpriteLoader.playerJump : SpriteLoader.playerJumpATK;
+
 			// Activates jumping state if there is no ceiling and player can still jump
 			if (!checkTileCollision(x, y - gravity) && jumpCounter < maxJumps) {
 				y -= gravity;
@@ -121,6 +153,7 @@ public class Player extends Entity {
 
 		// Player attacks
 		if (attack && canAttack) {
+			if (Game.sfx) Game.sounds.fire.play();
 			canAttack = false;
 			Fireball fb = new Fireball(x, y, w, h);
 			fb.direction = direction;
