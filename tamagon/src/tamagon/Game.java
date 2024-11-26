@@ -168,6 +168,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		// Initializes the game's interfaces
 		ui = new UserInterface();
+		
+		//Initializes entities sprite
+		new SpriteLoader();
 
 		// Initializes the game's entities
 		entities = new ArrayList<Entity>();
