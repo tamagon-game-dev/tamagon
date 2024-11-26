@@ -11,12 +11,12 @@ public class Level {
 	/**
 	 * Sprite sheet containing level tiles
 	 */
-	public static Spritesheet levelSprites = new Spritesheet("level");
+	static Spritesheet levelSprites = new Spritesheet("level");
 	
 	/**
 	 * Game tiles
 	 */
-	private Tile[] tiles;
+	static Tile[] tiles;
 	
 	/**
 	 * Level width and height
@@ -81,12 +81,12 @@ public class Level {
 						tiles[x + (y * levelW)] = new Collider(x*dimension, y*dimension, Tile.testTile);
 					}else if (currentPixel == 0xFF004810) {
 						//THE PLAYER
-						tiles[x + (y * levelW)] = new Collider(x*dimension, y*dimension, Tile.transparent);
+						tiles[x + (y * levelW)] = new Tile(x*dimension, y*dimension, Tile.transparent);
 						Player player = new Player(x*dimension, y*dimension, dimension, dimension);
 						Game.entities.add(player);
 					}else {
 						//Transparent tile (avoids crazy blur effect)
-						tiles[x + (y * levelW)] = new Collider(x*dimension, y*dimension, Tile.transparent);
+						tiles[x + (y * levelW)] = new Tile(x*dimension, y*dimension, Tile.transparent);
 					}
 				}
 			}

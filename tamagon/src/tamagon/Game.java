@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
@@ -19,7 +21,7 @@ import java.io.FileWriter;
 
 import javax.swing.JFrame;
 
-public class Game extends Canvas implements Runnable, KeyListener {
+public class Game extends Canvas implements Runnable, KeyListener, MouseListener {
 
 	/**
 	 * Screen scale, width and height
@@ -97,6 +99,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public Game() {
 		// Makes the game listen to keyboard events
 		this.addKeyListener(this);
+
+		// Makes the game listen to mouse events
+		this.addMouseListener(this);
 
 		// Gets player's settings
 		try {
@@ -279,17 +284,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		// Gets the canva's graphics
 		Graphics graphics = gameCanvas.getGraphics();
 
-		
 		if (Game.gameState.equals("playing")) {
-			
+
 			// Renders the level
 			level.render(graphics);
-			
-			//Renders the entities
+
+			// Renders the entities
 			for (int i = 0; i < entities.size(); i++) {
 				entities.get(i).render(graphics);
 			}
-			
+
 		}
 
 		// Renders the graphic interface
@@ -362,6 +366,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				if (sfx)
 					sounds.cursor.play();
 			}
+		} else if (gameState.equals("playing")) {
+
+			// Player movement
+			if (arg0.getKeyCode() == KeyEvent.VK_D) {
+				Player.right = true;
+			} else if (arg0.getKeyCode() == KeyEvent.VK_A) {
+				Player.left = true;
+			}
 		}
 
 	}
@@ -386,12 +398,54 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				// Starts the game
 				gameState = "starting";
 			}
+		} else if (gameState.equals("playing")) {
+
+			// Stops player movement
+			if (arg0.getKeyCode() == KeyEvent.VK_D) {
+				Player.right = false;
+			} else if (arg0.getKeyCode() == KeyEvent.VK_A) {
+				Player.left = false;
+			} else if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
+				Player.jump = true;
+				Player.jumpCounter++;
+			}
+
 		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		if (gameState.equals("playing")) {
+			Player.attack = true;
+		}
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if (gameState.equals("playing")) {
+			Player.attack = false;
+		}
 	}
 
 }
