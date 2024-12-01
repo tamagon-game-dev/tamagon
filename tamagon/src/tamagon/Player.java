@@ -13,7 +13,7 @@ public class Player extends Entity {
 	/**
 	 * Player speed, gravity, jump counter and direction;
 	 */
-	static int speed = 2, gravity = 4, jumpCounter = 0, maxJumps = 3, direction = 1;
+	static int speed = 2, gravity = 4, direction = 1;
 
 	/**
 	 * Jump duration and animation control
@@ -79,8 +79,6 @@ public class Player extends Entity {
 			//Moving sound
 			if (isMoving)
 				if (Game.sfx) Game.sounds.walk.play();
-			
-			jumpCounter = 0;
 		}
 
 		// If player is airborne and its not jumping, then proceed to fall (gravity)
@@ -135,8 +133,8 @@ public class Player extends Entity {
 			// Animation
 			sprites = (canAttack) ? SpriteLoader.playerJump : SpriteLoader.playerJumpATK;
 
-			// Activates jumping state if there is no ceiling and player can still jump
-			if (!checkTileCollision(x, y - gravity) && jumpCounter < maxJumps) {
+			// Activates jumping state if there is no ceiling
+			if (!checkTileCollision(x, y - gravity)) {
 				y -= gravity;
 				jumpFrames += gravity;
 				if (jumpFrames >= jumpHeight) {

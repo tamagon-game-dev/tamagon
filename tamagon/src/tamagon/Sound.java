@@ -17,7 +17,7 @@ public class Sound {
 	/**
 	 * Effects
 	 */
-	public AudioClip cursor, jump1, jump2, jump3, fire, hit, walk;
+	public AudioClip cursor, jump, fire, hit, walk;
 	
 	/**
 	 * Loads game Sounds
@@ -28,9 +28,7 @@ public class Sound {
 		
 		//SFX
 		cursor = load("cursor.wav");
-		jump1 = load("jump1.wav");
-		jump2 = load("jump2.wav");
-		jump3 = load("jump3.wav");
+		jump = load("jump.wav");
 		fire = load("fire.wav");
 		hit = load("hit.wav");
 		walk = load("walk.wav");

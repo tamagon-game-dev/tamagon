@@ -56,7 +56,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	/**
 	 * Current game state
 	 */
-	static String gameState = "title";
+	static String gameState = "logo";
 
 	/**
 	 * Game's highest score
@@ -413,16 +413,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 				
 				//jump sound
 				if (sfx) {
-					if(Player.jumpCounter == 0) {
-						sounds.jump1.play();
-					} else if(Player.jumpCounter == 1) {
-						sounds.jump2.play();
-					} else if(Player.jumpCounter == 2) {
-						sounds.jump3.play();
-					}
+					sounds.jump.play();
 				}
-				
-				Player.jumpCounter++;
+			
 				
 			}
 
