@@ -89,8 +89,29 @@ public class UserInterface {
 			renderOptions(g);
 		} else if (Game.gameState.equals("playing")) {
 			renderPlaying(g);
+		} else if (Game.gameState.equals("paused")) {
+			renderPaused(g);
 		}
 
+	}
+
+	/**
+	 * Renders the game on a paused state
+	 * @param g
+	 */
+	private void renderPaused(Graphics g) {
+		g.setColor(new Color(0,0,0,1));
+		g.fillRect(0, 0, Game.width, Game.height);
+		
+		//Paused label
+		g.setColor(new Color(248, 144, 32));
+		g.setFont(new Font("Calibri", Font.BOLD, 16 * Game.scale));
+		g.drawString("PAUSED", (Game.width/2)-32*Game.scale, (Game.height/2));
+		
+		g.setColor(new Color(248, 216, 32));
+		g.setFont(new Font("Calibri", Font.PLAIN, 16 * Game.scale));
+		g.drawString("PAUSED", (Game.width/2)-32*Game.scale, (Game.height/2));
+		
 	}
 
 	/**

@@ -168,8 +168,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		// Initializes the game's interfaces
 		ui = new UserInterface();
-		
-		//Initializes entities sprite
+
+		// Initializes entities sprite
 		new SpriteLoader();
 
 		// Initializes the game's entities
@@ -410,15 +410,27 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 				Player.left = false;
 			} else if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
 				Player.jump = true;
-				
-				//jump sound
+
+				// jump sound
 				if (sfx) {
 					sounds.jump.play();
 				}
-			
-				
+
+			} else if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+
+				// Game pause
+				gameState = "paused";
+
 			}
 
+		} else if (gameState.equals("paused")) {
+			
+			if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+
+				// revert pause
+				gameState = "playing";
+
+			}
 		}
 	}
 
