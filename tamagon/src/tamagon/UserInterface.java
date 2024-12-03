@@ -15,7 +15,7 @@ public class UserInterface {
 	/**
 	 * UI graphic elements
 	 */
-	private BufferedImage hitoriLogo, titleBg, tamagonLogo, wkey, skey, space, backspace;
+	private BufferedImage hitoriLogo, titleBg, tamagonLogo, wkey, skey, space, backspace, lifeIcon, eggIcon;
 
 	/**
 	 * Fade in/out animation frames
@@ -72,6 +72,8 @@ public class UserInterface {
 		skey = UISpritesheet.getSprite(122, 16, 16, 16);
 		space = UISpritesheet.getSprite(138, 0, 49, 16);
 		backspace = UISpritesheet.getSprite(138, 16, 32, 16);
+		lifeIcon = UISpritesheet.getSprite(122, 32, 21, 17);
+		eggIcon = UISpritesheet.getSprite(143, 32, 17, 17);
 	}
 
 	/**
@@ -350,6 +352,9 @@ public class UserInterface {
 	 * @param g
 	 */
 	private void renderPlaying(Graphics g) {
+		//Player info
+		renderPlayerUI(g);
+		
 		// If the screen is faded in, then fade it out!
 		if (fadedIn) {
 
@@ -371,6 +376,33 @@ public class UserInterface {
 				fadedOut = true;
 			}
 		}
+	}
+
+	/**
+	 * Renders Lives, Eggs and High-Score
+	 * @param g
+	 */
+	private void renderPlayerUI(Graphics g) {
+		//Life Icon
+		g.drawImage(lifeIcon, 0, 0, 21*Game.scale, 17*Game.scale, null);
+		
+		//Egg
+		g.drawImage(eggIcon, (Game.width/2)-26*Game.scale, 0, 17*Game.scale, 17*Game.scale, null);
+		
+		//Draw highlight
+		g.setColor(new Color(248, 144, 32));
+		g.setFont(new Font("Calibri", Font.BOLD, 16 * Game.scale));
+		g.drawString(Player.life + "/3", 21*Game.scale, 14*Game.scale);
+		g.drawString(Player.eggs + "/5", (Game.width/2)-8*Game.scale, 14*Game.scale);
+		g.drawString("SCORE: " + Player.score, Game.width-100*Game.scale, 14*Game.scale);
+		
+		//Draw text
+		g.setColor(new Color(248, 216, 32));
+		g.setFont(new Font("Calibri", Font.PLAIN, 16 * Game.scale));
+		g.drawString(Player.life + "/3", 21*Game.scale, 14*Game.scale);
+		g.drawString(Player.eggs + "/5", (Game.width/2)-8*Game.scale, 14*Game.scale);
+		g.drawString("SCORE: " + Player.score, Game.width-100*Game.scale, 14*Game.scale);
+		
 	}
 
 	/**

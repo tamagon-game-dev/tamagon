@@ -11,9 +11,9 @@ public class Player extends Entity {
 	static boolean right = false, left = false, jump = false, attack = false, canAttack = true;
 
 	/**
-	 * Player speed, gravity, jump counter and direction;
+	 * Player's manipulable stats;
 	 */
-	static int speed = 2, gravity = 4, direction = 1;
+	static int speed = 2, gravity = 4, direction = 1, life = 3, eggs = 0, score = 0;
 
 	/**
 	 * Jump duration and animation control
