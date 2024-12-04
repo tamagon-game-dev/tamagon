@@ -15,7 +15,7 @@ public class UserInterface {
 	/**
 	 * UI graphic elements
 	 */
-	private BufferedImage hitoriLogo, titleBg, tamagonLogo, wkey, skey, space, backspace, lifeIcon, eggIcon;
+	private BufferedImage hitoriLogo, titleBg, tamagonLogo, wkey, skey, space, backspace, lifeIcon, eggIcon, castleland;
 
 	/**
 	 * Fade in/out animation frames
@@ -74,6 +74,7 @@ public class UserInterface {
 		backspace = UISpritesheet.getSprite(138, 16, 32, 16);
 		lifeIcon = UISpritesheet.getSprite(122, 32, 21, 17);
 		eggIcon = UISpritesheet.getSprite(143, 32, 17, 17);
+		castleland = UISpritesheet.getSprite(187, 0, 107, 62);
 	}
 
 	/**
@@ -89,6 +90,8 @@ public class UserInterface {
 			renderTitle(g);
 		} else if (Game.gameState.equals("options")) {
 			renderOptions(g);
+		} else if (Game.gameState.equals("intro")) {
+			renderWorldIntro(g);
 		} else if (Game.gameState.equals("playing")) {
 			renderPlaying(g);
 		} else if (Game.gameState.equals("paused")) {
@@ -98,22 +101,104 @@ public class UserInterface {
 	}
 
 	/**
+	 * Renders a splash image with the level name
+	 * 
+	 * @param g
+	 */
+	private void renderWorldIntro(Graphics g) {
+		
+		//Splash image
+		if(Game.levelNumber >= 1 && Game.levelNumber <= 4) {
+			//Castleland
+			
+			//WORLD 1
+			g.setColor(new Color(248, 216, 32));
+			g.setFont(new Font("Calibri", Font.PLAIN, 16 * Game.scale));
+			g.drawString("WORLD 1", Game.width/2 - 30 * Game.scale, 80 * Game.scale);
+			
+			//WORLD NAME
+			g.setColor(new Color(248, 144, 32));
+			g.setFont(new Font("Calibri", Font.BOLD, 16 * Game.scale));
+			g.drawString("CASTLELAND", Game.width/2 - 40 * Game.scale, 160 * Game.scale);
+			
+			g.drawImage(castleland, (Game.width/2) - (107*Game.scale)/2,(Game.height/2) - (62*Game.scale)/2, 107*Game.scale, 62*Game.scale, null);
+		}
+		
+		// If the screen is faded in, then fade it out!
+		if (fadedIn) {
+			// Color black for fade out
+			g.setColor(new Color(0, 0, 0, fadeOut));
+
+			// Black background for fade out
+			g.fillRect(0, 0, Game.width, Game.height);
+
+			// Makes the black background fade out
+			if (fadeOut > fadeIn) {
+				fadeOut -= 3;
+			}
+
+			// Completes the fade out animation
+			if (fadeOut == fadeIn) {
+				startInterval = true;
+				fadedIn = false;
+				fadeOut = 255;
+			}
+		}
+
+		// If the screen is faded out, then fade it in!
+		if (fadedOut) {
+			// Color black for fade in
+			g.setColor(new Color(0, 0, 0, fadeIn));
+
+			// Black background for fade in
+			g.fillRect(0, 0, Game.width, Game.height);
+
+			// Makes the black background fade in
+			if (fadeIn < fadeOut) {
+				fadeIn += 3;
+			}
+
+			// Completes the fade in animation
+			if (fadeIn == fadeOut) {
+				fadedOut = false;
+				fadedIn = true;
+				fadeOut = 255;
+				fadeIn = 0;
+				Game.level = new Level("test");
+				Game.gameState = "playing";
+			}
+		}
+
+		// Interval between fade in and fade out
+		if (startInterval) {
+			interval--;
+			if (interval == 0) {
+				startInterval = false;
+				interval = maxInterval;
+				fadedOut = true;
+			}
+		}
+
+	}
+
+	/**
 	 * Renders the game on a paused state
+	 * 
 	 * @param g
 	 */
 	private void renderPaused(Graphics g) {
-		g.setColor(new Color(0,0,0,1));
+		g.setColor(new Color(0, 0, 0, 1));
 		g.fillRect(0, 0, Game.width, Game.height);
-		
-		//Paused label
+
+		// Paused label
 		g.setColor(new Color(248, 144, 32));
 		g.setFont(new Font("Calibri", Font.BOLD, 16 * Game.scale));
-		g.drawString("PAUSED", (Game.width/2)-32*Game.scale, (Game.height/2));
-		
+		g.drawString("PAUSED", (Game.width / 2) - 32 * Game.scale, (Game.height / 2));
+
 		g.setColor(new Color(248, 216, 32));
 		g.setFont(new Font("Calibri", Font.PLAIN, 16 * Game.scale));
-		g.drawString("PAUSED", (Game.width/2)-32*Game.scale, (Game.height/2));
-		
+		g.drawString("PAUSED", (Game.width / 2) - 32 * Game.scale, (Game.height / 2));
+
 	}
 
 	/**
@@ -277,8 +362,8 @@ public class UserInterface {
 				fadedIn = true;
 				fadeOut = 255;
 				fadeIn = 0;
-				Game.level = new Level("test");
-				Game.gameState = "playing";
+				interval = maxInterval;
+				Game.gameState = "intro";
 			}
 
 		}
@@ -352,9 +437,9 @@ public class UserInterface {
 	 * @param g
 	 */
 	private void renderPlaying(Graphics g) {
-		//Player info
+		// Player info
 		renderPlayerUI(g);
-		
+
 		// If the screen is faded in, then fade it out!
 		if (fadedIn) {
 
@@ -380,29 +465,30 @@ public class UserInterface {
 
 	/**
 	 * Renders Lives, Eggs and High-Score
+	 * 
 	 * @param g
 	 */
 	private void renderPlayerUI(Graphics g) {
-		//Life Icon
-		g.drawImage(lifeIcon, 0, 0, 21*Game.scale, 17*Game.scale, null);
-		
-		//Egg
-		g.drawImage(eggIcon, (Game.width/2)-26*Game.scale, 0, 17*Game.scale, 17*Game.scale, null);
-		
-		//Draw highlight
+		// Life Icon
+		g.drawImage(lifeIcon, 0, 0, 21 * Game.scale, 17 * Game.scale, null);
+
+		// Egg
+		g.drawImage(eggIcon, (Game.width / 2) - 26 * Game.scale, 0, 17 * Game.scale, 17 * Game.scale, null);
+
+		// Draw highlight
 		g.setColor(new Color(248, 144, 32));
 		g.setFont(new Font("Calibri", Font.BOLD, 16 * Game.scale));
-		g.drawString(Player.life + "/3", 21*Game.scale, 14*Game.scale);
-		g.drawString(Player.eggs + "/5", (Game.width/2)-8*Game.scale, 14*Game.scale);
-		g.drawString("SCORE: " + Player.score, Game.width-100*Game.scale, 14*Game.scale);
-		
-		//Draw text
+		g.drawString(Player.life + "/3", 21 * Game.scale, 14 * Game.scale);
+		g.drawString(Player.eggs + "/5", (Game.width / 2) - 8 * Game.scale, 14 * Game.scale);
+		g.drawString("SCORE: " + Player.score, Game.width - 100 * Game.scale, 14 * Game.scale);
+
+		// Draw text
 		g.setColor(new Color(248, 216, 32));
 		g.setFont(new Font("Calibri", Font.PLAIN, 16 * Game.scale));
-		g.drawString(Player.life + "/3", 21*Game.scale, 14*Game.scale);
-		g.drawString(Player.eggs + "/5", (Game.width/2)-8*Game.scale, 14*Game.scale);
-		g.drawString("SCORE: " + Player.score, Game.width-100*Game.scale, 14*Game.scale);
-		
+		g.drawString(Player.life + "/3", 21 * Game.scale, 14 * Game.scale);
+		g.drawString(Player.eggs + "/5", (Game.width / 2) - 8 * Game.scale, 14 * Game.scale);
+		g.drawString("SCORE: " + Player.score, Game.width - 100 * Game.scale, 14 * Game.scale);
+
 	}
 
 	/**

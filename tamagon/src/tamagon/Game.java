@@ -92,6 +92,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	 * Game entities
 	 */
 	public static ArrayList<Entity> entities;
+	
+	/**
+	 * Level number
+	 */
+	static int levelNumber = 1;
 
 	/**
 	 * Initializes game's objects

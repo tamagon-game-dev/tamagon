@@ -41,6 +41,8 @@ public class Level {
 		//Load level
 		if (name.equals("test")) {
 			levelTest();
+		} else if (name.equals("level1")) {
+			level1();
 		}else {
 			return;
 		}
@@ -80,6 +82,51 @@ public class Level {
 						// Test tile
 						tiles[x + (y * levelW)] = new Collider(x*dimension, y*dimension, Tile.testTile);
 					}else if (currentPixel == 0xFF004810) {
+						//THE PLAYER
+						tiles[x + (y * levelW)] = new Tile(x*dimension, y*dimension, Tile.transparent);
+						Player player = new Player(x*dimension, y*dimension, dimension, dimension);
+						Game.entities.add(player);
+					}else {
+						//Transparent tile (avoids crazy blur effect)
+						tiles[x + (y * levelW)] = new Tile(x*dimension, y*dimension, Tile.transparent);
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Loads the first level
+	 */
+	private void level1() {
+		// Grab map layout
+		try {
+			// Locating the level's image
+			BufferedImage level = ImageIO.read(getClass().getResource("/level1.png"));
+			
+			//updating level's dimensions
+			levelW = level.getWidth();
+			levelH = level.getHeight();
+			
+			//Initialize tiles array
+			tiles = new Tile[levelW * levelH];
+
+			// Creating an array that will carry image's pixels
+			int[] pixels = new int[levelW * levelH];
+
+			// Setting image pixels into the pixels[] array
+			level.getRGB(0, 0, levelW, levelH, pixels, 0, levelW);
+
+			// Iterating through the level image's pixels.
+			for (int x = 0; x < levelW; x++) {
+				for (int y = 0; y < levelH; y++) {
+
+					// Store current pixel color data
+					int currentPixel = pixels[x + (y * levelW)];
+
+					if (currentPixel == 0xFF004810) {
 						//THE PLAYER
 						tiles[x + (y * levelW)] = new Tile(x*dimension, y*dimension, Tile.transparent);
 						Player player = new Player(x*dimension, y*dimension, dimension, dimension);
