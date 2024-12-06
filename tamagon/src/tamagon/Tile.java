@@ -14,7 +14,8 @@ public class Tile {
 	 * Tile images
 	 */
 	public static BufferedImage testTile = Level.levelSprites.getSprite(0, 0, Level.dimension, Level.dimension),
-			transparent = Level.levelSprites.getSprite(0, Level.dimension * 1, Level.dimension, Level.dimension);
+			transparent = Level.levelSprites.getSprite(Level.dimension * 1, Level.dimension, Level.dimension, Level.dimension),
+			cavernFloor = Level.levelSprites.getSprite(Level.dimension * 2, 0, Level.dimension, Level.dimension);
 
 	/**
 	 * Tile coordinates

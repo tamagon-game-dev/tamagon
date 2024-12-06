@@ -131,6 +131,9 @@ public class Level {
 						tiles[x + (y * levelW)] = new Tile(x*dimension, y*dimension, Tile.transparent);
 						Player player = new Player(x*dimension, y*dimension, dimension, dimension);
 						Game.entities.add(player);
+					} else if (currentPixel == 0xFF785830){
+						//Cavern floor
+						tiles[x + (y * levelW)] = new Collider(x*dimension, y*dimension, Tile.cavernFloor);
 					}else {
 						//Transparent tile (avoids crazy blur effect)
 						tiles[x + (y * levelW)] = new Tile(x*dimension, y*dimension, Tile.transparent);
@@ -149,10 +152,10 @@ public class Level {
 	public void render(Graphics g) {
 		//Rendering optimization
 		int xStart = Camera.x / (dimension*Game.scale);
-		int yStart = Camera.y / (dimension*Game.scale);
-		
-		int xEnd = xStart + (Game.width / (dimension*Game.scale));
-		int yEnd = xStart + (Game.width / (dimension*Game.scale));
+        int yStart = Camera.y / (dimension*Game.scale);
+
+        int xEnd = (xStart + (Game.width / (dimension*Game.scale)));
+        int yEnd = yStart + (Game.height / (dimension*Game.scale));
 		
 		//Iterating over level's tiles
 		for (int x = xStart; x <= xEnd; x++) {

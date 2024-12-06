@@ -164,7 +164,7 @@ public class UserInterface {
 				fadedIn = true;
 				fadeOut = 255;
 				fadeIn = 0;
-				Game.level = new Level("test");
+				Game.level = new Level("level" + Game.levelNumber);
 				Game.gameState = "playing";
 			}
 		}
@@ -364,6 +364,7 @@ public class UserInterface {
 				fadeIn = 0;
 				interval = maxInterval;
 				Game.gameState = "intro";
+				if (Game.currentSong != null) Game.currentSong.stop();
 			}
 
 		}

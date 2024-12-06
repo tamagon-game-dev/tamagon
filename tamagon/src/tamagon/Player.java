@@ -164,10 +164,11 @@ public class Player extends Entity {
 	 * Updates player's camera
 	 */
 	private void updateCamera() {
-		Camera.x = Camera.clampCamera((this.x * Game.scale), 0,
-				Level.levelW * (Level.dimension * Game.scale) - Game.width);
-		Camera.y = Camera.clampCamera((this.y * Game.scale), 0,
-				Level.levelH * (Level.dimension * Game.scale) - Game.height);
+		int cameraX = (x*Game.scale) - (Game.width/2 - (Level.dimension * Game.scale) / 2);
+        int cameraY = (y*Game.scale) - (Game.height/2 - (Level.dimension * Game.scale)/ 2);
+
+        Camera.x = Camera.clampCamera(cameraX, 0, Level.levelW * (Level.dimension * Game.scale) - Game.width);
+        Camera.y = Camera.clampCamera(cameraY, 0, Level.levelH * (Level.dimension * Game.scale) - Game.height);
 	}
 
 }

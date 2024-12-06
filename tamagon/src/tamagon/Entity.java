@@ -42,6 +42,7 @@ public class Entity {
 		g.setColor(Color.RED);
 		g.fillRect(x * Game.scale - Camera.x, y * Game.scale - Camera.y, w * Game.scale, h * Game.scale);
 	}
+
 	/**
 	 * Predicts if the entity will collide with a tile
 	 * 
@@ -70,7 +71,8 @@ public class Entity {
 
 		int x4 = (nextX + Level.dimension - 1) / Level.dimension;
 		int y4 = (nextY + Level.dimension - 1) / Level.dimension;
-
+		
+		//Verdict
 		return (Level.tiles[x1 + (y1 * Level.levelW)] instanceof Collider
 				|| Level.tiles[x2 + (y2 * Level.levelW)] instanceof Collider
 				|| Level.tiles[x3 + (y3 * Level.levelW)] instanceof Collider
