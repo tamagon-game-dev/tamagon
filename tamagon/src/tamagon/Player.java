@@ -11,7 +11,7 @@ public class Player extends Entity {
 	static boolean right = false, left = false, jump = false, attack = false, canAttack = true;
 
 	/**
-	 * Player's manipulable stats;
+	 * Player's manipulable statistics;
 	 */
 	static int speed = 2, gravity = 4, direction = 1, life = 3, eggs = 0, score = 0;
 
@@ -24,12 +24,13 @@ public class Player extends Entity {
 	/**
 	 * Detects motion
 	 */
-	private boolean isMoving = false;
+	static boolean isMoving = false;
 
 	/**
 	 * Animations
 	 */
 	private BufferedImage[] sprites = SpriteLoader.playerWalk;
+	
 
 	/**
 	 * Player
@@ -73,6 +74,7 @@ public class Player extends Entity {
 	 * Controls the player's inputs
 	 */
 	private void movement() {
+		
 		// Check if player is grounded
 		if (checkTileCollision(x, y + gravity)) {
 			
@@ -80,10 +82,21 @@ public class Player extends Entity {
 			if (isMoving)
 				if (Game.sfx) Game.sounds.walk.play();
 		}
+		
 
 		// If player is airborne and its not jumping, then proceed to fall (gravity)
-		if (!checkTileCollision(x, y + gravity) && !jump)
+		if (!checkTileCollision(x, y + gravity) && !jump) {
+			
+			//Background animation
+			Level.bgY-=2*Game.scale;
+			Level.bgY1-=0.1f*Game.scale;
+			Level.bgY2-=0.2f*Game.scale;
+			Level.bgY3-=0.3f*Game.scale;
+			Level.bgY4-=0.5f*Game.scale;
+			
+			//Movement
 			y += gravity;
+		}
 
 		// Horizontal movement
 		if (right && !checkTileCollision(x + speed, y)) {
@@ -105,6 +118,7 @@ public class Player extends Entity {
 			offsetW = w * Game.scale;
 			offsetX = 0;
 		} else if (left && !checkTileCollision(x - speed, y)) {
+			
 			// Moves left while path is clear of colliders
 			x -= speed;
 			direction = -1;
@@ -129,12 +143,21 @@ public class Player extends Entity {
 
 		// Jump control
 		if (jump) {
-
+			
 			// Animation
 			sprites = (canAttack) ? SpriteLoader.playerJump : SpriteLoader.playerJumpATK;
 
 			// Activates jumping state if there is no ceiling
 			if (!checkTileCollision(x, y - gravity)) {
+				
+				//Background animation
+				Level.bgY+=2*Game.scale;
+				Level.bgY1+=0.1f*Game.scale;
+				Level.bgY2+=0.2f*Game.scale;
+				Level.bgY3+=0.3f*Game.scale;
+				Level.bgY4+=0.5f*Game.scale;
+				
+				//Movement
 				y -= gravity;
 				jumpFrames += gravity;
 				if (jumpFrames >= jumpHeight) {

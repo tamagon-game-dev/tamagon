@@ -12,7 +12,7 @@ public class Sound {
 	/**
 	 * Songs
 	 */
-	public AudioClip titlescreen;
+	public AudioClip titlescreen, intro;
 	
 	/**
 	 * Effects
@@ -25,6 +25,7 @@ public class Sound {
 	public Sound() {
 		//Songs
 		titlescreen = load("titlescreen.wav");
+		intro = load("intro.wav");
 		
 		//SFX
 		cursor = load("cursor.wav");

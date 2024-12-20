@@ -364,7 +364,16 @@ public class UserInterface {
 				fadeIn = 0;
 				interval = maxInterval;
 				Game.gameState = "intro";
+				
+				//Stops the title screen song
 				if (Game.currentSong != null) Game.currentSong.stop();
+				
+				//Starts the introduction song
+				if (Game.music) {
+					Game.currentSong = Game.sounds.intro;
+					Game.currentSong.play();
+				}
+				
 			}
 
 		}

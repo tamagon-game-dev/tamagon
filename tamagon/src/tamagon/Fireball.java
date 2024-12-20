@@ -48,6 +48,11 @@ public class Fireball extends Entity {
 	 * Plays before exploding
 	 */
 	private boolean finalAnimation = false;
+	
+	/**
+	 * Time until the fire ball explodes
+	 */
+	private int timer = 0, maxTimer = 80;
 
 	/**
 	 * Player shoots these
@@ -64,6 +69,14 @@ public class Fireball extends Entity {
 
 	@Override
 	public void update() {
+		
+		//Delete entity after 1.2 seconds
+		timer++;
+		if(timer >= maxTimer) {
+			Player.canAttack = true;
+			Game.entities.remove(this);
+		}
+		
 		if (direction == 1 && !checkTileCollision(x + 4, y)) {
 			// Fly right
 			x += 4;

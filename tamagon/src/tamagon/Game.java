@@ -26,7 +26,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	/**
 	 * Screen scale, width and height
 	 */
-	static int scale = 2, width, height;
+	static int scale = 4, width, height;
 
 	/**
 	 * frames per second
@@ -56,7 +56,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	/**
 	 * Current game state
 	 */
-	static String gameState = "logo";
+	static String gameState = "playing";
 
 	/**
 	 * Game's highest score
@@ -181,7 +181,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		entities = new ArrayList<Entity>();
 
 		// Initializes the game's level
-		level = new Level("title");
+		level = new Level("level1");
 	}
 
 	/**
@@ -293,15 +293,17 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		Graphics graphics = gameCanvas.getGraphics();
 
 		if (Game.gameState.equals("playing")) {
-
-			// Renders the level
-			level.render(graphics);
+			
+			// Render level
+			level.renderBackground(graphics);
 
 			// Renders the entities
 			for (int i = 0; i < entities.size(); i++) {
 				entities.get(i).render(graphics);
 			}
-
+			
+			// Renders the level
+			level.render(graphics);
 		}
 
 		// Renders the graphic interface
