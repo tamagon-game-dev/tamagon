@@ -28,7 +28,7 @@ public class Level {
 	/**
 	 * Decorations
 	 */
-	static BufferedImage cave = decorations.getSprite(0, 0, 416, 288);
+	static BufferedImage cave = decorations.getSprite(0, 0, 416, 288), tree = decorations.getSprite(0, 288, 96, 128);
 	/**
 	 * Game tiles
 	 */
@@ -314,6 +314,10 @@ public class Level {
 
 			// Cave
 			g.drawImage(cave, 0 - Camera.x, (dimension * 4) * Game.scale - Camera.y, 416 * Game.scale, 288 * Game.scale,
+					null);
+			
+			// Tree
+			g.drawImage(tree, (dimension * 18)*Game.scale - Camera.x, (dimension * 7) * Game.scale - Camera.y, 96 * Game.scale, 128 * Game.scale,
 					null);
 
 		}
