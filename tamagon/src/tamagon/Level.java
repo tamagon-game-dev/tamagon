@@ -164,6 +164,18 @@ public class Level {
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Player player = new Player(x * dimension, y * dimension, dimension, dimension);
 						Game.entities.add(player);
+					} else if (currentPixel == 0xFFF8D800) {
+						//EGG number one
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Egg egg1 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg1.id = 1;
+						Game.entities.add(egg1);	
+					}  else if (currentPixel == 0xFFF8D801) {
+						//EGG number one
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Egg egg2 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg2.id = 2;
+						Game.entities.add(egg2);	
 					} else if (currentPixel == 0xFF785830) {
 						// Cavern floor
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.cavernFloor);

@@ -10,14 +10,25 @@ public class SpriteLoader {
 	private Spritesheet playerSheet = new Spritesheet("player");
 	
 	/**
-	 * animated sprite
+	 * Entities' sprite sheet
+	 */
+	private Spritesheet entitySheet = new Spritesheet("entities");
+	
+	/**
+	 *  player's animated sprite
 	 */
 	static BufferedImage[] playerWalk, playerJump, playerWalkATK, playerJumpATK, fireball, fireballCollide;
+	
+	/**
+	 * Eggs animation
+	 */
+	static BufferedImage[] egg1, egg2, egg3, egg4, egg5;
 	
 	/**
 	 * Loads all entities sprite once
 	 */
 	public SpriteLoader() {
+		//Player
 		playerWalk = new BufferedImage[2];
 		playerWalk[0] = playerSheet.getSprite(0, 0, 32, 32);
 		playerWalk[1] = playerSheet.getSprite(32, 0, 32, 32);
@@ -41,6 +52,39 @@ public class SpriteLoader {
 		fireballCollide = new BufferedImage[2];
 		fireballCollide[0] = playerSheet.getSprite(0, 160, 32, 32);
 		fireballCollide[1] = playerSheet.getSprite(32, 160, 32, 32);
+		
+		
+		//EGGS
+		egg1 = new BufferedImage[4];
+		egg1[0] = entitySheet.getSprite(0, 0, 32, 32);
+		egg1[1] = entitySheet.getSprite(32, 0, 32, 32);
+		egg1[2] = entitySheet.getSprite(0, 0, 32, 32);
+		egg1[3] = entitySheet.getSprite(32*2, 0, 32, 32);
+		
+		egg2 = new BufferedImage[4];
+		egg2[0] = entitySheet.getSprite(32*3, 0, 32, 32);
+		egg2[1] = entitySheet.getSprite(32*4, 0, 32, 32);
+		egg2[2] = entitySheet.getSprite(32*3, 0, 32, 32);
+		egg2[3] = entitySheet.getSprite(32*5, 0, 32, 32);
+		
+		egg3 = new BufferedImage[4];
+		egg3[0] = entitySheet.getSprite(32*6, 0, 32, 32);
+		egg3[1] = entitySheet.getSprite(32*7, 0, 32, 32);
+		egg3[2] = entitySheet.getSprite(32*6, 0, 32, 32);
+		egg3[3] = entitySheet.getSprite(32*8, 0, 32, 32);
+		
+		egg4 = new BufferedImage[4];
+		egg4[0] = entitySheet.getSprite(0, 32, 32, 32);
+		egg4[1] = entitySheet.getSprite(32, 32, 32, 32);
+		egg4[2] = entitySheet.getSprite(0, 32, 32, 32);
+		egg4[3] = entitySheet.getSprite(32*2, 32, 32, 32);
+		
+		egg5 = new BufferedImage[4];
+		egg5[0] = entitySheet.getSprite(32*3, 32, 32, 32);
+		egg5[1] = entitySheet.getSprite(32*4, 32, 32, 32);
+		egg5[2] = entitySheet.getSprite(32*3, 32, 32, 32);
+		egg5[3] = entitySheet.getSprite(32*5, 32, 32, 32);
+		
 		
 		
 	}
