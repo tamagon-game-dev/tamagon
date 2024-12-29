@@ -91,12 +91,18 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	/**
 	 * Game entities
 	 */
-	public static ArrayList<Entity> entities;
+	 static ArrayList<Entity> entities;
 	
 	/**
 	 * Level number
 	 */
 	static int levelNumber = 1;
+	
+	/**
+	 * Player
+	 */
+	static Player player;
+	
 
 	/**
 	 * Initializes game's objects
@@ -296,14 +302,15 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			
 			// Render level
 			level.renderBackground(graphics);
+			
+			// Renders the level
+			level.render(graphics);
 
 			// Renders the entities
 			for (int i = 0; i < entities.size(); i++) {
 				entities.get(i).render(graphics);
 			}
 			
-			// Renders the level
-			level.render(graphics);
 		}
 
 		// Renders the graphic interface
@@ -327,6 +334,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	 */
 	@Override
 	public void run() {
+		requestFocus();
 
 		// Renders the game and applies it's logic
 		while (true) {

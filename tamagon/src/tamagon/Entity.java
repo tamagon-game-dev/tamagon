@@ -2,6 +2,7 @@ package tamagon;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Entity {
 
@@ -9,6 +10,11 @@ public class Entity {
 	 * Entity size & position
 	 */
 	public int x, y, w, h;
+	
+	/**
+	 * Entity collision mask
+	 */
+	public int maskX, maskY, maskW, maskH;
 
 	/**
 	 * An entity is a game object
@@ -43,6 +49,41 @@ public class Entity {
 		g.fillRect(x * Game.scale - Camera.x, y * Game.scale - Camera.y, w * Game.scale, h * Game.scale);
 	}
 
+	
+	/**
+	 * Checks if player is getting collided with another entity
+	 * @return boolean
+	 */
+	protected boolean checkCollisionWithPlayer(Entity entity) {
+		int playerX = Game.player.x + Game.player.maskX;
+		int playerY = Game.player.y + Game.player.maskY;
+		int playerW = Game.player.w - Game.player.maskW;
+		int playerH = Game.player.h - Game.player.maskH;
+		Rectangle player = new Rectangle(playerX, playerY, playerW, playerH);
+		
+		int entityX = entity.x + entity.maskX;
+		int entityY = entity.y + entity.maskY;
+		int entityW = entity.w - entity.maskW;
+		int entityH = entity.h - entity.maskH;
+		Rectangle target = new Rectangle(entityX, entityY, entityW, entityH);
+		
+		return player.intersects(target);
+	}
+	
+	/**
+	 * Setting the collision mask
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 */
+	public void setMask(int x, int y, int w, int h) {
+		this.maskX = x;
+		this.maskY = y;
+		this.maskW = w;
+		this.maskH = h;
+	}
+	
 	/**
 	 * Predicts if the entity will collide with a tile
 	 * 

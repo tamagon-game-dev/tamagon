@@ -34,6 +34,11 @@ public class Egg extends Entity {
 	 * Animation index
 	 */
 	private int animationIndex = 0;
+	
+	/**
+	 * Egg position
+	 */
+	private int position = 0;
 
 	/**
 	 * Egg
@@ -45,6 +50,44 @@ public class Egg extends Entity {
 	 */
 	public Egg(int x, int y, int w, int h) {
 		super(x, y, w, h);
+	}
+
+	@Override
+	public void update() {
+
+		// Checks if player collided
+		if (this.checkCollisionWithPlayer(this) && state.equals("standing")) {
+			state = "follow";
+			Player.eggs++;
+			
+			//Score distribution
+			if (id == 1) {
+				Player.score+=100;
+			}else if (id == 2) {
+				Player.score+=200;
+			}
+			
+			//Position distribution
+			if (Player.eggs == 1) {
+				position = 1;
+			} else if (Player.eggs == 2) {
+				position = 2;
+			}
+		}
+
+		// Following the player
+		if (state.equals("follow")) {
+			
+			if (position == 1) {
+				int x = Player.direction == 1 ? Game.player.x - w : Game.player.x + w;
+				this.x = x;
+				this.y = Game.player.y;
+			}else if (position == 2) {
+				int x = Player.direction == 1 ? Game.player.x - (w*2) : Game.player.x + (w*2);
+				this.x = x;
+				this.y = Game.player.y;
+			}
+		}
 	}
 
 	@Override

@@ -118,7 +118,9 @@ public class Level {
 						// THE PLAYER
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Player player = new Player(x * dimension, y * dimension, dimension, dimension);
+						player.setMask(10, 5, 16, 27);
 						Game.entities.add(player);
+						Game.player = player;
 					} else {
 						// Transparent tile (avoids crazy blur effect)
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
@@ -163,18 +165,22 @@ public class Level {
 						// THE PLAYER
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Player player = new Player(x * dimension, y * dimension, dimension, dimension);
+						player.setMask(10, 5, 16, 27);
 						Game.entities.add(player);
+						Game.player = player;
 					} else if (currentPixel == 0xFFF8D800) {
 						//EGG number one
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Egg egg1 = new Egg(x * dimension, y * dimension, dimension, dimension);
 						egg1.id = 1;
+						egg1.setMask(9, 8, 14, 16);
 						Game.entities.add(egg1);	
 					}  else if (currentPixel == 0xFFF8D801) {
 						//EGG number one
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Egg egg2 = new Egg(x * dimension, y * dimension, dimension, dimension);
 						egg2.id = 2;
+						egg2.setMask(9, 8, 14, 16);
 						Game.entities.add(egg2);	
 					} else if (currentPixel == 0xFF785830) {
 						// Cavern floor
