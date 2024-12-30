@@ -39,6 +39,11 @@ public class Egg extends Entity {
 	 * Egg position
 	 */
 	private int position = 0;
+	
+	/**
+	 * Egg speed
+	 */
+	private int speed = 2;
 
 	/**
 	 * Egg
@@ -73,19 +78,32 @@ public class Egg extends Entity {
 			} else if (Player.eggs == 2) {
 				position = 2;
 			}
+			
+			//Sound
+			if (Game.sfx) Game.sounds.egg.play();
 		}
 
 		// Following the player
 		if (state.equals("follow")) {
+			//Offset
+			int offset = w;
+			if(position == 2) {
+				offset = w*2;
+			}
 			
-			if (position == 1) {
-				int x = Player.direction == 1 ? Game.player.x - w : Game.player.x + w;
-				this.x = x;
-				this.y = Game.player.y;
-			}else if (position == 2) {
-				int x = Player.direction == 1 ? Game.player.x - (w*2) : Game.player.x + (w*2);
-				this.x = x;
-				this.y = Game.player.y;
+			
+			//Horizontal movement
+			if(x > Game.player.x + offset) {
+				x-=speed;
+			}else if (x < Game.player.x - offset) {
+				x+=speed;
+			}
+			
+			//Vertical movement
+			if(y > Game.player.y) {
+				y-=speed;
+			}else if (y < Game.player.y) {
+				y+=speed;
 			}
 		}
 	}

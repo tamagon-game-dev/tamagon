@@ -17,7 +17,7 @@ public class Sound {
 	/**
 	 * Effects
 	 */
-	public AudioClip cursor, jump, fire, hit, walk;
+	public AudioClip cursor, jump, fire, hit, walk, egg;
 	
 	/**
 	 * Loads game Sounds
@@ -33,6 +33,7 @@ public class Sound {
 		fire = load("fire.wav");
 		hit = load("hit.wav");
 		walk = load("walk.wav");
+		egg = load("egg.wav");
 		
 	}
 	
