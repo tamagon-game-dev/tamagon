@@ -46,7 +46,7 @@ public class Egg extends Entity {
 	private int speed = 2;
 
 	/**
-	 * Egg
+	 * Egg is life, egg is power
 	 * 
 	 * @param x
 	 * @param y

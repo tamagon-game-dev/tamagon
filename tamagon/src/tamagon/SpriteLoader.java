@@ -25,6 +25,11 @@ public class SpriteLoader {
 	static BufferedImage[] egg1, egg2, egg3, egg4, egg5;
 	
 	/**
+	 * Gems animation
+	 */
+	static BufferedImage[] sapphire, ruby, emerald, diamond;
+	
+	/**
 	 * Loads all entities sprite once
 	 */
 	public SpriteLoader() {
@@ -86,6 +91,23 @@ public class SpriteLoader {
 		egg5[3] = entitySheet.getSprite(32*5, 32, 32, 32);
 		
 		
+		
+		//GEMS
+		sapphire = new BufferedImage[2];
+		sapphire[0] = entitySheet.getSprite(192, 32, 32, 32);
+		sapphire[1] = entitySheet.getSprite(192+32, 32, 32, 32);
+		
+		ruby = new BufferedImage[2];
+		ruby[0] = entitySheet.getSprite(256, 32, 32, 32);
+		ruby[1] = entitySheet.getSprite(256+32, 32, 32, 32);
+		
+		emerald = new BufferedImage[2];
+		emerald[0] = entitySheet.getSprite(0, 64, 32, 32);
+		emerald[1] = entitySheet.getSprite(32, 64, 32, 32);
+		
+		diamond = new BufferedImage[2];
+		diamond[0] = entitySheet.getSprite(64, 64, 32, 32);
+		diamond[1] = entitySheet.getSprite(64+32, 64, 32, 32);
 		
 	}
 }

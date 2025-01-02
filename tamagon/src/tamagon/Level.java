@@ -182,6 +182,18 @@ public class Level {
 						egg2.id = 2;
 						egg2.setMask(9, 8, 14, 16);
 						Game.entities.add(egg2);	
+					} else if (currentPixel == 0xFF00FCD8) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Gem diamond = new Gem(x * dimension, y * dimension, dimension, dimension);
+						diamond.type = Gem.DIAMOND;
+						diamond.setMask(8, 6, 18, 17);
+						Game.entities.add(diamond);
+					} else if (currentPixel == 0xFF0000F8) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
+						sapphire.type = Gem.SAPPHIRE;
+						sapphire.setMask(11, 6, 9, 14);
+						Game.entities.add(sapphire);
 					} else if (currentPixel == 0xFF785830) {
 						// Cavern floor
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.cavernFloor);
