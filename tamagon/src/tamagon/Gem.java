@@ -54,12 +54,16 @@ public class Gem extends Entity{
 			//Gem type
 			if (type == SAPPHIRE){
 				Player.score+=10;
+				if (Game.sfx) Game.sounds.sapphire.play();
 			} else if (type == RUBY) {
 				Player.score+=20;
+				if (Game.sfx) Game.sounds.ruby.play();
 			} else if (type == EMERALD) {
 				Player.score+=30;
+				if (Game.sfx) Game.sounds.emerald.play();
 			} else if (type == DIAMOND) {
 				Player.score+=40;
+				if (Game.sfx) Game.sounds.diamond.play();
 			}
 			
 			Game.entities.remove(this);
