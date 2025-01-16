@@ -119,4 +119,19 @@ public class Entity {
 				|| Level.tiles[x3 + (y3 * Level.levelW)] instanceof Collider
 				|| Level.tiles[x4 + (y4 * Level.levelW)] instanceof Collider);
 	}
+	
+	/**
+	 * Returns the distance that the current entity is from the player
+	 * 
+	 * @param e - Entity
+	 * @return distance in pixels (int)
+	 */
+	protected int distanceFromPlayer(Entity e) {
+		int entityX = e.x;
+		int entityY = e.y;
+		int playerX = Game.player.x;
+		int playerY = Game.player.y;
+		
+		return (int)Math.sqrt((entityX - playerX) * (entityX - playerX) + (entityY - playerY) * (entityY - playerY));
+	}
 }

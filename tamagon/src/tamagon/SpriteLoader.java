@@ -30,6 +30,11 @@ public class SpriteLoader {
 	static BufferedImage[] sapphire, ruby, emerald, diamond;
 	
 	/**
+	 * Enemy: Knight
+	 */
+	static BufferedImage[] knightWalk, knightDetect, knightAttack, knightDoubt, knightDeath;
+	
+	/**
 	 * Loads all entities sprite once
 	 */
 	public SpriteLoader() {
@@ -57,7 +62,6 @@ public class SpriteLoader {
 		fireballCollide = new BufferedImage[2];
 		fireballCollide[0] = playerSheet.getSprite(0, 160, 32, 32);
 		fireballCollide[1] = playerSheet.getSprite(32, 160, 32, 32);
-		
 		
 		//EGGS
 		egg1 = new BufferedImage[4];
@@ -90,8 +94,6 @@ public class SpriteLoader {
 		egg5[2] = entitySheet.getSprite(32*3, 32, 32, 32);
 		egg5[3] = entitySheet.getSprite(32*5, 32, 32, 32);
 		
-		
-		
 		//GEMS
 		sapphire = new BufferedImage[2];
 		sapphire[0] = entitySheet.getSprite(192, 32, 32, 32);
@@ -109,5 +111,33 @@ public class SpriteLoader {
 		diamond[0] = entitySheet.getSprite(64, 64, 32, 32);
 		diamond[1] = entitySheet.getSprite(64+32, 64, 32, 32);
 		
+		//--------------------ENEMIES----------------------//
+		//KNIGHT
+		knightWalk = new BufferedImage[2];
+		knightWalk[0] = entitySheet.getSprite(0, 96, 32, 48);
+		knightWalk[1] = entitySheet.getSprite(32, 96, 32, 48);
+		
+		knightDetect = new BufferedImage[2];
+		knightDetect[0] = entitySheet.getSprite(32*2, 96, 32, 48);
+		knightDetect[1] = entitySheet.getSprite(32*3, 96, 32, 48);
+		
+		knightAttack = new BufferedImage[2];
+		knightAttack[0] = entitySheet.getSprite(128, 96, 42, 48);
+		knightAttack[1] = entitySheet.getSprite(128+42, 96, 42, 48);
+		
+		knightDoubt = new BufferedImage[2];
+		knightDoubt[0] = entitySheet.getSprite(212, 96, 32, 48);
+		knightDoubt[1] = entitySheet.getSprite(212+32, 96, 32, 48);
+		
+		knightDeath = new BufferedImage[9];
+		knightDeath[0] = entitySheet.getSprite(0, 144, 32, 48);
+		knightDeath[1] = entitySheet.getSprite(32, 144, 32, 48);
+		knightDeath[2] = entitySheet.getSprite(32*2, 144, 32, 48);
+		knightDeath[3] = entitySheet.getSprite(32*3, 144, 32, 48);
+		knightDeath[4] = entitySheet.getSprite(32*4, 144, 32, 48);
+		knightDeath[5] = entitySheet.getSprite(32*5, 144, 32, 48);
+		knightDeath[6] = entitySheet.getSprite(32*6, 144, 32, 48);
+		knightDeath[7] = entitySheet.getSprite(32*7, 144, 32, 48);
+		knightDeath[8] = entitySheet.getSprite(32*7, 144, 32, 48);
 	}
 }

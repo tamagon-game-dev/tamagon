@@ -16,24 +16,9 @@ public class Egg extends Entity {
 	private String state = "standing";
 
 	/**
-	 * Animation frames
+	 * Animation variables
 	 */
-	private int animationFrames = 0;
-
-	/**
-	 * Max animation frame
-	 */
-	private int maxFrame = 10;
-
-	/**
-	 * Max animation index
-	 */
-	private int maxIndex = 3;
-
-	/**
-	 * Animation index
-	 */
-	private int animationIndex = 0;
+	private int animationFrames = 0, maxFrame = 30, maxIndex = 1, animationIndex = 0;
 	
 	/**
 	 * Egg position

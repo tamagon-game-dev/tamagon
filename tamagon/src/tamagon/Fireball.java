@@ -15,34 +15,14 @@ public class Fireball extends Entity {
 	private Image[] sprites = SpriteLoader.fireball;
 
 	/**
-	 * Animation index
+	 * Sprite flip offsets
 	 */
-	private int animationIndex = 0;
-
-	/**
-	 * horizontal offset
-	 */
-	private int offsetX = 0;
-
-	/**
-	 * width offset
-	 */
-	private int offsetW = 0;
+	private int offsetX = 0, offsetW = 0;
 	
 	/**
-	 * Animation frames
+	 * Animation variables
 	 */
-	private int animationFrames = 0;
-	
-	/**
-	 * Max animation frame
-	 */
-	private int maxFrame = 4;
-	
-	/**
-	 * Max animation index
-	 */
-	private int maxIndex = 1;
+	private int animationFrames = 0, maxFrame = 30, maxIndex = 1, animationIndex = 0;
 	
 	/**
 	 * Plays before exploding

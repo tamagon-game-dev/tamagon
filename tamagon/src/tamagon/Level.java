@@ -194,6 +194,10 @@ public class Level {
 						sapphire.type = Gem.SAPPHIRE;
 						sapphire.setMask(11, 6, 9, 14);
 						Game.entities.add(sapphire);
+					} else if (currentPixel == 0xFF484848) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Knight knight = new Knight(x * dimension, (y * dimension) - 16, dimension, 48);
+						Game.entities.add(knight);
 					} else if (currentPixel == 0xFF785830) {
 						// Cavern floor
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.cavernFloor);

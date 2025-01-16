@@ -16,24 +16,9 @@ public class Gem extends Entity{
 	public int type = 0;
 	
 	/**
-	 * Animation frames
+	 * Animation variables
 	 */
-	private int animationFrames = 0;
-
-	/**
-	 * Max animation frame
-	 */
-	private int maxFrame = 5;
-
-	/**
-	 * Max animation index
-	 */
-	private int maxIndex = 1;
-
-	/**
-	 * Animation index
-	 */
-	private int animationIndex = 0;
+	private int animationFrames = 0, maxFrame = 5, maxIndex = 1, animationIndex = 0;
 
 	/**
 	 * Money
