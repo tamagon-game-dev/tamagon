@@ -5,10 +5,12 @@ import java.awt.image.BufferedImage;
 
 public class Knight extends Entity {
 
+
 	/**
 	 * Animation variables & movement variables
 	 */
-	private int animationFrames = 0, maxFrame = 10, maxIndex = 1, animationIndex = 0, direction = 1, speed = 1;
+	private int animationFrames = 0, maxFrame = 10, maxIndex = 1, animationIndex = 0, direction = 1, speed = 1,
+			stoppedFrames = 0, maxStoppedFrames = 30;
 
 	/**
 	 * Sprite flip offsets
@@ -36,29 +38,65 @@ public class Knight extends Entity {
 	public void update() {
 		
 		//Do something only if player is near
-		state = (this.distanceFromPlayer(this) <= 320) ? "walking" : "inactive";
+		int distance = this.distanceFromPlayer(this);
+		if (distance >= 256) {
+			state = "inactive";
+		} else {
+			
+			//Reset state to walking if its inactive
+			if (state.equals("inactive")) {
+				state = "walking";
+			}
+			
+		}
+		
 		
 		
 		if(state.equals("walking")) {
+			//Walking effect
+			if (Game.sfx) { 
+				
+				//Dynamic sound
+				if (distance >= 224-32) {
+					Game.sounds.knightWalk.setVolume(0.1f);
+				}else if (distance >= 224-32*2) {
+					Game.sounds.knightWalk.setVolume(0.2f);
+				}else if (distance >= 224-32*3) {
+					Game.sounds.knightWalk.setVolume(0.4f);
+				}else if (distance >= 224-32*4) {
+					Game.sounds.knightWalk.setVolume(0.6f);
+				}else if (distance >= 224-32*5) {
+					Game.sounds.knightWalk.setVolume(0.8f);
+				}else if (distance >= 224-32*6) {
+					Game.sounds.knightWalk.setVolume(1f);
+				}
+				
+				Game.sounds.knightWalk.play();
+			}
+			
 			//Walking state
+			//Slowing down
+			speed = 1;
+			maxFrame = 10;
+			
+			//Walking sprite width reset
+			w = 32;
 			
 			if(direction == 1) {
-				// Invert sprite
-				offsetW = w * Game.scale;
-				offsetX = 0;
 				
 				//Walk towards right if right is free and there is ground to walk on
 				if (!this.checkTileCollision(x+speed, y) && this.checkTileCollision(x+w, y+h)) {
-					x+=speed;
+					x+=speed;	
 				}else {
 					//Walk left instead
 					direction = -1;
 				}
 				
+				//Check if player is on sight
+				if(Game.player.y <= y+h && Game.player.y >= y && Game.player.x > x) {
+					state = "spotted";
+				}
 			}else {
-				// Invert sprite
-				offsetW = -(w * Game.scale);
-				offsetX = (w * Game.scale);
 				
 				//Walk towards left if left is free and there is ground to walk on
 				if (!this.checkTileCollision(x-speed, y) && this.checkTileCollision(x-w, y+h)) {
@@ -67,6 +105,79 @@ public class Knight extends Entity {
 					//Walk right instead
 					direction = 1;
 				}
+				
+				//Check if player is on sight
+				if(Game.player.y <= y+h && Game.player.y >= y && Game.player.x < x) {
+					state = "spotted";
+				}
+			}
+		} else if (state.equals("spotted")) {
+			//Spotted sprite width reset
+			w = 32;
+			
+			//Found the player! Begin surprised state
+			stoppedFrames++;
+			if (stoppedFrames > maxStoppedFrames) {
+				stoppedFrames = 0;
+				state = "attack";
+			}
+		} else if (state.equals("attack")) {
+			//Running effect
+			if (Game.sfx) { 
+				
+				//Dynamic sound
+				if (distance >= 224-32) {
+					Game.sounds.knightRun.setVolume(0.1f);
+				}else if (distance >= 224-32*2) {
+					Game.sounds.knightRun.setVolume(0.2f);
+				}else if (distance >= 224-32*3) {
+					Game.sounds.knightRun.setVolume(0.4f);
+				}else if (distance >= 224-32*4) {
+					Game.sounds.knightRun.setVolume(0.6f);
+				}else if (distance >= 224-32*5) {
+					Game.sounds.knightRun.setVolume(0.8f);
+				}else if (distance >= 224-32*6) {
+					Game.sounds.knightRun.setVolume(1f);
+				}
+				
+				Game.sounds.knightRun.play();
+			}
+			
+			//Speeding up
+			speed = 4;
+			maxFrame = 5;
+			
+			//Attacking sprite is wider
+			w = 42;
+			
+			if (Game.player.x > x + speed  && !this.checkTileCollision(x+speed, y) && this.checkTileCollision(x+w, y+h)) {
+				//Chase the player towards right
+				x+=speed;
+				
+				//Updating direction
+				direction = 1;
+			} else if (Game.player.x < x  - speed && !this.checkTileCollision(x-speed, y) && this.checkTileCollision(x-w, y+h)) {
+				//Chase the player towards left
+				x-=speed;
+				
+				//Updating direction
+				direction = -1;
+			}
+			
+			//Losing player from view
+			if (Game.player.y < y-h || Game.player.y > y+h) {
+				state = "doubt";
+			}
+			
+		}else if (state.equals("doubt")) {
+			//Doubt sprite width reset
+			w = 32;
+			
+			//Lost the player! Begin doubt state
+			stoppedFrames++;
+			if (stoppedFrames > maxStoppedFrames) {
+				stoppedFrames = 0;
+				state = "walking";
 			}
 		}
 
@@ -88,13 +199,28 @@ public class Knight extends Entity {
 					animationIndex = 0;
 				}
 			}
-			
-			//Possible animations
+
+			// Possible animations
 			if (state.equals("walking")) {
 				sprites = SpriteLoader.knightWalk;
+			} else if (state.equals("spotted")) {
+				sprites = SpriteLoader.knightDetect;
+			} else if (state.equals("attack")) {
+				sprites = SpriteLoader.knightAttack;
+			} else if (state.equals("doubt")) {
+				sprites = SpriteLoader.knightDoubt;
+			}
+			
+			//Updating direction
+			if (direction == 1) {
+				offsetW = w * Game.scale;
+				offsetX = 0;
+			}else {
+				offsetW = -(w * Game.scale);
+				offsetX = (w * Game.scale);
 			}
 
-			//Rendering the enemy
+			// Rendering the enemy
 			g.drawImage(sprites[animationIndex], (x * Game.scale - Camera.x) + offsetX, y * Game.scale - Camera.y,
 					offsetW, h * Game.scale, null);
 		}

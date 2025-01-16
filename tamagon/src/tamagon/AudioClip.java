@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -81,5 +82,25 @@ public class AudioClip {
 
 		// reset audio position to start
 		audioClip.setFramePosition(0);
+	}
+	
+	/**
+	 * Get clip volume
+	 * @return float ranging from 0 to 1
+	 */
+	public float getVolume() {
+	    FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
+	    return (float) Math.pow(10f, gainControl.getValue() / 20f);
+	}
+
+	/**
+	 * Modify clip volume
+	 * @param volume - float (minimum = 0, max = 1)
+	 */
+	public void setVolume(float volume) {
+	    if (volume < 0f || volume > 1f)
+	        return;
+	    FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
+	    gainControl.setValue(20f * (float) Math.log10(volume));
 	}
 }
