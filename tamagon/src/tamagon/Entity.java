@@ -15,6 +15,11 @@ public class Entity {
 	 * Entity collision mask
 	 */
 	public int maskX, maskY, maskW, maskH;
+	
+	/**
+	 * Entity is alive
+	 */
+	public boolean alive = true;
 
 	/**
 	 * An entity is a game object
@@ -133,5 +138,27 @@ public class Entity {
 		int playerY = Game.player.y;
 		
 		return (int)Math.sqrt((entityX - playerX) * (entityX - playerX) + (entityY - playerY) * (entityY - playerY));
+	}
+	
+	/**
+	 * Checks if one entity is colliding with other
+	 * @param entity1 - Entity
+	 * @param entity2 - Entity
+	 * @return - true if collision occurs
+	 */
+	protected boolean checkCollision(Entity entity1, Entity entity2) {
+		int entity1X = entity1.x + entity1.maskX;
+		int entity1Y = entity1.y + entity1.maskY;
+		int entity1W = entity1.w - entity1.maskW;
+		int entity1H =entity1.h - entity1.maskH;
+		Rectangle e1 = new Rectangle(entity1X, entity1Y, entity1W, entity1H);
+		
+		int entity2X = entity2.x + entity2.maskX;
+		int entity2Y = entity2.y + entity2.maskY;
+		int entity2W = entity2.w - entity2.maskW;
+		int entity2H = entity2.h - entity2.maskH;
+		Rectangle e2 = new Rectangle(entity2X, entity2Y, entity2W, entity2H);
+		
+		return e1.intersects(e2);
 	}
 }

@@ -89,9 +89,14 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	static Level level;
 
 	/**
-	 * Game entities
+	 * Game entities (player, gems, eggs, chest, doors, etc)
 	 */
 	 static ArrayList<Entity> entities;
+	 
+	 /**
+	  * Game enemies
+	  */
+	 static ArrayList<Entity> enemies;
 	
 	/**
 	 * Level number
@@ -185,6 +190,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		// Initializes the game's entities
 		entities = new ArrayList<Entity>();
+		enemies = new ArrayList<Entity>();	
 
 		// Initializes the game's level
 		level = new Level("level1");
@@ -275,6 +281,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			for (int i = 0; i < entities.size(); i++) {
 				entities.get(i).update();
 			}
+			
+			for (int i = 0; i < enemies.size(); i++) {
+				Entity current = enemies.get(i);
+				if (current.alive) current.update();
+			}
 
 		}
 
@@ -309,6 +320,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			// Renders the entities
 			for (int i = 0; i < entities.size(); i++) {
 				entities.get(i).render(graphics);
+			}
+			
+			for (int i = 0; i < enemies.size(); i++) {
+				enemies.get(i).render(graphics);
 			}
 			
 		}

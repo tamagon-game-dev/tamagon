@@ -22,7 +22,7 @@ public class Fireball extends Entity {
 	/**
 	 * Animation variables
 	 */
-	private int animationFrames = 0, maxFrame = 30, maxIndex = 1, animationIndex = 0;
+	private int animationFrames = 0, maxFrame = 1, maxIndex = 1, animationIndex = 0;
 	
 	/**
 	 * Plays before exploding
@@ -49,6 +49,7 @@ public class Fireball extends Entity {
 
 	@Override
 	public void update() {
+		checkCollisionEnemy();
 		
 		//Delete entity after 1.2 seconds
 		timer++;
@@ -103,5 +104,17 @@ public class Fireball extends Entity {
 
 		g.drawImage(sprites[animationIndex], (x * Game.scale - Camera.x) + offsetX, y * Game.scale - Camera.y, offsetW,
 				h * Game.scale, null);
+	}
+	
+	/**
+	 * Checks collision with enemies
+	 */
+	private void checkCollisionEnemy() {
+		for (int i = 0; i < Game.enemies.size(); i++) {
+			Entity current = Game.enemies.get(i);
+			if (this.checkCollision(this, current)) {
+				current.alive = false;
+			}
+		}
 	}
 }

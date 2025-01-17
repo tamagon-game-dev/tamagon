@@ -197,7 +197,7 @@ public class Level {
 					} else if (currentPixel == 0xFF484848) {
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Knight knight = new Knight(x * dimension, (y * dimension) - 16, dimension, 48);
-						Game.entities.add(knight);
+						Game.enemies.add(knight);
 					} else if (currentPixel == 0xFF785830) {
 						// Cavern floor
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.cavernFloor);
