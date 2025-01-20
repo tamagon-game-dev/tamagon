@@ -489,14 +489,14 @@ public class UserInterface {
 		g.setColor(new Color(248, 144, 32));
 		g.setFont(new Font("Calibri", Font.BOLD, 16 * Game.scale));
 		g.drawString(Player.life + "/3", 21 * Game.scale, 14 * Game.scale);
-		g.drawString(Player.eggs + "/5", (Game.width / 2) - 8 * Game.scale, 14 * Game.scale);
+		g.drawString(Player.eggs.size() + "/5", (Game.width / 2) - 8 * Game.scale, 14 * Game.scale);
 		g.drawString("SCORE: " + Player.score, Game.width - 100 * Game.scale, 14 * Game.scale);
 
 		// Draw text
 		g.setColor(new Color(248, 216, 32));
 		g.setFont(new Font("Calibri", Font.PLAIN, 16 * Game.scale));
 		g.drawString(Player.life + "/3", 21 * Game.scale, 14 * Game.scale);
-		g.drawString(Player.eggs + "/5", (Game.width / 2) - 8 * Game.scale, 14 * Game.scale);
+		g.drawString(Player.eggs.size() + "/5", (Game.width / 2) - 8 * Game.scale, 14 * Game.scale);
 		g.drawString("SCORE: " + Player.score, Game.width - 100 * Game.scale, 14 * Game.scale);
 
 	}

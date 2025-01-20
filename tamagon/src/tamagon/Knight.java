@@ -51,6 +51,24 @@ public class Knight extends Entity {
 			if (state.equals("inactive")) {
 				state = "walking";
 			}
+			
+			//Damage check
+			if (this.checkCollisionWithPlayer(this) && !Player.hurt) {
+				Player.hurt = true;
+				if (Player.eggs.size() > 0) {
+					
+					//Kills the egg
+					Player.eggs.get(0).alive = false;
+					
+					//Reduces egg position if there's any
+					if (Player.eggs.size() > 1) Player.eggs.get(1).position--;
+					
+					//Hurt sound effect
+					if(Game.sfx) Game.sounds.hurt.play();
+				}
+				
+				
+			}
 
 		}
 

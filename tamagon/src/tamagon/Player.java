@@ -2,24 +2,25 @@ package tamagon;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Player extends Entity {
 
 	/**
 	 * Player controls
 	 */
-	static boolean right = false, left = false, jump = false, attack = false, canAttack = true;
+	static boolean right = false, left = false, jump = false, attack = false, canAttack = true, hurt = false;
 
 	/**
 	 * Player's manipulable statistics;
 	 */
-	static int speed = 2, gravity = 4, direction = 1, life = 3, eggs = 0, score = 0;
+	static int speed = 2, gravity = 4, direction = 1, life = 3, score = 0;
 
 	/**
 	 * Jump duration and animation control
 	 */
 	private int jumpHeight = 64, jumpFrames = 0, animationFrames = 0, maxFrame = 8, animationIndex = 0, maxIndex = 1,
-			offsetW = w * Game.scale, offsetX = 0;
+			offsetW = w * Game.scale, offsetX = 0, hurtFrames = 0, hurtMaxFrames = 120;
 
 	/**
 	 * Detects motion
@@ -31,6 +32,10 @@ public class Player extends Entity {
 	 */
 	private BufferedImage[] sprites = SpriteLoader.playerWalk;
 	
+	/**
+	 * Store eggs
+	 */
+	static ArrayList<Egg> eggs;
 
 	/**
 	 * Player
@@ -42,6 +47,9 @@ public class Player extends Entity {
 	 */
 	public Player(int x, int y, int w, int h) {
 		super(x, y, w, h);
+		
+		//Initialize egg list
+		eggs = new ArrayList<>();
 	}
 
 	@Override
@@ -65,36 +73,48 @@ public class Player extends Entity {
 			}
 		}
 
+		// Hurt frames
+		if (hurt) {
+			hurtFrames++;
+			if (hurtFrames >= hurtMaxFrames) {
+				hurtFrames = 0;
+				hurt = false;
+			}
+		}
+
 		// Draw the sprite
-		g.drawImage(sprites[animationIndex], (x * Game.scale - Camera.x) + offsetX, y * Game.scale - Camera.y, offsetW,
-				h * Game.scale, null);
+		//Check if hurt frames is even so it triggers flickering
+		if (hurtFrames % 2 == 0) {
+			g.drawImage(sprites[animationIndex], (x * Game.scale - Camera.x) + offsetX, y * Game.scale - Camera.y,
+					offsetW, h * Game.scale, null);
+		}
 	}
 
 	/**
 	 * Controls the player's inputs
 	 */
 	private void movement() {
-		
+
 		// Check if player is grounded
 		if (checkTileCollision(x, y + gravity)) {
-			
-			//Moving sound
+
+			// Moving sound
 			if (isMoving)
-				if (Game.sfx) Game.sounds.walk.play();
+				if (Game.sfx)
+					Game.sounds.walk.play();
 		}
-		
 
 		// If player is airborne and its not jumping, then proceed to fall (gravity)
 		if (!checkTileCollision(x, y + gravity) && !jump) {
-			
-			//Background animation
-			Level.bgY-=2*Game.scale;
-			Level.bgY1-=0.1f*Game.scale;
-			Level.bgY2-=0.2f*Game.scale;
-			Level.bgY3-=0.3f*Game.scale;
-			Level.bgY4-=0.5f*Game.scale;
-			
-			//Movement
+
+			// Background animation
+			Level.bgY -= 2 * Game.scale;
+			Level.bgY1 -= 0.1f * Game.scale;
+			Level.bgY2 -= 0.2f * Game.scale;
+			Level.bgY3 -= 0.3f * Game.scale;
+			Level.bgY4 -= 0.5f * Game.scale;
+
+			// Movement
 			y += gravity;
 		}
 
@@ -118,7 +138,7 @@ public class Player extends Entity {
 			offsetW = w * Game.scale;
 			offsetX = 0;
 		} else if (left && !checkTileCollision(x - speed, y)) {
-			
+
 			// Moves left while path is clear of colliders
 			x -= speed;
 			direction = -1;
@@ -138,26 +158,27 @@ public class Player extends Entity {
 			offsetX = (w * Game.scale);
 		} else {
 			isMoving = false;
-			if(!canAttack) sprites = SpriteLoader.playerWalkATK;
+			if (!canAttack)
+				sprites = SpriteLoader.playerWalkATK;
 		}
 
 		// Jump control
 		if (jump) {
-			
+
 			// Animation
 			sprites = (canAttack) ? SpriteLoader.playerJump : SpriteLoader.playerJumpATK;
 
 			// Activates jumping state if there is no ceiling
 			if (!checkTileCollision(x, y - gravity)) {
-				
-				//Background animation
-				Level.bgY+=2*Game.scale;
-				Level.bgY1+=0.1f*Game.scale;
-				Level.bgY2+=0.2f*Game.scale;
-				Level.bgY3+=0.3f*Game.scale;
-				Level.bgY4+=0.5f*Game.scale;
-				
-				//Movement
+
+				// Background animation
+				Level.bgY += 2 * Game.scale;
+				Level.bgY1 += 0.1f * Game.scale;
+				Level.bgY2 += 0.2f * Game.scale;
+				Level.bgY3 += 0.3f * Game.scale;
+				Level.bgY4 += 0.5f * Game.scale;
+
+				// Movement
 				y -= gravity;
 				jumpFrames += gravity;
 				if (jumpFrames >= jumpHeight) {
@@ -174,7 +195,8 @@ public class Player extends Entity {
 
 		// Player attacks
 		if (attack && canAttack) {
-			if (Game.sfx) Game.sounds.fire.play();
+			if (Game.sfx)
+				Game.sounds.fire.play();
 			canAttack = false;
 			Fireball fb = new Fireball(x, y, w, h);
 			fb.direction = direction;
@@ -187,11 +209,11 @@ public class Player extends Entity {
 	 * Updates player's camera
 	 */
 	private void updateCamera() {
-		int cameraX = (x*Game.scale) - (Game.width/2 - (Level.dimension * Game.scale) / 2);
-        int cameraY = (y*Game.scale) - (Game.height/2 - (Level.dimension * Game.scale)/ 2);
+		int cameraX = (x * Game.scale) - (Game.width / 2 - (Level.dimension * Game.scale) / 2);
+		int cameraY = (y * Game.scale) - (Game.height / 2 - (Level.dimension * Game.scale) / 2);
 
-        Camera.x = Camera.clampCamera(cameraX, 0, Level.levelW * (Level.dimension * Game.scale) - Game.width);
-        Camera.y = Camera.clampCamera(cameraY, 0, Level.levelH * (Level.dimension * Game.scale) - Game.height);
+		Camera.x = Camera.clampCamera(cameraX, 0, Level.levelW * (Level.dimension * Game.scale) - Game.width);
+		Camera.y = Camera.clampCamera(cameraY, 0, Level.levelH * (Level.dimension * Game.scale) - Game.height);
 	}
 
 }

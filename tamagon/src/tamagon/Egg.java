@@ -18,12 +18,12 @@ public class Egg extends Entity {
 	/**
 	 * Animation variables
 	 */
-	private int animationFrames = 0, maxFrame = 30, maxIndex = 1, animationIndex = 0;
+	private int animationFrames = 0, maxFrame = 5, maxIndex = 3, animationIndex = 0;
 	
 	/**
 	 * Egg position
 	 */
-	private int position = 0;
+	public int position = 0;
 	
 	/**
 	 * Egg speed
@@ -44,24 +44,30 @@ public class Egg extends Entity {
 
 	@Override
 	public void update() {
+		
+		//Break the egg
+		if(!alive) state = "broken";
 
 		// Checks if player collided
 		if (this.checkCollisionWithPlayer(this) && state.equals("standing")) {
+			//Position distribution
+			if (Player.eggs.size() == 0) {
+				position = 1;
+			} else if (Player.eggs.size() == 1) {
+				position = 2;
+			}
+			
+			//Follows the player
 			state = "follow";
-			Player.eggs++;
+			
+			//Add to the egg list
+			Player.eggs.add(this);
 			
 			//Score distribution
 			if (id == 1) {
 				Player.score+=100;
 			}else if (id == 2) {
 				Player.score+=200;
-			}
-			
-			//Position distribution
-			if (Player.eggs == 1) {
-				position = 1;
-			} else if (Player.eggs == 2) {
-				position = 2;
 			}
 			
 			//Sound
@@ -104,6 +110,10 @@ public class Egg extends Entity {
 			animationIndex++;
 			if (animationIndex > maxIndex) {
 				animationIndex = 0;
+				if(!alive) {
+					Game.entities.remove(this);
+					Player.eggs.remove(this);
+				}
 			}
 		}
 
@@ -119,6 +129,9 @@ public class Egg extends Entity {
 		} else if (id == 5) {
 			sprites = SpriteLoader.egg5;
 		}
+		
+		//Broken sprite
+		if (!alive) animationIndex = 4;
 
 		// Draw the sprite
 		g.drawImage(sprites[animationIndex], (x * Game.scale - Camera.x), y * Game.scale - Camera.y, w * Game.scale,
