@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.FileWriter;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable, KeyListener, MouseListener {
@@ -239,6 +240,14 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		// Sets the window's name
 		window.setTitle(game.title);
+		
+		// Sets the window's icon
+		try {
+			window.setIconImage(ImageIO.read(game.getClass().getResource("/icon.png")));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		// Prevents screen resizing
 		window.setResizable(false);
