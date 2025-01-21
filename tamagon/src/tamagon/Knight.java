@@ -54,9 +54,11 @@ public class Knight extends Entity {
 			
 			//Damage check
 			if (this.checkCollisionWithPlayer(this) && !Player.hurt) {
+				
+				//Triggers hurt status
 				Player.hurt = true;
+				
 				if (Player.eggs.size() > 0) {
-					
 					//Kills the egg
 					Player.eggs.get(0).alive = false;
 					
@@ -65,6 +67,16 @@ public class Knight extends Entity {
 					
 					//Hurt sound effect
 					if(Game.sfx) Game.sounds.hurt.play();
+				}else {
+					Game.player.alive = false;
+					Player.life--;
+					
+					// Stops any music if there's one
+					if (Game.music && Game.currentSong != null)
+						Game.currentSong.stop();
+					
+					//Whomp whomp
+					if(Game.music) Game.sounds.dead.play();
 				}
 				
 				

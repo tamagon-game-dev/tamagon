@@ -10,6 +10,11 @@ public class Player extends Entity {
 	 * Player controls
 	 */
 	static boolean right = false, left = false, jump = false, attack = false, canAttack = true, hurt = false;
+	
+	/**
+	 * Death animation
+	 */
+	private boolean goUp = true, goDown = false;
 
 	/**
 	 * Player's manipulable statistics;
@@ -20,7 +25,7 @@ public class Player extends Entity {
 	 * Jump duration and animation control
 	 */
 	private int jumpHeight = 64, jumpFrames = 0, animationFrames = 0, maxFrame = 8, animationIndex = 0, maxIndex = 1,
-			offsetW = w * Game.scale, offsetX = 0, hurtFrames = 0, hurtMaxFrames = 120;
+			offsetW = w * Game.scale, offsetX = 0, hurtFrames = 0, hurtMaxFrames = 120, deadFrames = 0, maxDeadFrames = 20;
 
 	/**
 	 * Detects motion
@@ -31,7 +36,7 @@ public class Player extends Entity {
 	 * Animations
 	 */
 	private BufferedImage[] sprites = SpriteLoader.playerWalk;
-	
+
 	/**
 	 * Store eggs
 	 */
@@ -47,21 +52,55 @@ public class Player extends Entity {
 	 */
 	public Player(int x, int y, int w, int h) {
 		super(x, y, w, h);
-		
-		//Initialize egg list
+
+		// Initialize egg list
 		eggs = new ArrayList<>();
 	}
 
 	@Override
 	public void update() {
-		movement();
-		updateCamera();
+		if (alive) {
+			movement();
+			updateCamera();
+		}else {
+			deathAnimation();
+		}
+	}
+	
+	/**
+	 * Player death animation
+	 */
+	private void deathAnimation() {
+		if(goUp) y-=Game.scale;
+		if(goDown) y+=Game.scale;
+		
+		deadFrames++;
+		if(deadFrames > maxDeadFrames) {
+			deadFrames = 0;
+			
+			if (goDown) {
+				goUp = true;
+				goDown = false;
+				hurt = false;
+				alive = true;
+				Game.gameState = "restart";
+			}
+			
+			if (goUp) {
+				maxDeadFrames = 80;
+				goUp = false;
+				goDown = true;
+			}
+			
+			
+		}
+		
 	}
 
 	@Override
 	public void render(Graphics g) {
 		// Animation control
-		if (jump || isMoving)
+		if (jump || isMoving || !alive)
 			animationFrames++;
 
 		// Animation frames
@@ -74,16 +113,21 @@ public class Player extends Entity {
 		}
 
 		// Hurt frames
-		if (hurt) {
+		if (hurt && alive) {
 			hurtFrames++;
 			if (hurtFrames >= hurtMaxFrames) {
 				hurtFrames = 0;
 				hurt = false;
 			}
 		}
+		
+		//Death animation
+		if(!alive) {
+			sprites = SpriteLoader.playerDead;
+		}
 
 		// Draw the sprite
-		//Check if hurt frames is even so it triggers flickering
+		// Check if hurt frames is even so it triggers flickering
 		if (hurtFrames % 2 == 0) {
 			g.drawImage(sprites[animationIndex], (x * Game.scale - Camera.x) + offsetX, y * Game.scale - Camera.y,
 					offsetW, h * Game.scale, null);

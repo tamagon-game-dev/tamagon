@@ -352,6 +352,19 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		// Makes the current buffer visible
 		bufferStrategy.show();
 	}
+	
+	/**
+	 * Restarts the level
+	 */
+	static void restartLevel() {
+		entities.clear();
+		enemies.clear();
+		
+		int playerLife = Player.life;
+		level = new Level("level" + levelNumber);
+		Player.life = playerLife;
+		Player.score = 0;
+	}
 
 	/**
 	 * Runnable class method
@@ -451,7 +464,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 				Player.jump = true;
 
 				// jump sound
-				if (sfx) {
+				if (sfx && player.alive) {
 					sounds.jump.play();
 				}
 

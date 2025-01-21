@@ -34,7 +34,7 @@ public class Gem extends Entity{
 	
 	@Override
 	public void update() {
-		if (this.checkCollisionWithPlayer(this)){
+		if (Game.player.alive && this.checkCollisionWithPlayer(this)){
 			
 			//Gem type
 			if (type == SAPPHIRE){

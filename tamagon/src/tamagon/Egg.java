@@ -49,7 +49,7 @@ public class Egg extends Entity {
 		if(!alive) state = "broken";
 
 		// Checks if player collided
-		if (this.checkCollisionWithPlayer(this) && state.equals("standing")) {
+		if (Game.player.alive && this.checkCollisionWithPlayer(this) && state.equals("standing")) {
 			//Position distribution
 			if (Player.eggs.size() == 0) {
 				position = 1;

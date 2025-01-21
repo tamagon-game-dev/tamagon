@@ -17,7 +17,7 @@ public class SpriteLoader {
 	/**
 	 *  player's animated sprite
 	 */
-	static BufferedImage[] playerWalk, playerJump, playerWalkATK, playerJumpATK, fireball, fireballCollide;
+	static BufferedImage[] playerWalk, playerJump, playerWalkATK, playerJumpATK, fireball, fireballCollide, playerDead;
 	
 	/**
 	 * Eggs animation
@@ -62,6 +62,11 @@ public class SpriteLoader {
 		fireballCollide = new BufferedImage[2];
 		fireballCollide[0] = playerSheet.getSprite(0, 160, 32, 32);
 		fireballCollide[1] = playerSheet.getSprite(32, 160, 32, 32);
+		
+		playerDead = new BufferedImage[2];
+		playerDead[0] = playerSheet.getSprite(0, 192, 32, 32);
+		playerDead[1] = playerSheet.getSprite(32, 192, 32, 32);
+		
 		
 		//EGGS
 		egg1 = new BufferedImage[5];

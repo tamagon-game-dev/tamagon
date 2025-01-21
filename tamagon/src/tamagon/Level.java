@@ -330,7 +330,7 @@ public class Level {
 			g.drawImage(hill, (int) bg1ScrollX + Game.width, (int) bgY1, 320 * Game.scale, 56 * Game.scale, null);
 
 			// BG movement
-			if (Player.isMoving && Camera.x != 0 && Camera.x != levelW * dimension * Game.scale - Game.width) {
+			if (Player.isMoving && Camera.x != 0 && Camera.x != levelW * dimension * Game.scale - Game.width && Game.player.alive) {
 				if (Player.right) {
 					bg1ScrollX -= Player.speed * Game.scale;
 					bg2ScrollX -= 1.5f * Game.scale;

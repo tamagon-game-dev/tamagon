@@ -17,7 +17,7 @@ public class Sound {
 	/**
 	 * Effects
 	 */
-	public AudioClip cursor, jump, fire, hit, walk, egg, sapphire, ruby, emerald, diamond, knightWalk, knightRun, hurt;
+	public AudioClip cursor, jump, fire, hit, walk, egg, sapphire, ruby, emerald, diamond, knightWalk, knightRun, hurt, dead;
 	
 	/**
 	 * Loads game Sounds
@@ -41,6 +41,7 @@ public class Sound {
 		knightWalk = load("knightWalk.wav");
 		knightRun = load("knightRun.wav");
 		hurt = load("hurt.wav");
+		dead = load("dead.wav");
 	}
 	
 	/**

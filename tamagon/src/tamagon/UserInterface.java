@@ -96,8 +96,63 @@ public class UserInterface {
 			renderPlaying(g);
 		} else if (Game.gameState.equals("paused")) {
 			renderPaused(g);
+		} else if (Game.gameState.equals("restart")) {
+			renderRestart(g);
 		}
 
+	}
+
+	/**
+	 * Game restart transition
+	 * 
+	 * @param g
+	 */
+	private void renderRestart(Graphics g) {
+		// If the screen is faded out, then fade it in!
+		if (fadedOut) {
+			// Color black for fade in
+			g.setColor(new Color(0, 0, 0, fadeIn));
+
+			// Black background for fade in
+			g.fillRect(0, 0, Game.width, Game.height);
+
+			// Makes the black background fade in
+			if (fadeIn < fadeOut) {
+				fadeIn += 3;
+			}
+
+			// Completes the fade in animation
+			if (fadeIn == fadeOut) {
+				fadedOut = false;
+				fadedIn = true;
+				fadeOut = 255;
+				fadeIn = 0;
+				Game.restartLevel();
+			}
+		}
+		
+		// If the screen is faded in, then fade it out!
+		if (fadedIn) {
+			
+			// Color black for fade out
+			g.setColor(new Color(0, 0, 0, fadeOut));
+
+			// Black background for fade out
+			g.fillRect(0, 0, Game.width, Game.height);
+
+			// Makes the black background fade out
+			if (fadeOut > fadeIn) {
+				fadeOut -= 3;
+			}
+
+			// Completes the fade out animation
+			if (fadeOut == fadeIn) {
+				fadedOut = true;
+				fadedIn = false;
+				fadeOut = 255;
+				Game.gameState = "playing";
+			}
+		}
 	}
 
 	/**
@@ -106,24 +161,25 @@ public class UserInterface {
 	 * @param g
 	 */
 	private void renderWorldIntro(Graphics g) {
-		
-		//Splash image
-		if(Game.levelNumber >= 1 && Game.levelNumber <= 4) {
-			//Castleland
-			
-			//WORLD 1
+
+		// Splash image
+		if (Game.levelNumber >= 1 && Game.levelNumber <= 4) {
+			// Castleland
+
+			// WORLD 1
 			g.setColor(new Color(248, 216, 32));
 			g.setFont(new Font("Calibri", Font.PLAIN, 16 * Game.scale));
-			g.drawString("WORLD 1", Game.width/2 - 30 * Game.scale, 80 * Game.scale);
-			
-			//WORLD NAME
+			g.drawString("WORLD 1", Game.width / 2 - 30 * Game.scale, 80 * Game.scale);
+
+			// WORLD NAME
 			g.setColor(new Color(248, 144, 32));
 			g.setFont(new Font("Calibri", Font.BOLD, 16 * Game.scale));
-			g.drawString("CASTLELAND", Game.width/2 - 40 * Game.scale, 160 * Game.scale);
-			
-			g.drawImage(castleland, (Game.width/2) - (107*Game.scale)/2,(Game.height/2) - (62*Game.scale)/2, 107*Game.scale, 62*Game.scale, null);
+			g.drawString("CASTLELAND", Game.width / 2 - 40 * Game.scale, 160 * Game.scale);
+
+			g.drawImage(castleland, (Game.width / 2) - (107 * Game.scale) / 2,
+					(Game.height / 2) - (62 * Game.scale) / 2, 107 * Game.scale, 62 * Game.scale, null);
 		}
-		
+
 		// If the screen is faded in, then fade it out!
 		if (fadedIn) {
 			// Color black for fade out
@@ -364,16 +420,17 @@ public class UserInterface {
 				fadeIn = 0;
 				interval = maxInterval;
 				Game.gameState = "intro";
-				
-				//Stops the title screen song
-				if (Game.currentSong != null) Game.currentSong.stop();
-				
-				//Starts the introduction song
+
+				// Stops the title screen song
+				if (Game.currentSong != null)
+					Game.currentSong.stop();
+
+				// Starts the introduction song
 				if (Game.music) {
 					Game.currentSong = Game.sounds.intro;
 					Game.currentSong.play();
 				}
-				
+
 			}
 
 		}
