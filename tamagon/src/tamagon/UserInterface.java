@@ -130,10 +130,15 @@ public class UserInterface {
 				Game.restartLevel();
 			}
 		}
-		
+
 		// If the screen is faded in, then fade it out!
 		if (fadedIn) {
-			
+
+			// LOADING
+			g.setColor(new Color(248, 216, 32));
+			g.setFont(new Font("Calibri", Font.PLAIN, 12 * Game.scale));
+			g.drawString("LOADING", Game.width/2 - 30*Game.scale, Game.height/2);
+
 			// Color black for fade out
 			g.setColor(new Color(0, 0, 0, fadeOut));
 
