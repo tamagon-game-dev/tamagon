@@ -76,6 +76,13 @@ public class Level {
 			bgY3 = bgY3value;
 			bgY4 = bgY4value;
 			level1();
+			
+			//Play music after level is loaded
+			if (Game.music) { 
+				Game.currentSong = Game.sounds.level1;
+				Game.currentSong.setVolume(0.5f);
+				Game.currentSong.loop();
+			};
 		} else {
 			return;
 		}
