@@ -15,7 +15,8 @@ public class UserInterface {
 	/**
 	 * UI graphic elements
 	 */
-	private BufferedImage hitoriLogo, titleBg, tamagonLogo, wkey, skey, space, backspace, lifeIcon, eggIcon, castleland;
+	private BufferedImage hitoriLogo, titleBg, tamagonLogo, wkey, skey, space, backspace, lifeIcon, eggIcon, castleland,
+			gameOver;
 
 	/**
 	 * Fade in/out animation frames
@@ -75,6 +76,7 @@ public class UserInterface {
 		lifeIcon = UISpritesheet.getSprite(122, 32, 21, 17);
 		eggIcon = UISpritesheet.getSprite(143, 32, 17, 17);
 		castleland = UISpritesheet.getSprite(187, 0, 107, 62);
+		gameOver = UISpritesheet.getSprite(213, 300, 107, 62);
 	}
 
 	/**
@@ -98,8 +100,40 @@ public class UserInterface {
 			renderPaused(g);
 		} else if (Game.gameState.equals("restart")) {
 			renderRestart(g);
+		} else if (Game.gameState.equals("gameover")) {
+			renderGameOver(g);
 		}
 
+	}
+
+	/**
+	 * Render game over
+	 * 
+	 * @param g
+	 */
+	private void renderGameOver(Graphics g) {
+		// Game Over label
+		g.setColor(new Color(248, 144, 32));
+		g.setFont(new Font("Calibri", Font.BOLD, 16 * Game.scale));
+		g.drawString("GAME OVER", (Game.width / 2) - (42 * Game.scale), (Game.height / 2) - 40 * Game.scale);
+
+		g.setColor(new Color(248, 216, 32));
+		g.setFont(new Font("Calibri", Font.PLAIN, 16 * Game.scale));
+		g.drawString("GAME OVER", (Game.width / 2) - (42 * Game.scale), (Game.height / 2) - 40 * Game.scale);
+
+		// Broken eggs
+		g.drawImage(gameOver, (Game.width / 2) - (107 * Game.scale) / 2, (Game.height / 2) - (31 * Game.scale) / 2,
+				107 * Game.scale, 62 * Game.scale, null);
+
+		// Interval between fade in and fade out
+		if (startInterval) {
+			interval--;
+			if (interval == 0) {
+				startInterval = false;
+				interval = maxInterval;
+				Game.gameState = "title";
+			}
+		}
 	}
 
 	/**
@@ -127,7 +161,16 @@ public class UserInterface {
 				fadedIn = true;
 				fadeOut = 255;
 				fadeIn = 0;
-				Game.restartLevel();
+				if (Player.life > 0) {
+					Game.restartLevel();
+				} else {
+					Game.gameState = "gameover";
+					startInterval = true;
+					Game.entities.clear();
+					Game.enemies.clear();
+					Player.life = 3;
+					Player.score = 0;
+				}
 			}
 		}
 
@@ -137,7 +180,7 @@ public class UserInterface {
 			// LOADING
 			g.setColor(new Color(248, 216, 32));
 			g.setFont(new Font("Calibri", Font.PLAIN, 12 * Game.scale));
-			g.drawString("LOADING", Game.width/2 - 30*Game.scale, Game.height/2);
+			g.drawString("LOADING", Game.width / 2 - 30 * Game.scale, Game.height / 2);
 
 			// Color black for fade out
 			g.setColor(new Color(0, 0, 0, fadeOut));
