@@ -242,7 +242,7 @@ public class Level {
 						animatedTiles[x + (y * levelW)] = new AnimatedTile(x * dimension, y * dimension, sprites);
 					}else if (currentPixel == 0xFF000068) {
 						//Underwater
-						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.underwater);
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.underwater);
 					} else {
 						// Transparent tile (avoids crazy blur effect)
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);

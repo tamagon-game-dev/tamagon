@@ -10,7 +10,7 @@ public class Player extends Entity {
 	 * Player controls
 	 */
 	static boolean right = false, left = false, jump = false, attack = false, canAttack = true, hurt = false;
-	
+
 	/**
 	 * Death animation
 	 */
@@ -25,7 +25,8 @@ public class Player extends Entity {
 	 * Jump duration and animation control
 	 */
 	private int jumpHeight = 64, jumpFrames = 0, animationFrames = 0, maxFrame = 8, animationIndex = 0, maxIndex = 1,
-			offsetW = w * Game.scale, offsetX = 0, hurtFrames = 0, hurtMaxFrames = 120, deadFrames = 0, maxDeadFrames = 20;
+			offsetW = w * Game.scale, offsetX = 0, hurtFrames = 0, hurtMaxFrames = 120, deadFrames = 0,
+			maxDeadFrames = 20;
 
 	/**
 	 * Detects motion
@@ -60,24 +61,45 @@ public class Player extends Entity {
 	@Override
 	public void update() {
 		if (alive) {
+			fallDeathCheck();
 			movement();
 			updateCamera();
-		}else {
+		} else {
 			deathAnimation();
 		}
 	}
-	
+
+	/**
+	 * Checks if player has fallen
+	 */
+	private void fallDeathCheck() {
+		if (y >= Level.levelH * Level.dimension - Level.dimension * 2) {
+			alive = false;
+			Player.life--;
+
+			// Stops any music if there's one
+			if (Game.music && Game.currentSong != null)
+				Game.currentSong.stop();
+
+			// Whomp whomp
+			if (Game.music)
+				Game.sounds.dead.play();
+		}
+	}
+
 	/**
 	 * Player death animation
 	 */
 	private void deathAnimation() {
-		if(goUp) y-=Game.scale;
-		if(goDown) y+=Game.scale;
-		
+		if (goUp)
+			y -= Game.scale;
+		if (goDown)
+			y += Game.scale;
+
 		deadFrames++;
-		if(deadFrames > maxDeadFrames) {
+		if (deadFrames > maxDeadFrames) {
 			deadFrames = 0;
-			
+
 			if (goDown) {
 				goUp = true;
 				goDown = false;
@@ -85,16 +107,15 @@ public class Player extends Entity {
 				alive = true;
 				Game.gameState = "restart";
 			}
-			
+
 			if (goUp) {
 				maxDeadFrames = 80;
 				goUp = false;
 				goDown = true;
 			}
-			
-			
+
 		}
-		
+
 	}
 
 	@Override
@@ -120,9 +141,9 @@ public class Player extends Entity {
 				hurt = false;
 			}
 		}
-		
-		//Death animation
-		if(!alive) {
+
+		// Death animation
+		if (!alive) {
 			sprites = SpriteLoader.playerDead;
 		}
 
