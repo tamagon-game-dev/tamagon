@@ -29,10 +29,16 @@ public class Level {
 	 * Decorations
 	 */
 	static BufferedImage cave = decorations.getSprite(0, 0, 416, 288), tree = decorations.getSprite(0, 288, 96, 128);
+
 	/**
 	 * Game tiles
 	 */
 	static Tile[] tiles;
+
+	/**
+	 * Animated tiles
+	 */
+	static AnimatedTile[] animatedTiles;
 
 	/**
 	 * Level width and height
@@ -76,13 +82,14 @@ public class Level {
 			bgY3 = bgY3value;
 			bgY4 = bgY4value;
 			level1();
-			
-			//Play music after level is loaded
-			if (Game.music) { 
+
+			// Play music after level is loaded
+			if (Game.music) {
 				Game.currentSong = Game.sounds.level1;
 				Game.currentSong.setVolume(0.5f);
 				Game.currentSong.loop();
-			};
+			}
+			;
 		} else {
 			return;
 		}
@@ -104,6 +111,7 @@ public class Level {
 
 			// Initialize tiles array
 			tiles = new Tile[levelW * levelH];
+			animatedTiles = new AnimatedTile[levelW * levelH];
 
 			// Creating an array that will carry image's pixels
 			int[] pixels = new int[levelW * levelH];
@@ -154,6 +162,7 @@ public class Level {
 
 			// Initialize tiles array
 			tiles = new Tile[levelW * levelH];
+			animatedTiles = new AnimatedTile[levelW * levelH];
 
 			// Creating an array that will carry image's pixels
 			int[] pixels = new int[levelW * levelH];
@@ -176,19 +185,19 @@ public class Level {
 						Game.entities.add(player);
 						Game.player = player;
 					} else if (currentPixel == 0xFFF8D800) {
-						//EGG number one
+						// EGG number one
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Egg egg1 = new Egg(x * dimension, y * dimension, dimension, dimension);
 						egg1.id = 1;
 						egg1.setMask(9, 8, 14, 16);
-						Game.entities.add(egg1);	
-					}  else if (currentPixel == 0xFFF8D801) {
-						//EGG number one
+						Game.entities.add(egg1);
+					} else if (currentPixel == 0xFFF8D801) {
+						// EGG number one
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Egg egg2 = new Egg(x * dimension, y * dimension, dimension, dimension);
 						egg2.id = 2;
 						egg2.setMask(9, 8, 14, 16);
-						Game.entities.add(egg2);	
+						Game.entities.add(egg2);
 					} else if (currentPixel == 0xFF00FCD8) {
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Gem diamond = new Gem(x * dimension, y * dimension, dimension, dimension);
@@ -201,6 +210,12 @@ public class Level {
 						sapphire.type = Gem.SAPPHIRE;
 						sapphire.setMask(11, 6, 9, 14);
 						Game.entities.add(sapphire);
+					} else if (currentPixel == 0xFFF80000) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Gem ruby = new Gem(x * dimension, y * dimension, dimension, dimension);
+						ruby.type = Gem.RUBY;
+						ruby.setMask(11, 6, 9, 14);
+						Game.entities.add(ruby);
 					} else if (currentPixel == 0xFF484848) {
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Knight knight = new Knight(x * dimension, (y * dimension) - 16, dimension, 48);
@@ -217,6 +232,17 @@ public class Level {
 					} else if (currentPixel == 0xFFFFFFF1) {
 						// Invisible wall
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.transparent);
+					} else if (currentPixel == 0xFF0000B0) {
+						//Water
+						BufferedImage[] sprites = new BufferedImage[3];
+						sprites[0] = AnimatedTile.water1;
+						sprites[1] = AnimatedTile.water2;
+						sprites[2] = AnimatedTile.water3;
+						
+						animatedTiles[x + (y * levelW)] = new AnimatedTile(x * dimension, y * dimension, sprites);
+					}else if (currentPixel == 0xFF000068) {
+						//Underwater
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.underwater);
 					} else {
 						// Transparent tile (avoids crazy blur effect)
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
@@ -251,13 +277,17 @@ public class Level {
 
 				// Grab current tile
 				Tile tile = tiles[x + (y * levelW)];
+				AnimatedTile animatedTile = animatedTiles[x + (y * levelW)];
 
-				// Don't render if there's no tile
-				if (tile == null)
-					continue;
-
-				// Render the tile
-				tile.render(g);
+				// Render tile
+				if (tile != null) {
+					tile.render(g);
+				}
+				
+				// Render animated tile
+				if (animatedTile != null) {
+					animatedTile.render(g);
+				}
 			}
 		}
 	}
@@ -337,7 +367,8 @@ public class Level {
 			g.drawImage(hill, (int) bg1ScrollX + Game.width, (int) bgY1, 320 * Game.scale, 56 * Game.scale, null);
 
 			// BG movement
-			if (Player.isMoving && Camera.x != 0 && Camera.x != levelW * dimension * Game.scale - Game.width && Game.player.alive) {
+			if (Player.isMoving && Camera.x != 0 && Camera.x != levelW * dimension * Game.scale - Game.width
+					&& Game.player.alive) {
 				if (Player.right) {
 					bg1ScrollX -= Player.speed * Game.scale;
 					bg2ScrollX -= 1.5f * Game.scale;
@@ -356,10 +387,10 @@ public class Level {
 			// Cave
 			g.drawImage(cave, 0 - Camera.x, (dimension * 4) * Game.scale - Camera.y, 416 * Game.scale, 288 * Game.scale,
 					null);
-			
+
 			// Tree
-			g.drawImage(tree, (dimension * 18)*Game.scale - Camera.x, (dimension * 7) * Game.scale - Camera.y, 96 * Game.scale, 128 * Game.scale,
-					null);
+			g.drawImage(tree, (dimension * 18) * Game.scale - Camera.x, (dimension * 7) * Game.scale - Camera.y,
+					96 * Game.scale, 128 * Game.scale, null);
 
 		}
 
