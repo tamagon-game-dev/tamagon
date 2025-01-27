@@ -18,7 +18,17 @@ public class Tile {
 			cavernFloor = Level.levelSprites.getSprite(Level.dimension * 2, 0, Level.dimension, Level.dimension),
 			grass = Level.levelSprites.getSprite(Level.dimension * 3, 0, Level.dimension, Level.dimension),
 			ground = Level.levelSprites.getSprite(Level.dimension * 4, 0, Level.dimension, Level.dimension),
-			underwater = Level.levelSprites.getSprite(Level.dimension * 8, 0, Level.dimension, Level.dimension);
+			underwater = Level.levelSprites.getSprite(Level.dimension * 8, 0, Level.dimension, Level.dimension),
+			goldfloor_ul = Level.levelSprites.getSprite(288, 0, Level.dimension, Level.dimension),
+			goldfloor_um = Level.levelSprites.getSprite(256, 32, Level.dimension, Level.dimension),
+			goldfloor_ur = Level.levelSprites.getSprite(288, 96, Level.dimension, Level.dimension),
+			goldfloor_mr = Level.levelSprites.getSprite(288, 96+32, Level.dimension, Level.dimension),
+			goldfloor_lr = Level.levelSprites.getSprite(288, 96+64, Level.dimension, Level.dimension),
+			goldfloor_lm = Level.levelSprites.getSprite(256, 96, Level.dimension, Level.dimension),
+			goldfloor_ll = Level.levelSprites.getSprite(288, 64, Level.dimension, Level.dimension),
+			goldfloor_ml = Level.levelSprites.getSprite(288, 32, Level.dimension, Level.dimension),
+			stoneblock = Level.levelSprites.getSprite(256, 64, Level.dimension, Level.dimension),
+			stoneblock2 = Level.levelSprites.getSprite(288, 192, Level.dimension, Level.dimension);
 
 	/**
 	 * Tile coordinates
