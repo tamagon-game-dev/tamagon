@@ -28,7 +28,12 @@ public class Tile {
 			goldfloor_ll = Level.levelSprites.getSprite(288, 64, Level.dimension, Level.dimension),
 			goldfloor_ml = Level.levelSprites.getSprite(288, 32, Level.dimension, Level.dimension),
 			stoneblock = Level.levelSprites.getSprite(256, 64, Level.dimension, Level.dimension),
-			stoneblock2 = Level.levelSprites.getSprite(288, 192, Level.dimension, Level.dimension);
+			stoneblock2 = Level.levelSprites.getSprite(288, 192, Level.dimension, Level.dimension),
+			castleTowerL = Level.levelSprites.getSprite(0, 32, Level.dimension, Level.dimension),
+			castleTowerM = Level.levelSprites.getSprite(32, 32, Level.dimension, Level.dimension),
+			castleTowerR = Level.levelSprites.getSprite(64, 32, Level.dimension, Level.dimension),
+			castleTowerWindow = Level.levelSprites.getSprite(96, 32, Level.dimension, Level.dimension),
+			castleTiles = Level.levelSprites.getSprite(128, 32, Level.dimension, Level.dimension);
 
 	/**
 	 * Tile coordinates

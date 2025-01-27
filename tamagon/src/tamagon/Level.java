@@ -233,46 +233,58 @@ public class Level {
 						// Invisible wall
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.transparent);
 					} else if (currentPixel == 0xFF0000B0) {
-						//Water
+						// Water
 						BufferedImage[] sprites = new BufferedImage[3];
 						sprites[0] = AnimatedTile.water1;
 						sprites[1] = AnimatedTile.water2;
 						sprites[2] = AnimatedTile.water3;
-						
+
 						animatedTiles[x + (y * levelW)] = new AnimatedTile(x * dimension, y * dimension, sprites);
 					} else if (currentPixel == 0xFF000068) {
-						//Under water
+						// Under water
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.underwater);
 					} else if (currentPixel == 0xFFD8D800) {
-						//Gold floor upper left
+						// Gold floor upper left
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_ul);
 					} else if (currentPixel == 0xFFD8D801) {
-						//Gold floor upper middle
+						// Gold floor upper middle
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_um);
 					} else if (currentPixel == 0xFFD8D802) {
-						//Gold floor upper right
+						// Gold floor upper right
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_ur);
 					} else if (currentPixel == 0xFFD8D803) {
-						//Gold floor middle right
+						// Gold floor middle right
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_mr);
 					} else if (currentPixel == 0xFFD8D804) {
-						//Gold floor lower right
+						// Gold floor lower right
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_lr);
 					} else if (currentPixel == 0xFFD8D805) {
-						//Gold floor lower middle
+						// Gold floor lower middle
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_lm);
 					} else if (currentPixel == 0xFFD8D806) {
-						//Gold floor lower left
+						// Gold floor lower left
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_ll);
 					} else if (currentPixel == 0xFFD8D807) {
-						//Gold floor middle left
+						// Gold floor middle left
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_ml);
 					} else if (currentPixel == 0xFF787C78) {
-						//Stone block
+						// Stone block
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.stoneblock);
 					} else if (currentPixel == 0xFF788C88) {
-						//Stone block 2
+						// Stone block 2
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.stoneblock2);
+					} else if (currentPixel == 0xFF484849) {
+						// Castle Tower left
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerL);
+					} else if (currentPixel == 0xFF484850) {
+						// Castle Tower middle
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
+					} else if (currentPixel == 0xFF484851) {
+						// Castle Tower right
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerR);
+					} else if (currentPixel == 0xFF484852) {
+						// Castle Tower right
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerWindow);
 					} else {
 						// Transparent tile (avoids crazy blur effect)
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
@@ -313,7 +325,7 @@ public class Level {
 				if (tile != null) {
 					tile.render(g);
 				}
-				
+
 				// Render animated tile
 				if (animatedTile != null) {
 					animatedTile.render(g);
