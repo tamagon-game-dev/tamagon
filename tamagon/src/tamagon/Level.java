@@ -283,8 +283,29 @@ public class Level {
 						// Castle Tower right
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerR);
 					} else if (currentPixel == 0xFF484852) {
-						// Castle Tower right
+						// Castle Tower window
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerWindow);
+					} else if (currentPixel == 0xFF98A0A8) {
+						// Castle Tower Top Left
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerTL);
+					} else if (currentPixel == 0xFF98A0A9) {
+						// Castle Tower Top Middle
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerTM);
+					} else if (currentPixel == 0xFF98A0B0) {
+						// Castle Tower Top Right
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerTR);
+					} else if (currentPixel == 0xFF98A0B1) {
+						// Castle Block Left
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.castleBlockL);
+					} else if (currentPixel == 0xFF98A0B2) {
+						// Castle Block Middle
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.castleBlockM);
+					} else if (currentPixel == 0xFF98A0B3) {
+						// Castle Block Right
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.castleBlockR);
+					} else if (currentPixel == 0xFF98A0B4) {
+						// Castle Tower
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.castleTower);
 					} else {
 						// Transparent tile (avoids crazy blur effect)
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);

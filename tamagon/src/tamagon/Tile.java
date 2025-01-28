@@ -33,7 +33,13 @@ public class Tile {
 			castleTowerM = Level.levelSprites.getSprite(32, 32, Level.dimension, Level.dimension),
 			castleTowerR = Level.levelSprites.getSprite(64, 32, Level.dimension, Level.dimension),
 			castleTowerWindow = Level.levelSprites.getSprite(96, 32, Level.dimension, Level.dimension),
-			castleTiles = Level.levelSprites.getSprite(128, 32, Level.dimension, Level.dimension);
+			castleTowerTL = Level.levelSprites.getSprite(128, 32, Level.dimension, Level.dimension),
+			castleTowerTM = Level.levelSprites.getSprite(128+32, 32, Level.dimension, Level.dimension),
+			castleTowerTR = Level.levelSprites.getSprite(128+64, 32, Level.dimension, Level.dimension),
+			castleBlockL  = Level.levelSprites.getSprite(0, 64, Level.dimension, Level.dimension),
+			castleBlockM  = Level.levelSprites.getSprite(32, 64, Level.dimension, Level.dimension),
+			castleBlockR  = Level.levelSprites.getSprite(64, 64, Level.dimension, Level.dimension),
+			castleTower = Level.levelSprites.getSprite(224, 32, Level.dimension, Level.dimension);
 
 	/**
 	 * Tile coordinates
