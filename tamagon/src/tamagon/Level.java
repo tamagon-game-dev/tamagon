@@ -192,12 +192,33 @@ public class Level {
 						egg1.setMask(9, 8, 14, 16);
 						Game.entities.add(egg1);
 					} else if (currentPixel == 0xFFF8D801) {
-						// EGG number one
+						// EGG number two
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Egg egg2 = new Egg(x * dimension, y * dimension, dimension, dimension);
 						egg2.id = 2;
 						egg2.setMask(9, 8, 14, 16);
 						Game.entities.add(egg2);
+					} else if (currentPixel == 0xFFF8D802) {
+						// EGG number three
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Egg egg3 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg3.id = 3;
+						egg3.setMask(9, 8, 14, 16);
+						Game.entities.add(egg3);
+					} else if (currentPixel == 0xFFF8D803) {
+						// EGG number four
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Egg egg4 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg4.id = 4;
+						egg4.setMask(9, 8, 14, 16);
+						Game.entities.add(egg4);
+					} else if (currentPixel == 0xFFF8D804) {
+						// EGG number five
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Egg egg5 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg5.id = 5;
+						egg5.setMask(9, 8, 14, 16);
+						Game.entities.add(egg5);
 					} else if (currentPixel == 0xFF00FCD8) {
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Gem diamond = new Gem(x * dimension, y * dimension, dimension, dimension);
@@ -206,6 +227,13 @@ public class Level {
 						Game.entities.add(diamond);
 					} else if (currentPixel == 0xFF0000F8) {
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
+						sapphire.type = Gem.SAPPHIRE;
+						sapphire.setMask(11, 6, 9, 14);
+						Game.entities.add(sapphire);
+					} else if (currentPixel == 0xFF0000F9) {
+						//Sapphire tower middle
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
 						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
 						sapphire.type = Gem.SAPPHIRE;
 						sapphire.setMask(11, 6, 9, 14);
@@ -306,6 +334,33 @@ public class Level {
 					} else if (currentPixel == 0xFF98A0B4) {
 						// Castle Tower
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.castleTower);
+					} else if (currentPixel == 0xFF98A0B5) {
+						// Battlement Top
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.battlementTop);
+					}else if (currentPixel == 0xFF98A0B6) {
+						// Battlement Bottom
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.battlementBot);
+					} else if (currentPixel == 0xFF98A0B7) {
+						// Rampart Top
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartTop);
+					}else if (currentPixel == 0xFF98A0B8) {
+						// Rampart Bottom
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartBot);
+					} else if (currentPixel == 0xFF98A0B9) {
+						// Rampart Window Top Left
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartWindowTL);
+					} else if (currentPixel == 0xFF98A0C0) {
+						// Rampart Window Top Right
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartWindowTR);
+					} else if (currentPixel == 0xFF98A0C1) {
+						// Rampart Window Bottom Left
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartWindowBL);
+					} else if (currentPixel == 0xFF98A0C2) {
+						// Rampart Window Bottom Right
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartWindowBR);
+					} else if (currentPixel == 0xFF98A0C3) {
+						// Battlement
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.battlement);
 					} else {
 						// Transparent tile (avoids crazy blur effect)
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);

@@ -39,7 +39,16 @@ public class Tile {
 			castleBlockL  = Level.levelSprites.getSprite(0, 64, Level.dimension, Level.dimension),
 			castleBlockM  = Level.levelSprites.getSprite(32, 64, Level.dimension, Level.dimension),
 			castleBlockR  = Level.levelSprites.getSprite(64, 64, Level.dimension, Level.dimension),
-			castleTower = Level.levelSprites.getSprite(224, 32, Level.dimension, Level.dimension);
+			castleTower = Level.levelSprites.getSprite(224, 32, Level.dimension, Level.dimension),
+			battlementTop = Level.levelSprites.getSprite(96, 64, Level.dimension, Level.dimension),
+			battlementBot = Level.levelSprites.getSprite(96, 96, Level.dimension, Level.dimension),
+			rampartTop = Level.levelSprites.getSprite(96+32, 64, Level.dimension, Level.dimension),
+			rampartBot = Level.levelSprites.getSprite(96+32, 96, Level.dimension, Level.dimension),
+			rampartWindowTL = Level.levelSprites.getSprite(160, 64, Level.dimension, Level.dimension),
+			rampartWindowTR = Level.levelSprites.getSprite(160+32, 64, Level.dimension, Level.dimension),
+			rampartWindowBL = Level.levelSprites.getSprite(160, 96, Level.dimension, Level.dimension),
+			rampartWindowBR = Level.levelSprites.getSprite(160+32, 96, Level.dimension, Level.dimension),
+			battlement = Level.levelSprites.getSprite(224, 64, Level.dimension, Level.dimension);
 
 	/**
 	 * Tile coordinates

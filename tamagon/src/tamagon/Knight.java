@@ -63,7 +63,9 @@ public class Knight extends Entity {
 					Player.eggs.get(0).alive = false;
 					
 					//Reduces egg position if there's any
-					if (Player.eggs.size() > 1) Player.eggs.get(1).position--;
+					if (Player.eggs.size() > 1) {
+						Player.eggs.forEach(egg -> {egg.position--;});
+					}
 					
 					//Hurt sound effect
 					if(Game.sfx) Game.sounds.hurt.play();

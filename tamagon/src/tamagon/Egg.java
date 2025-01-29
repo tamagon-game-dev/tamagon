@@ -51,11 +51,7 @@ public class Egg extends Entity {
 		// Checks if player collided
 		if (Game.player.alive && this.checkCollisionWithPlayer(this) && state.equals("standing")) {
 			//Position distribution
-			if (Player.eggs.size() == 0) {
-				position = 1;
-			} else if (Player.eggs.size() == 1) {
-				position = 2;
-			}
+			position = Player.eggs.size() + 1;
 			
 			//Follows the player
 			state = "follow";
@@ -64,11 +60,7 @@ public class Egg extends Entity {
 			Player.eggs.add(this);
 			
 			//Score distribution
-			if (id == 1) {
-				Player.score+=100;
-			}else if (id == 2) {
-				Player.score+=200;
-			}
+			Player.score+=100*id;
 			
 			//Sound
 			if (Game.sfx) Game.sounds.egg.play();
@@ -77,10 +69,7 @@ public class Egg extends Entity {
 		// Following the player
 		if (state.equals("follow")) {
 			//Offset
-			int offset = w;
-			if(position == 2) {
-				offset = w*2;
-			}
+			int offset = w*position;
 			
 			
 			//Horizontal movement
