@@ -10,12 +10,12 @@ public class Entity {
 	 * Entity size & position
 	 */
 	public int x, y, w, h;
-	
+
 	/**
 	 * Entity collision mask
 	 */
 	public int maskX, maskY, maskW, maskH;
-	
+
 	/**
 	 * Entity is alive
 	 */
@@ -54,9 +54,9 @@ public class Entity {
 		g.fillRect(x * Game.scale - Camera.x, y * Game.scale - Camera.y, w * Game.scale, h * Game.scale);
 	}
 
-	
 	/**
 	 * Checks if player is getting collided with another entity
+	 * 
 	 * @return boolean
 	 */
 	protected boolean checkCollisionWithPlayer(Entity entity) {
@@ -65,18 +65,19 @@ public class Entity {
 		int playerW = Game.player.w - Game.player.maskW;
 		int playerH = Game.player.h - Game.player.maskH;
 		Rectangle player = new Rectangle(playerX, playerY, playerW, playerH);
-		
+
 		int entityX = entity.x + entity.maskX;
 		int entityY = entity.y + entity.maskY;
 		int entityW = entity.w - entity.maskW;
 		int entityH = entity.h - entity.maskH;
 		Rectangle target = new Rectangle(entityX, entityY, entityW, entityH);
-		
+
 		return player.intersects(target);
 	}
-	
+
 	/**
 	 * Setting the collision mask
+	 * 
 	 * @param x
 	 * @param y
 	 * @param w
@@ -88,7 +89,7 @@ public class Entity {
 		this.maskW = w;
 		this.maskH = h;
 	}
-	
+
 	/**
 	 * Predicts if the entity will collide with a tile
 	 * 
@@ -117,14 +118,14 @@ public class Entity {
 
 		int x4 = (nextX + Level.dimension - 1) / Level.dimension;
 		int y4 = (nextY + Level.dimension - 1) / Level.dimension;
-		
-		//Verdict
+
+		// Verdict
 		return (Level.tiles[x1 + (y1 * Level.levelW)] instanceof Collider
 				|| Level.tiles[x2 + (y2 * Level.levelW)] instanceof Collider
 				|| Level.tiles[x3 + (y3 * Level.levelW)] instanceof Collider
 				|| Level.tiles[x4 + (y4 * Level.levelW)] instanceof Collider);
 	}
-	
+
 	/**
 	 * Returns the distance that the current entity is from the player
 	 * 
@@ -136,12 +137,13 @@ public class Entity {
 		int entityY = e.y;
 		int playerX = Game.player.x;
 		int playerY = Game.player.y;
-		
-		return (int)Math.sqrt((entityX - playerX) * (entityX - playerX) + (entityY - playerY) * (entityY - playerY));
+
+		return (int) Math.sqrt((entityX - playerX) * (entityX - playerX) + (entityY - playerY) * (entityY - playerY));
 	}
-	
+
 	/**
 	 * Checks if one entity is colliding with other
+	 * 
 	 * @param entity1 - Entity
 	 * @param entity2 - Entity
 	 * @return - true if collision occurs
@@ -150,15 +152,54 @@ public class Entity {
 		int entity1X = entity1.x + entity1.maskX;
 		int entity1Y = entity1.y + entity1.maskY;
 		int entity1W = entity1.w - entity1.maskW;
-		int entity1H =entity1.h - entity1.maskH;
+		int entity1H = entity1.h - entity1.maskH;
 		Rectangle e1 = new Rectangle(entity1X, entity1Y, entity1W, entity1H);
-		
+
 		int entity2X = entity2.x + entity2.maskX;
 		int entity2Y = entity2.y + entity2.maskY;
 		int entity2W = entity2.w - entity2.maskW;
 		int entity2H = entity2.h - entity2.maskH;
 		Rectangle e2 = new Rectangle(entity2X, entity2Y, entity2W, entity2H);
-		
+
 		return e1.intersects(e2);
+	}
+
+	/**
+	 * Checks if player has been damaged
+	 */
+	protected void checkPlayerDamage() {
+		if (this.checkCollisionWithPlayer(this) && !Player.hurt) {
+
+			// Triggers hurt status
+			Player.hurt = true;
+
+			if (Player.eggs.size() > 0) {
+				// Kills the egg
+				Player.eggs.get(0).alive = false;
+
+				// Reduces egg position if there's any
+				if (Player.eggs.size() > 1) {
+					Player.eggs.forEach(egg -> {
+						egg.position--;
+					});
+				}
+
+				// Hurt sound effect
+				if (Game.sfx)
+					Game.sounds.hurt.play();
+			} else {
+				Game.player.alive = false;
+				Player.life--;
+
+				// Stops any music if there's one
+				if (Game.music && Game.currentSong != null)
+					Game.currentSong.stop();
+
+				// Whomp whomp
+				if (Game.music)
+					Game.sounds.dead.play();
+			}
+
+		}
 	}
 }

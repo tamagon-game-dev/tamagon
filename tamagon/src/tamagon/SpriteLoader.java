@@ -35,6 +35,16 @@ public class SpriteLoader {
 	static BufferedImage[] knightWalk, knightDetect, knightAttack, knightDoubt, knightDeath;
 	
 	/**
+	 * Enemy: Archer
+	 */
+	static BufferedImage[] archerShoot, archerDead, arrowBurn;
+	
+	/**
+	 * Archer's arrow
+	 */
+	static BufferedImage arrow;
+	
+	/**
 	 * Loads all entities sprite once
 	 */
 	public SpriteLoader() {
@@ -149,5 +159,26 @@ public class SpriteLoader {
 		knightDeath[6] = entitySheet.getSprite(32*6, 144, 32, 48);
 		knightDeath[7] = entitySheet.getSprite(32*7, 144, 32, 48);
 		knightDeath[8] = entitySheet.getSprite(32*7, 144, 32, 48);
+		
+		//Archer
+		archerShoot = new BufferedImage[3];
+		archerShoot[0] = entitySheet.getSprite(0, 192, 32, 48);
+		archerShoot[1] = entitySheet.getSprite(32, 192, 32, 48);
+		archerShoot[2] = entitySheet.getSprite(64, 192, 32, 48);
+		
+		archerDead = new BufferedImage[7];
+		archerDead[0] = entitySheet.getSprite(0, 240, 32, 48);
+		archerDead[1] = entitySheet.getSprite(32, 240, 32, 48);
+		archerDead[2] = entitySheet.getSprite(32*2, 240, 32, 48);
+		archerDead[3] = entitySheet.getSprite(32*3, 240, 32, 48);
+		archerDead[4] = entitySheet.getSprite(32*4, 240, 32, 48);
+		archerDead[5] = entitySheet.getSprite(32*5, 240, 32, 48);
+		archerDead[6] = entitySheet.getSprite(32*6, 240, 32, 48);
+		
+		arrow = entitySheet.getSprite(288, 64, 32, 32);
+		arrowBurn = new BufferedImage[3];
+		arrowBurn[0] = entitySheet.getSprite(288, 64+32, 32, 32);
+		arrowBurn[1] = entitySheet.getSprite(288, 64+64, 32, 32);
+		arrowBurn[2] = entitySheet.getSprite(288, 64+96, 32, 32);
 	}
 }
