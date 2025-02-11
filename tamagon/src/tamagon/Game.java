@@ -109,6 +109,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	 */
 	static Player player;
 	
+	/**
+	 * Checks if player is on a Secret Area
+	 */
+	static boolean secretArea = false;
+	
 
 	/**
 	 * Initializes game's objects
@@ -245,7 +250,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		try {
 			window.setIconImage(ImageIO.read(game.getClass().getResource("/icon.png")));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -334,6 +338,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			for (int i = 0; i < enemies.size(); i++) {
 				enemies.get(i).render(graphics);
 			}
+			
+			//Covers for hidden areas
+			if (!secretArea) level.render2(graphics);
 			
 		}
 

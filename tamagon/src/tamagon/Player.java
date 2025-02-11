@@ -159,6 +159,9 @@ public class Player extends Entity {
 	 * Controls the player's inputs
 	 */
 	private void movement() {
+		
+		//Check if it's on secret area 
+		Game.secretArea = (this.checkSecretArea(x, y)) ? true : false;
 
 		// Check if player is grounded
 		if (checkTileCollision(x, y + gravity)) {

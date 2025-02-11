@@ -33,7 +33,7 @@ public class Level {
 	/**
 	 * Game tiles
 	 */
-	static Tile[] tiles;
+	static Tile[] tiles, tiles2;
 
 	/**
 	 * Animated tiles
@@ -162,6 +162,7 @@ public class Level {
 
 			// Initialize tiles array
 			tiles = new Tile[levelW * levelH];
+			tiles2 = new Tile[levelW * levelH];
 			animatedTiles = new AnimatedTile[levelW * levelH];
 
 			// Creating an array that will carry image's pixels
@@ -201,6 +202,14 @@ public class Level {
 					} else if (currentPixel == 0xFFF8D802) {
 						// EGG number three
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Egg egg3 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg3.id = 3;
+						egg3.setMask(9, 8, 14, 16);
+						Game.entities.add(egg3);
+					} else if (currentPixel == 0xFFF8D812) {
+						// EGG number three LEVEL1 hidden area
+						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.stoneblock2);
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
 						Egg egg3 = new Egg(x * dimension, y * dimension, dimension, dimension);
 						egg3.id = 3;
 						egg3.setMask(9, 8, 14, 16);
@@ -302,10 +311,10 @@ public class Level {
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_ml);
 					} else if (currentPixel == 0xFF787C78) {
 						// Stone block
-						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.stoneblock);
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.stoneblock);
 					} else if (currentPixel == 0xFF788C88) {
 						// Stone block 2
-						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.stoneblock2);
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.stoneblock2);
 					} else if (currentPixel == 0xFF484849) {
 						// Castle Tower left
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerL);
@@ -366,6 +375,14 @@ public class Level {
 					} else if (currentPixel == 0xFF98A0C3) {
 						// Battlement
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.battlement);
+					} else if (currentPixel == 0xFFD8D813) {
+						// Secret area entrance
+						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.goldfloor_mr);
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
+					} else if (currentPixel == 0xFF788C98) {
+						// Secret area inside
+						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.stoneblock2);
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
 					} else {
 						// Transparent tile (avoids crazy blur effect)
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
@@ -410,6 +427,38 @@ public class Level {
 				// Render animated tile
 				if (animatedTile != null) {
 					animatedTile.render(g);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Renders the level's second layer
+	 * 
+	 * @param g - Graphic component
+	 */
+	public void render2(Graphics g) {
+		// Rendering optimization
+		int xStart = Camera.x / (dimension * Game.scale);
+		int yStart = Camera.y / (dimension * Game.scale);
+
+		int xEnd = (xStart + (Game.width / (dimension * Game.scale)));
+		int yEnd = yStart + (Game.height / (dimension * Game.scale));
+
+		// Iterating over level's tiles
+		for (int x = xStart; x <= xEnd; x++) {
+			for (int y = yStart; y <= yEnd; y++) {
+
+				// Preventing array out of bounds
+				if (x < 0 || y < 0 || x >= levelW || y >= levelH)
+					continue;
+
+				// Grab current tile
+				Tile tile = tiles2[x + (y * levelW)];
+
+				// Render tile
+				if (tile != null) {
+					tile.render(g);
 				}
 			}
 		}
