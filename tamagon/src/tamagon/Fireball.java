@@ -49,7 +49,6 @@ public class Fireball extends Entity {
 
 	@Override
 	public void update() {
-		checkCollisionEnemy();
 		
 		//Delete entity after 1.2 seconds
 		timer++;
@@ -58,14 +57,14 @@ public class Fireball extends Entity {
 			Game.entities.remove(this);
 		}
 		
-		if (direction == 1 && !checkTileCollision(x + 4, y)) {
+		if (direction == 1 && !checkTileCollision(x + 4, y) && !checkCollisionEnemy()) {
 			// Fly right
 			x += 4;
 
 			// Invert sprite
 			offsetW = w * Game.scale;
 			offsetX = 0;
-		} else if (direction == -1 && !checkTileCollision(x - 4, y)) {
+		} else if (direction == -1 && !checkTileCollision(x - 4, y) && !checkCollisionEnemy()) {
 			// Fly left
 			x -= 4;
 
@@ -109,12 +108,15 @@ public class Fireball extends Entity {
 	/**
 	 * Checks collision with enemies
 	 */
-	private void checkCollisionEnemy() {
+	private boolean checkCollisionEnemy() {
 		for (int i = 0; i < Game.enemies.size(); i++) {
 			Entity current = Game.enemies.get(i);
 			if (this.checkCollision(this, current)) {
 				current.alive = false;
+				return true;
 			}
 		}
+		
+		return false;
 	}
 }

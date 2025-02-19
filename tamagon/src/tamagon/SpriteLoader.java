@@ -40,9 +40,14 @@ public class SpriteLoader {
 	static BufferedImage[] archerShoot, archerDead, arrowBurn;
 	
 	/**
-	 * Archer's arrow
+	 * Projectiles
 	 */
-	static BufferedImage arrow;
+	static BufferedImage arrow, dagger;
+	
+	/**
+	 * Enemy: Paladin
+	 */
+	static BufferedImage[] paladinShield, paladinAttack, paladinDeath;
 	
 	/**
 	 * Loads all entities sprite once
@@ -180,5 +185,25 @@ public class SpriteLoader {
 		arrowBurn[0] = entitySheet.getSprite(288, 64+32, 32, 32);
 		arrowBurn[1] = entitySheet.getSprite(288, 64+64, 32, 32);
 		arrowBurn[2] = entitySheet.getSprite(288, 64+96, 32, 32);
+		
+		//PALADIN
+		paladinShield = new BufferedImage[2];
+		paladinShield[0] = entitySheet.getSprite(96, 192, 32, 48);
+		paladinShield[1] = entitySheet.getSprite(96+32, 192, 32, 48);
+		
+		paladinAttack = new BufferedImage[3];
+		paladinAttack[0] = entitySheet.getSprite(96+32*2, 192, 32, 48);
+		paladinAttack[1] = entitySheet.getSprite(96+32*3, 192, 32, 48);
+		paladinAttack[2] = entitySheet.getSprite(96+32*4, 192, 32, 48);
+		
+		paladinDeath = new BufferedImage[9];
+		paladinDeath[0] = entitySheet.getSprite(96+32*5, 192, 32, 48);
+		paladinDeath[1] = entitySheet.getSprite(96+32*6, 192, 32, 48);
+		paladinDeath[2] = entitySheet.getSprite(96+32*4, 192+32, 32, 48);
+		paladinDeath[3] = entitySheet.getSprite(96+32*5, 192+32, 32, 48);
+		paladinDeath[5] = entitySheet.getSprite(96+32*6, 192+32, 32, 48);
+		paladinDeath[6] = knightDeath[6];
+		paladinDeath[7] = knightDeath[7];
+		paladinDeath[8] = knightDeath[8];
 	}
 }
