@@ -268,6 +268,8 @@ public class Player extends Entity {
 			canAttack = false;
 			Fireball fb = new Fireball(x, y, w, h);
 			fb.direction = direction;
+			//Collision mask
+			if (direction == 1) fb.setMask(17, 11, 15, 4); else fb.setMask(0, 11, 15, 4);
 			Game.entities.add(fb);
 		}
 

@@ -112,7 +112,7 @@ public class Fireball extends Entity {
 		for (int i = 0; i < Game.enemies.size(); i++) {
 			Entity current = Game.enemies.get(i);
 			if (this.checkCollision(this, current)) {
-				current.alive = false;
+				if (!current.shield) current.alive = false;
 				return true;
 			}
 		}

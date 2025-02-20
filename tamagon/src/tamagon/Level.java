@@ -256,12 +256,18 @@ public class Level {
 					} else if (currentPixel == 0xFF484848) {
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Knight knight = new Knight(x * dimension, (y * dimension) - 16, dimension, 48);
+						knight.setMask(11, 6, 10, 42);
 						Game.enemies.add(knight);
 					} else if (currentPixel == 0xFF782400) {
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartBot);
 						Archer archer = new Archer(x * dimension, (y * dimension) - 16, dimension, 48);
-						archer.setMask(9, 3, 19, 3);
+						archer.setMask(10, 5, 11, 43);
 						Game.enemies.add(archer);
+					} else if (currentPixel == 0xFFD0D7EA) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartWindowTL);
+						Paladin paladin = new Paladin(x * dimension, (y * dimension) - 16, dimension, 48);
+						paladin.setMask(2, 16, 28, 18);
+						Game.enemies.add(paladin);
 					} else if (currentPixel == 0xFF785830) {
 						// Cavern floor
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.cavernFloor);

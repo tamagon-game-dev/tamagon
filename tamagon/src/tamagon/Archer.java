@@ -58,9 +58,31 @@ public class Archer extends Entity {
 
 			// Shoot arrow
 			if (animationFrames == 0 && animationIndex == maxIndex) {
+				
+				//Arrow sfx
+				if (Game.sfx) {
+
+					// Dynamic sound
+					if (distance >= 224 - 32) {
+						Game.sounds.arrow.setVolume(0.1f);
+					} else if (distance >= 224 - 32 * 2) {
+						Game.sounds.arrow.setVolume(0.2f);
+					} else if (distance >= 224 - 32 * 3) {
+						Game.sounds.arrow.setVolume(0.4f);
+					} else if (distance >= 224 - 32 * 4) {
+						Game.sounds.arrow.setVolume(0.6f);
+					} else if (distance >= 224 - 32 * 5) {
+						Game.sounds.arrow.setVolume(0.8f);
+					} else if (distance >= 224 - 32 * 6) {
+						Game.sounds.arrow.setVolume(1f);
+					}
+
+					Game.sounds.arrow.play();
+				}
+				
 				Arrow arrow = new Arrow(x, y+9, 32, 32);
 				arrow.direction = direction;
-				arrow.setMask(26, 14, 29, 27);
+				arrow.setMask(5, 14, 24, 5);
 				Game.enemies.add(arrow);
 			}
 

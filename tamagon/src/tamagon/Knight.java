@@ -58,6 +58,9 @@ public class Knight extends Entity {
 		}
 
 		if (state.equals("walking")) {
+			//Reset hit box
+			this.setMask(11, 6, 10, 42);
+			
 			// Walking effect
 			if (Game.sfx) {
 
@@ -117,6 +120,9 @@ public class Knight extends Entity {
 				}
 			}
 		} else if (state.equals("spotted")) {
+			//reset hit box
+			this.setMask(11, 6, 10, 42);
+			
 			// Spotted sprite width reset
 			w = 32;
 
@@ -127,6 +133,9 @@ public class Knight extends Entity {
 				state = "attack";
 			}
 		} else if (state.equals("attack")) {
+			//update hit box
+			this.setMask(11, 6, 15, 40);
+			
 			// Running effect
 			if (Game.sfx) {
 
@@ -177,6 +186,8 @@ public class Knight extends Entity {
 			}
 
 		} else if (state.equals("doubt")) {
+			//Reset hit box
+			this.setMask(11, 6, 10, 42);
 			// Doubt sprite width reset
 			w = 32;
 

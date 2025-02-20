@@ -22,6 +22,11 @@ public class Entity {
 	public boolean alive = true;
 
 	/**
+	 * Entity has shield against projectiles
+	 */
+	public boolean shield = false;
+
+	/**
 	 * An entity is a game object
 	 * 
 	 * @param x - horizontal coordinate
@@ -49,9 +54,7 @@ public class Entity {
 	 * @param g
 	 */
 	public void render(Graphics g) {
-		// Entity hit box and position
-		g.setColor(Color.RED);
-		g.fillRect(x * Game.scale - Camera.x, y * Game.scale - Camera.y, w * Game.scale, h * Game.scale);
+		showHitBox(g);
 	}
 
 	/**
@@ -62,14 +65,14 @@ public class Entity {
 	protected boolean checkCollisionWithPlayer(Entity entity) {
 		int playerX = Game.player.x + Game.player.maskX;
 		int playerY = Game.player.y + Game.player.maskY;
-		int playerW = Game.player.w - Game.player.maskW;
-		int playerH = Game.player.h - Game.player.maskH;
+		int playerW = Game.player.maskW;
+		int playerH = Game.player.maskH;
 		Rectangle player = new Rectangle(playerX, playerY, playerW, playerH);
 
 		int entityX = entity.x + entity.maskX;
 		int entityY = entity.y + entity.maskY;
-		int entityW = entity.w - entity.maskW;
-		int entityH = entity.h - entity.maskH;
+		int entityW = entity.maskW;
+		int entityH = entity.maskH;
 		Rectangle target = new Rectangle(entityX, entityY, entityW, entityH);
 
 		return player.intersects(target);
@@ -118,7 +121,7 @@ public class Entity {
 				|| Level.tiles[x3 + (y3 * Level.levelW)] instanceof Collider
 				|| Level.tiles[x4 + (y4 * Level.levelW)] instanceof Collider);
 	}
-	
+
 	/**
 	 * Predicts if the entity will collide with a secret area
 	 * 
@@ -173,14 +176,14 @@ public class Entity {
 	protected boolean checkCollision(Entity entity1, Entity entity2) {
 		int entity1X = entity1.x + entity1.maskX;
 		int entity1Y = entity1.y + entity1.maskY;
-		int entity1W = entity1.w - entity1.maskW;
-		int entity1H = entity1.h - entity1.maskH;
+		int entity1W = entity1.maskW;
+		int entity1H = entity1.maskH;
 		Rectangle e1 = new Rectangle(entity1X, entity1Y, entity1W, entity1H);
 
 		int entity2X = entity2.x + entity2.maskX;
 		int entity2Y = entity2.y + entity2.maskY;
-		int entity2W = entity2.w - entity2.maskW;
-		int entity2H = entity2.h - entity2.maskH;
+		int entity2W = entity2.maskW;
+		int entity2H = entity2.maskH;
 		Rectangle e2 = new Rectangle(entity2X, entity2Y, entity2W, entity2H);
 
 		return e1.intersects(e2);
@@ -222,6 +225,20 @@ public class Entity {
 					Game.sounds.dead.play();
 			}
 
+		}
+	}
+
+	/**
+	 * Shows objects hit box
+	 * 
+	 * @param g
+	 */
+	protected void showHitBox(Graphics g) {
+		// Entity hit box and position
+		if (alive) {
+			g.setColor(new Color(255, 0, 0, 100));
+			g.fillRect((x + maskX) * Game.scale - Camera.x, (y + maskY) * Game.scale - Camera.y, maskW * Game.scale,
+					maskH * Game.scale);
 		}
 	}
 }

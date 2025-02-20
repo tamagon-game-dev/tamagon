@@ -332,11 +332,19 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 			// Renders the entities
 			for (int i = 0; i < entities.size(); i++) {
-				entities.get(i).render(graphics);
+				Entity e = entities.get(i);
+				e.render(graphics);
+				
+				//For debug
+				e.showHitBox(graphics);
 			}
 			
 			for (int i = 0; i < enemies.size(); i++) {
-				enemies.get(i).render(graphics);
+				Entity e = enemies.get(i);
+				e.render(graphics);
+				
+				//For debug
+				e.showHitBox(graphics);
 			}
 			
 			//Covers for hidden areas
