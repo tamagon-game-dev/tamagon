@@ -8,7 +8,7 @@ public class Paladin extends Entity {
 	/**
 	 * Animation variables & movement variables
 	 */
-	private int animationFrames = 0, maxFrame = 20, maxIndex = 1, animationIndex = 0, direction = 1;
+	private int animationFrames = 0, maxFrame = 20, maxIndex = 1, animationIndex = 0, direction = 1, timer = 60*3;
 
 	/**
 	 * Sprite flip offsets
@@ -43,15 +43,54 @@ public class Paladin extends Entity {
 		// Do something only if player is near
 		int distance = this.distanceFromPlayer(this);
 		if (distance >= 256) {
+			//Reset timer
+			timer = 60*3;
 			state = "inactive";
 		} else {
-			state = "shield";
+			//timer
+			if (state.equals("shield") && timer > 0 ) timer--;
+			
+			//state change
+			state = (timer == 0 || state.equals("attack")) ? "attack" : "shield";
 			
 			// Damage check
 			this.checkPlayerDamage();
 
 			// Change directions
 			direction = (Game.player.x < x) ? -1 : 1;
+			
+			if (state.equals("attack")) {
+				//Animation reset
+				if (timer == 0) {
+					animationFrames = 0;
+					animationIndex = 0;
+				}
+				
+				//timer increment
+				timer++;
+				
+				//Launch attack
+				if (animationIndex == 1 && animationFrames == 0) {
+					//Dagger sfx
+					if (Game.sfx) Game.sounds.dagger.play();
+					Dagger dagger = new Dagger(x, y+3, 32, 32);
+					dagger.indestructible = true;
+					dagger.setMask(11, 14, 11, 5);
+					dagger.direction = direction;
+					Game.enemies.add(dagger);
+				}
+				
+				
+				//Reset variables after attack animation is finished
+				if (timer == 60) {
+					
+					state = "shield";
+					animationFrames = 0;
+					animationIndex = 0;
+					timer = 60*3;
+				}
+				
+			}
 		}
 	}
 

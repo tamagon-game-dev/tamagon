@@ -25,6 +25,11 @@ public class Entity {
 	 * Entity has shield against projectiles
 	 */
 	public boolean shield = false;
+	
+	/**
+	 * Entity can be destroyed? 
+	 */
+	public boolean indestructible = false;
 
 	/**
 	 * An entity is a game object

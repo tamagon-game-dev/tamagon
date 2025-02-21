@@ -192,6 +192,7 @@ public class SpriteLoader {
 		arrowBurn[2] = entitySheet.getSprite(288, 64+96, 32, 32);
 		
 		//PALADIN
+		dagger = entitySheet.getSprite(288, 0, 32, 32);
 		paladinShield = new BufferedImage[2];
 		paladinShield[0] = entitySheet.getSprite(96, 192, 32, 48);
 		paladinShield[1] = entitySheet.getSprite(96+32, 192, 32, 48);
