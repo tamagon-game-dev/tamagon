@@ -50,6 +50,11 @@ public class SpriteLoader {
 	static BufferedImage[] paladinShield, paladinAttack, paladinDeath;
 	
 	/**
+	 * Particles
+	 */
+	static BufferedImage[] shieldParticle;
+	
+	/**
 	 * Loads all entities sprite once
 	 */
 	public SpriteLoader() {
@@ -205,5 +210,18 @@ public class SpriteLoader {
 		paladinDeath[5] = knightDeath[6];
 		paladinDeath[6] = knightDeath[7];
 		paladinDeath[7] = knightDeath[8];
+		
+		
+		//--------------------PARTICLES----------------------//
+		
+		//Shield particle:
+		//Activates when the fire ball hits shields
+		shieldParticle = new BufferedImage[6];
+		shieldParticle[0] = entitySheet.getSprite(0, 288, 32, 32);
+		shieldParticle[1] = entitySheet.getSprite(32, 288, 32, 32);
+		shieldParticle[2] = entitySheet.getSprite(32*2, 288, 32, 32);
+		shieldParticle[3] = entitySheet.getSprite(32*3, 288, 32, 32);
+		shieldParticle[4] = entitySheet.getSprite(32*4, 288, 32, 32);
+		shieldParticle[5] = entitySheet.getSprite(32*5, 288, 32, 32);
 	}
 }
