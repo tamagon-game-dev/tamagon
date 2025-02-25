@@ -247,6 +247,13 @@ public class Level {
 						sapphire.type = Gem.SAPPHIRE;
 						sapphire.setMask(11, 6, 9, 14);
 						Game.entities.add(sapphire);
+					} else if (currentPixel == 0xFF904830) {
+						//Sapphire wood wall
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
+						sapphire.type = Gem.SAPPHIRE;
+						sapphire.setMask(11, 6, 9, 14);
+						Game.entities.add(sapphire);
 					} else if (currentPixel == 0xFFF80000) {
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Gem ruby = new Gem(x * dimension, y * dimension, dimension, dimension);
@@ -389,6 +396,16 @@ public class Level {
 						// Secret area inside
 						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.stoneblock2);
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
+					} else if (currentPixel == 0xFF906C20) {
+						// Torch
+						BufferedImage[] sprites = new BufferedImage[2];
+						sprites[0] = AnimatedTile.woodWallTorch1;
+						sprites[1] = AnimatedTile.woodWallTorch2;
+
+						animatedTiles[x + (y * levelW)] = new AnimatedTile(x * dimension, y * dimension, sprites);
+					} else if (currentPixel == 0xFF904820) {
+						// Wood wall
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
 					} else {
 						// Transparent tile (avoids crazy blur effect)
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);

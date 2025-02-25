@@ -18,7 +18,9 @@ public class AnimatedTile {
 	 * Animated tiles
 	 */
 	static BufferedImage water1 = Level.levelSprites.getSprite(160, 0, 32, 32), water2 = Level.levelSprites.getSprite(160+32, 0, 32, 32),
-			water3 = Level.levelSprites.getSprite(160+64, 0, 32, 32);
+			water3 = Level.levelSprites.getSprite(160+64, 0, 32, 32),
+			woodWallTorch1 = Level.levelSprites.getSprite(32, 96, Level.dimension, Level.dimension),
+			woodWallTorch2 = Level.levelSprites.getSprite(64, 96, Level.dimension, Level.dimension);;
 
 	/**
 	 * Animation variables
