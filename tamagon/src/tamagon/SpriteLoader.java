@@ -55,6 +55,11 @@ public class SpriteLoader {
 	static BufferedImage[] shieldParticle;
 	
 	/**
+	 * The flag pole finishes the round
+	 */
+	static BufferedImage[] flagpole;
+	
+	/**
 	 * Loads all entities sprite once
 	 */
 	public SpriteLoader() {
@@ -224,5 +229,13 @@ public class SpriteLoader {
 		shieldParticle[3] = entitySheet.getSprite(32*3, 288, 32, 32);
 		shieldParticle[4] = entitySheet.getSprite(32*4, 288, 32, 32);
 		shieldParticle[5] = entitySheet.getSprite(32*5, 288, 32, 32);
+		
+		
+		
+		//Flag pole
+		flagpole = new BufferedImage[3];
+		flagpole[0] = entitySheet.getSprite(192, 288, 32, 32);
+		flagpole[1] = entitySheet.getSprite(192+32, 288, 32, 32);
+		flagpole[2] = entitySheet.getSprite(192+64, 288, 32, 32);
 	}
 }

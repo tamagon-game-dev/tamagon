@@ -275,6 +275,12 @@ public class Level {
 						Paladin paladin = new Paladin(x * dimension, (y * dimension) - 16, dimension, 48);
 						paladin.setMask(2, 16, 28, 18);
 						Game.enemies.add(paladin);
+					} else if (currentPixel == 0xFF000000) {
+						//Flagpole
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Flagpole flagpole = new Flagpole(x * dimension, y * dimension, dimension, dimension);
+						flagpole.setMask(16, 31, 1, 1);
+						Game.entities.add(flagpole);
 					} else if (currentPixel == 0xFF785830) {
 						// Cavern floor
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.cavernFloor);
