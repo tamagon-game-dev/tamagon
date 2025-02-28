@@ -21,6 +21,19 @@ public class Flagpole extends Entity {
 		super(x, y, w, h);
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public void update() {
+		//Ends the level
+		if (this.checkCollisionWithPlayer(this)) {
+			Game.gameState = "levelend";
+			if(Game.music) {
+				Game.currentSong.stop();
+				Game.currentSong = Game.sounds.levelEnd;
+				Game.currentSong.play();
+			}
+		}
+	}
 
 	@Override
 	public void render(Graphics g) {

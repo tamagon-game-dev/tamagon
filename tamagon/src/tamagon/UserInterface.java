@@ -102,8 +102,93 @@ public class UserInterface {
 			renderRestart(g);
 		} else if (Game.gameState.equals("gameover")) {
 			renderGameOver(g);
+		} else if (Game.gameState.equals("levelend")) {
+			renderLevelEnd(g);
 		}
 
+	}
+
+	/**
+	 * Render level's final result
+	 * 
+	 * @param g
+	 */
+	private void renderLevelEnd(Graphics g) {
+		startInterval = true;
+
+		// Darkened background
+		g.setColor(new Color(0, 0, 0, 1));
+		g.fillRect(0, 0, Game.width, Game.height);
+
+		g.setColor(new Color(248, 144, 32));
+		g.setFont(new Font("Calibri", Font.BOLD, 16 * Game.scale));
+
+		// Final score calculus
+		int calc = (Player.eggs.size() * 10) + (Level.enemiesDefeated * 5);
+
+		if (interval <= 60 * 3 - 30) {
+			g.drawString("EGG", Game.width / 5, Game.height - (32 * Game.scale) * 6);
+			g.drawString(Player.eggs.size() + " x 10", Game.width - 128 * Game.scale,
+					Game.height - (32 * Game.scale) * 6);
+		}
+
+		if (interval <= 60 * 3 - 60) {
+			g.drawString("ENEMY", Game.width / 5, Game.height - (32 * Game.scale) * 4);
+			g.drawString(Level.enemiesDefeated + " x 5", Game.width - 128 * Game.scale,
+					Game.height - (32 * Game.scale) * 4);
+		}
+
+		if (interval <= 60 * 3 - 90) {
+			g.drawString("TOTAL", Game.width / 5, Game.height - (32 * Game.scale) * 2);
+			g.drawString(calc + " points!", Game.width - 128 * Game.scale, Game.height - (32 * Game.scale) * 2);
+		}
+
+		g.setColor(new Color(248, 216, 32));
+		g.setFont(new Font("Calibri", Font.PLAIN, 16 * Game.scale));
+
+		if (interval <= 60 * 3 - 30) {
+			g.drawString("EGG", Game.width / 5, Game.height - (32 * Game.scale) * 6);
+			g.drawString(Player.eggs.size() + " x 10", Game.width - 128 * Game.scale,
+					Game.height - (32 * Game.scale) * 6);
+		}
+
+		if (interval <= 60 * 3 - 60) {
+			g.drawString("ENEMY", Game.width / 5, Game.height - (32 * Game.scale) * 4);
+			g.drawString(Level.enemiesDefeated + " x 5", Game.width - 128 * Game.scale,
+					Game.height - (32 * Game.scale) * 4);
+		}
+
+		if (interval <= 60 * 3 - 90) {
+			g.drawString("TOTAL", Game.width / 5, Game.height - (32 * Game.scale) * 2);
+			g.drawString(calc + " points!", Game.width - 128 * Game.scale, Game.height - (32 * Game.scale) * 2);
+		}
+
+		// Interval between text
+		if (startInterval) {
+			interval--;
+			if (interval == 0) {
+				//interval reset
+				startInterval = false;
+				interval = maxInterval;
+				
+				//high score set
+				Player.score += calc;
+				if(Player.score > Game.highscore) Game.highscore = Player.score;
+				
+				//variables reset
+				Player.score = 0;
+				Player.eggs.clear();
+				Game.entities.clear();
+				Game.enemies.clear();
+				Player.right = false;
+				Player.left = false;
+				Player.jump = false;
+				Player.attack = false;
+				
+				//Game title
+				Game.gameState = "title";
+			}
+		}
 	}
 
 	/**

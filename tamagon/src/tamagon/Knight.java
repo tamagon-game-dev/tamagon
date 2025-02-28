@@ -239,6 +239,7 @@ public class Knight extends Entity {
 				if (deathAnimation) {
 					Game.enemies.remove(this);
 					Player.score+=50;
+					Level.enemiesDefeated++;
 				}
 			}
 		}

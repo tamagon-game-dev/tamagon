@@ -55,6 +55,11 @@ public class Level {
 	 */
 	static float bg1ScrollX, bg2ScrollX, bg3ScrollX, bg4ScrollX, bgY, bgY1, bgY2, bgY3, bgY4, bgYvalue, bgY1value,
 			bgY2value, bgY3value, bgY4value;
+	
+	/**
+	 * Enemies defeated counts
+	 */
+	static int enemiesDefeated = 0;
 
 	/**
 	 * Loads the level in question
@@ -62,6 +67,9 @@ public class Level {
 	 * @param name - level name
 	 */
 	public Level(String name) {
+		//Resets enemies defeated count
+		enemiesDefeated = 0;
+		
 		// Stops any music if there's one
 		if (Game.music && Game.currentSong != null)
 			Game.currentSong.stop();

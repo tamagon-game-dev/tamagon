@@ -57,7 +57,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	/**
 	 * Current game state
 	 */
-	static String gameState = "playing";
+	static String gameState = "title";
 
 	/**
 	 * Game's highest score
@@ -199,7 +199,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		enemies = new ArrayList<Entity>();	
 
 		// Initializes the game's level
-		level = new Level("level1");
+		level = new Level("none");
 	}
 
 	/**
@@ -336,7 +336,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 				e.render(graphics);
 				
 				//For debug
-				e.showHitBox(graphics);
+				//e.showHitBox(graphics);
 			}
 			
 			for (int i = 0; i < enemies.size(); i++) {
@@ -344,7 +344,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 				e.render(graphics);
 				
 				//For debug
-				e.showHitBox(graphics);
+				//e.showHitBox(graphics);
 			}
 			
 			//Covers for hidden areas

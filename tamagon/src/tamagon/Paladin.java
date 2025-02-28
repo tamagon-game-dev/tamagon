@@ -151,6 +151,7 @@ public class Paladin extends Entity {
 				if (deathAnimation) {
 					Game.enemies.remove(this);
 					Player.score += 100;
+					Level.enemiesDefeated++;
 				}
 			}
 		}
