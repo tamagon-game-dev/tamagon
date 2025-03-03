@@ -184,6 +184,7 @@ public class UserInterface {
 				Player.left = false;
 				Player.jump = false;
 				Player.attack = false;
+				Player.canAttack = true;
 				
 				//Game title
 				Game.gameState = "title";
