@@ -580,19 +580,7 @@ public class UserInterface {
 		titleBackground(g);
 
 		// Menu instructions
-		menuInstructions(g);
-
-		// Prevents cursor overflow
-		if (cursor < 0)
-			cursor = 0;
-
-		// Prevents cursor overflow
-		if (cursor > 2)
-			cursor = 2;
-
-		// Prevents resolution overflow
-		if (resolution > 3)
-			resolution = 0;
+		menuInstructions(g);	
 
 		// Menu cursor render
 		int[] cursorY = new int[3];

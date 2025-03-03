@@ -427,11 +427,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 				// Goes back to title menu
 				gameState = "title";
 				ui.cursor = 0;
-			} else if (arg0.getKeyCode() == KeyEvent.VK_W) {
+			} else if (arg0.getKeyCode() == KeyEvent.VK_W && ui.cursor > 0) {
 				ui.cursor -= 1;
 				if (sfx)
 					sounds.cursor.play();
-			} else if (arg0.getKeyCode() == KeyEvent.VK_S) {
+			} else if (arg0.getKeyCode() == KeyEvent.VK_S && ui.cursor < 2) {
 				ui.cursor += 1;
 				if (sfx)
 					sounds.cursor.play();
@@ -458,6 +458,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 				sfx = (sfx) ? false : true;
 			} else if (ui.cursor == 2) {
 				ui.resolution += 1;
+				
+				// Prevents resolution overflow
+				if (ui.resolution > 3)
+					ui.resolution = 0;
 			}
 		} else if (arg0.getKeyCode() == KeyEvent.VK_SPACE && gameState.equals("title")) {
 			// Enters the options menu
