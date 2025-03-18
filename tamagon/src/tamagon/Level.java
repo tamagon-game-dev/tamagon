@@ -55,7 +55,7 @@ public class Level {
 	 */
 	static float bg1ScrollX, bg2ScrollX, bg3ScrollX, bg4ScrollX, bgY, bgY1, bgY2, bgY3, bgY4, bgYvalue, bgY1value,
 			bgY2value, bgY3value, bgY4value;
-	
+
 	/**
 	 * Enemies defeated counts
 	 */
@@ -67,9 +67,9 @@ public class Level {
 	 * @param name - level name
 	 */
 	public Level(String name) {
-		//Resets enemies defeated count
+		// Resets enemies defeated count
 		enemiesDefeated = 0;
-		
+
 		// Stops any music if there's one
 		if (Game.music && Game.currentSong != null)
 			Game.currentSong.stop();
@@ -249,14 +249,14 @@ public class Level {
 						sapphire.setMask(11, 6, 9, 14);
 						Game.entities.add(sapphire);
 					} else if (currentPixel == 0xFF0000F9) {
-						//Sapphire tower middle
+						// Sapphire tower middle
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
 						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
 						sapphire.type = Gem.SAPPHIRE;
 						sapphire.setMask(11, 6, 9, 14);
 						Game.entities.add(sapphire);
 					} else if (currentPixel == 0xFF904830) {
-						//Sapphire wood wall
+						// Sapphire wood wall
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
 						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
 						sapphire.type = Gem.SAPPHIRE;
@@ -284,7 +284,7 @@ public class Level {
 						paladin.setMask(2, 16, 28, 18);
 						Game.enemies.add(paladin);
 					} else if (currentPixel == 0xFF000000) {
-						//Flagpole
+						// Flagpole
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
 						Flagpole flagpole = new Flagpole(x * dimension, y * dimension, dimension, dimension);
 						flagpole.setMask(16, 31, 1, 1);
@@ -378,13 +378,13 @@ public class Level {
 					} else if (currentPixel == 0xFF98A0B5) {
 						// Battlement Top
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.battlementTop);
-					}else if (currentPixel == 0xFF98A0B6) {
+					} else if (currentPixel == 0xFF98A0B6) {
 						// Battlement Bottom
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.battlementBot);
 					} else if (currentPixel == 0xFF98A0B7) {
 						// Rampart Top
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartTop);
-					}else if (currentPixel == 0xFF98A0B8) {
+					} else if (currentPixel == 0xFF98A0B8) {
 						// Rampart Bottom
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartBot);
 					} else if (currentPixel == 0xFF98A0B9) {
@@ -468,7 +468,7 @@ public class Level {
 			}
 		}
 	}
-	
+
 	/**
 	 * Renders the level's second layer
 	 * 
@@ -508,100 +508,115 @@ public class Level {
 	 */
 	public void renderBackground(Graphics g) {
 
-		// Level 1 background
+		// Variable initialization
+		BufferedImage bg = null;
+		BufferedImage bg1 = null;
+		BufferedImage bg2 = null;
+		BufferedImage bg3 = null;
+		BufferedImage bg4 = null;
+		
+		//World 1
+		if (Game.levelNumber >= 1 && Game.levelNumber <= 4) {
+			bg = sky;
+			bg1 = hill;
+			bg2 = castle;
+			bg3 = mountains;
+			bg4 = clouds;
+		}
+
+		// Reset horizontal variables
+		if (bg1ScrollX <= -Game.width) {
+			bg1ScrollX = 0;
+		} else if (bg1ScrollX > Game.width) {
+			bg1ScrollX = 0;
+		}
+
+		if (bg2ScrollX <= -Game.width) {
+			bg2ScrollX = 0;
+		} else if (bg2ScrollX > Game.width) {
+			bg2ScrollX = 0;
+		}
+
+		if (bg3ScrollX <= -Game.width) {
+			bg3ScrollX = 0;
+		} else if (bg3ScrollX > Game.width) {
+			bg3ScrollX = 0;
+		}
+
+		if (bg4ScrollX <= -Game.width) {
+			bg4ScrollX = 0;
+		}
+
+		// Reset vertical variables
+		if (bgY1 < bgY1value) {
+			bgY1 = bgY1value;
+		}
+
+		if (bgY2 < bgY2value) {
+			bgY2 = bgY2value;
+		}
+
+		if (bgY3 < bgY3value) {
+			bgY3 = bgY3value;
+		}
+
+		if (bgY4 < bgY4value) {
+			bgY4 = bgY4value;
+		}
+
+		// ---------- BACKGROUNDS ------------ //
+		// Draw the sky
+		g.drawImage(bg, 0, (int) bgY, 320 * Game.scale, 448 * Game.scale, null);
+
+		// clouds
+		g.drawImage(bg4, (int) bg4ScrollX - Game.width, (int) bgY4, 320 * Game.scale, 112 * Game.scale, null);
+		g.drawImage(bg4, (int) bg4ScrollX, (int) bgY4, 320 * Game.scale, 112 * Game.scale, null);
+		g.drawImage(bg4, (int) bg4ScrollX + Game.width, (int) bgY4, 320 * Game.scale, 112 * Game.scale, null);
+
+		// mountains
+		g.drawImage(bg3, (int) bg3ScrollX - Game.width, (int) bgY3, 320 * Game.scale, 56 * Game.scale, null);
+		g.drawImage(bg3, (int) bg3ScrollX, (int) bgY3, 320 * Game.scale, 56 * Game.scale, null);
+		g.drawImage(bg3, (int) bg3ScrollX + Game.width, (int) bgY3, 320 * Game.scale, 56 * Game.scale, null);
+
+		// castle
+		g.drawImage(bg2, (int) bg2ScrollX - Game.width, (int) bgY2, 320 * Game.scale, 112 * Game.scale, null);
+		g.drawImage(bg2, (int) bg2ScrollX, (int) bgY2, 320 * Game.scale, 112 * Game.scale, null);
+		g.drawImage(bg2, (int) bg2ScrollX + Game.width, (int) bgY2, 320 * Game.scale, 112 * Game.scale, null);
+
+		// hills
+		g.drawImage(bg1, (int) bg1ScrollX - Game.width, (int) bgY1, 320 * Game.scale, 56 * Game.scale, null);
+		g.drawImage(bg1, (int) bg1ScrollX, (int) bgY1, 320 * Game.scale, 56 * Game.scale, null);
+		g.drawImage(bg1, (int) bg1ScrollX + Game.width, (int) bgY1, 320 * Game.scale, 56 * Game.scale, null);
+
+		// BG movement
+		if (Player.isMoving && Camera.x != 0 && Camera.x != levelW * dimension * Game.scale - Game.width
+				&& Game.player.alive) {
+			if (Player.right) {
+				bg1ScrollX -= Player.speed * Game.scale;
+				bg2ScrollX -= 1.5f * Game.scale;
+				bg3ScrollX -= 1 * Game.scale;
+			} else if (Player.left) {
+				bg1ScrollX += Player.speed * Game.scale;
+				bg2ScrollX += 1.5f * Game.scale;
+				bg3ScrollX += 1 * Game.scale;
+			}
+		}
+
+		bg4ScrollX--;
+
+		// ------------ DECORATIONS --------------//
+
 		if (Game.levelNumber == 1) {
-
-			// Reset horizontal variables
-			if (bg1ScrollX <= -Game.width) {
-				bg1ScrollX = 0;
-			} else if (bg1ScrollX > Game.width) {
-				bg1ScrollX = 0;
-			}
-
-			if (bg2ScrollX <= -Game.width) {
-				bg2ScrollX = 0;
-			} else if (bg2ScrollX > Game.width) {
-				bg2ScrollX = 0;
-			}
-
-			if (bg3ScrollX <= -Game.width) {
-				bg3ScrollX = 0;
-			} else if (bg3ScrollX > Game.width) {
-				bg3ScrollX = 0;
-			}
-
-			if (bg4ScrollX <= -Game.width) {
-				bg4ScrollX = 0;
-			}
-
-			// Reset vertical variables
-			if (bgY1 < bgY1value) {
-				bgY1 = bgY1value;
-			}
-
-			if (bgY2 < bgY2value) {
-				bgY2 = bgY2value;
-			}
-
-			if (bgY3 < bgY3value) {
-				bgY3 = bgY3value;
-			}
-
-			if (bgY4 < bgY4value) {
-				bgY4 = bgY4value;
-			}
-
-			// ---------- BACKGROUNDS ------------ //
-			// Draw the sky
-			g.drawImage(sky, 0, (int) bgY, 320 * Game.scale, 448 * Game.scale, null);
-
-			// clouds
-			g.drawImage(clouds, (int) bg4ScrollX - Game.width, (int) bgY4, 320 * Game.scale, 112 * Game.scale, null);
-			g.drawImage(clouds, (int) bg4ScrollX, (int) bgY4, 320 * Game.scale, 112 * Game.scale, null);
-			g.drawImage(clouds, (int) bg4ScrollX + Game.width, (int) bgY4, 320 * Game.scale, 112 * Game.scale, null);
-
-			// mountains
-			g.drawImage(mountains, (int) bg3ScrollX - Game.width, (int) bgY3, 320 * Game.scale, 56 * Game.scale, null);
-			g.drawImage(mountains, (int) bg3ScrollX, (int) bgY3, 320 * Game.scale, 56 * Game.scale, null);
-			g.drawImage(mountains, (int) bg3ScrollX + Game.width, (int) bgY3, 320 * Game.scale, 56 * Game.scale, null);
-
-			// castle
-			g.drawImage(castle, (int) bg2ScrollX - Game.width, (int) bgY2, 320 * Game.scale, 112 * Game.scale, null);
-			g.drawImage(castle, (int) bg2ScrollX, (int) bgY2, 320 * Game.scale, 112 * Game.scale, null);
-			g.drawImage(castle, (int) bg2ScrollX + Game.width, (int) bgY2, 320 * Game.scale, 112 * Game.scale, null);
-
-			// hills
-			g.drawImage(hill, (int) bg1ScrollX - Game.width, (int) bgY1, 320 * Game.scale, 56 * Game.scale, null);
-			g.drawImage(hill, (int) bg1ScrollX, (int) bgY1, 320 * Game.scale, 56 * Game.scale, null);
-			g.drawImage(hill, (int) bg1ScrollX + Game.width, (int) bgY1, 320 * Game.scale, 56 * Game.scale, null);
-
-			// BG movement
-			if (Player.isMoving && Camera.x != 0 && Camera.x != levelW * dimension * Game.scale - Game.width
-					&& Game.player.alive) {
-				if (Player.right) {
-					bg1ScrollX -= Player.speed * Game.scale;
-					bg2ScrollX -= 1.5f * Game.scale;
-					bg3ScrollX -= 1 * Game.scale;
-				} else if (Player.left) {
-					bg1ScrollX += Player.speed * Game.scale;
-					bg2ScrollX += 1.5f * Game.scale;
-					bg3ScrollX += 1 * Game.scale;
-				}
-			}
-
-			bg4ScrollX--;
-
-			// ------------ DECORATIONS --------------//
-
+			
 			// Cave
 			g.drawImage(cave, 0 - Camera.x, (dimension * 4) * Game.scale - Camera.y, 416 * Game.scale, 288 * Game.scale,
 					null);
-
 			// Tree
 			g.drawImage(tree, (dimension * 18) * Game.scale - Camera.x, (dimension * 7) * Game.scale - Camera.y,
 					96 * Game.scale, 128 * Game.scale, null);
-
+		
 		}
 
 	}
+
 }

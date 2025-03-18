@@ -185,9 +185,11 @@ public class UserInterface {
 				Player.jump = false;
 				Player.attack = false;
 				Player.canAttack = true;
+				Game.levelNumber+= 1;
 				
-				//Game title
-				Game.gameState = "title";
+				//Next Level
+				Game.gameState = "playing";
+				Game.level = new Level("level" + Game.levelNumber);
 			}
 		}
 	}
