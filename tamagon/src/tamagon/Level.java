@@ -74,21 +74,23 @@ public class Level {
 		if (Game.music && Game.currentSong != null)
 			Game.currentSong.stop();
 
+		// Background animation position
+		bgYvalue = 164 * Game.scale;
+		bgY1value = 168 * Game.scale;
+		bgY2value = 90 * Game.scale;
+		bgY3value = 62 * Game.scale;
+		bgY4value = -40 * Game.scale;
+
+		bgY = -(bgYvalue);
+		bgY1 = bgY1value;
+		bgY2 = bgY2value;
+		bgY3 = bgY3value;
+		bgY4 = bgY4value;
+
 		// Load level
 		if (name.equals("test")) {
 			levelTest();
 		} else if (name.equals("level1")) {
-			bgYvalue = 164 * Game.scale;
-			bgY1value = 168 * Game.scale;
-			bgY2value = 90 * Game.scale;
-			bgY3value = 62 * Game.scale;
-			bgY4value = -40 * Game.scale;
-
-			bgY = -(bgYvalue);
-			bgY1 = bgY1value;
-			bgY2 = bgY2value;
-			bgY3 = bgY3value;
-			bgY4 = bgY4value;
 			level1();
 
 			// Play music after level is loaded
@@ -97,7 +99,15 @@ public class Level {
 				Game.currentSong.setVolume(0.5f);
 				Game.currentSong.loop();
 			}
-			;
+		} else if (name.equals("level2")) {
+			level2();
+
+			// Play music after level is loaded
+			if (Game.music) {
+				Game.currentSong = Game.sounds.level1;
+				Game.currentSong.setVolume(0.5f);
+				Game.currentSong.loop();
+			}
 		} else {
 			return;
 		}
@@ -432,6 +442,97 @@ public class Level {
 	}
 
 	/**
+	 * Loads the second level
+	 */
+	private void level2() {
+		try {
+			// Locating the level's image
+			BufferedImage level = ImageIO.read(getClass().getResource("/level2.png"));
+
+			// updating level's dimensions
+			levelW = level.getWidth();
+			levelH = level.getHeight();
+
+			// Initialize tiles array
+			tiles = new Tile[levelW * levelH];
+			tiles2 = new Tile[levelW * levelH];
+			animatedTiles = new AnimatedTile[levelW * levelH];
+
+			// Creating an array that will carry image's pixels
+			int[] pixels = new int[levelW * levelH];
+
+			// Setting image pixels into the pixels[] array
+			level.getRGB(0, 0, levelW, levelH, pixels, 0, levelW);
+
+			// Iterating through the level image's pixels.
+			for (int x = 0; x < levelW; x++) {
+				for (int y = 0; y < levelH; y++) {
+
+					// Store current pixel color data
+					int currentPixel = pixels[x + (y * levelW)];
+
+					if (currentPixel == 0xFF004810) {
+						// THE PLAYER
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Player player = new Player(x * dimension, y * dimension, dimension, dimension);
+						player.setMask(10, 5, 16, 27);
+						Game.entities.add(player);
+						Game.player = player;
+					} else if (currentPixel == 0xFFF8D800) {
+						// EGG number one Wood Wall
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Egg egg1 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg1.id = 1;
+						egg1.setMask(9, 8, 14, 16);
+						Game.entities.add(egg1);
+					} else if (currentPixel == 0xFFF8D801) {
+						// EGG number two Castle Tower middle
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
+						Egg egg2 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg2.id = 2;
+						egg2.setMask(9, 8, 14, 16);
+						Game.entities.add(egg2);
+					} else if (currentPixel == 0xFF00FCD9) {
+						//Diamond Castle Tower middle
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
+						Gem diamond = new Gem(x * dimension, y * dimension, dimension, dimension);
+						diamond.type = Gem.DIAMOND;
+						diamond.setMask(8, 6, 18, 17);
+						Game.entities.add(diamond);
+					} else if (currentPixel == 0xFFD8D801) {
+						// Gold floor upper middle
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_um);
+					} else if (currentPixel == 0xFFD8D805) {
+						// Gold floor lower middle
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_lm);
+					} else if (currentPixel == 0xFF787C78) {
+						// Stone block
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.stoneblock);
+					} else if (currentPixel == 0xFF788C88) {
+						// Stone block 2
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.stoneblock2);
+					} else if (currentPixel == 0xFF484850) {
+						// Castle Tower middle
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
+					} else if (currentPixel == 0xFF904820) {
+						// Wood wall
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+					} else if (currentPixel == 0xFFFFFFF1) {
+						// Invisible wood wall
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.woodWall);
+					} else if (currentPixel == 0xFFFFFFF2) {
+						// Invisible Castle Tower middle
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.castleTowerM);
+					}
+
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Renders the level
 	 * 
 	 * @param g - Graphic component
@@ -514,8 +615,8 @@ public class Level {
 		BufferedImage bg2 = null;
 		BufferedImage bg3 = null;
 		BufferedImage bg4 = null;
-		
-		//World 1
+
+		// World 1
 		if (Game.levelNumber >= 1 && Game.levelNumber <= 4) {
 			bg = sky;
 			bg1 = hill;
@@ -607,14 +708,14 @@ public class Level {
 		// ------------ DECORATIONS --------------//
 
 		if (Game.levelNumber == 1) {
-			
+
 			// Cave
 			g.drawImage(cave, 0 - Camera.x, (dimension * 4) * Game.scale - Camera.y, 416 * Game.scale, 288 * Game.scale,
 					null);
 			// Tree
 			g.drawImage(tree, (dimension * 18) * Game.scale - Camera.x, (dimension * 7) * Game.scale - Camera.y,
 					96 * Game.scale, 128 * Game.scale, null);
-		
+
 		}
 
 	}

@@ -176,7 +176,6 @@ public class UserInterface {
 				if(Player.score > Game.highscore) Game.highscore = Player.score;
 				
 				//variables reset
-				Player.score = 0;
 				Player.eggs.clear();
 				Game.entities.clear();
 				Game.enemies.clear();
