@@ -137,8 +137,10 @@ public class Paladin extends Entity {
 			}
 
 			// Rendering the enemy
-			g.drawImage(sprites[animationIndex], (x * Game.scale - Camera.x) + offsetX, y * Game.scale - Camera.y,
+			if(animationIndex < sprites.length) {
+				g.drawImage(sprites[animationIndex], (x * Game.scale - Camera.x) + offsetX, y * Game.scale - Camera.y,
 					offsetW, h * Game.scale, null);
+			}
 		}
 
 		// Animation frames

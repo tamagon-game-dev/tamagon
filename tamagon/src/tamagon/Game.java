@@ -57,7 +57,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	/**
 	 * Current game state
 	 */
-	static String gameState = "title";
+	static String gameState = "playing";
 
 	/**
 	 * Game's highest score
@@ -102,7 +102,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	/**
 	 * Level number
 	 */
-	static int levelNumber = 1;
+	static int levelNumber = 2;
 	
 	/**
 	 * Player
@@ -199,7 +199,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		enemies = new ArrayList<Entity>();	
 
 		// Initializes the game's level
-		level = new Level("none");
+		level = new Level("level2");
 	}
 
 	/**

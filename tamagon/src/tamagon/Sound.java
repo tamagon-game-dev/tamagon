@@ -12,7 +12,7 @@ public class Sound {
 	/**
 	 * Songs
 	 */
-	public AudioClip titlescreen, intro, level1, levelEnd;
+	public AudioClip titlescreen, intro, world1, levelEnd;
 	
 	/**
 	 * Effects
@@ -26,7 +26,7 @@ public class Sound {
 		//Songs
 		titlescreen = load("titlescreen.wav");
 		intro = load("intro.wav");
-		level1 = load("level1.wav");
+		world1 = load("world1.wav");
 		levelEnd = load("levelEnd.wav");
 		
 		//SFX

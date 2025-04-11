@@ -187,8 +187,7 @@ public class UserInterface {
 				Game.levelNumber+= 1;
 				
 				//Next Level
-				Game.gameState = "playing";
-				Game.level = new Level("level" + Game.levelNumber);
+				Game.gameState = "restart";
 			}
 		}
 	}

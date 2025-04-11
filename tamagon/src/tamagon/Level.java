@@ -95,7 +95,7 @@ public class Level {
 
 			// Play music after level is loaded
 			if (Game.music) {
-				Game.currentSong = Game.sounds.level1;
+				Game.currentSong = Game.sounds.world1;
 				Game.currentSong.setVolume(0.5f);
 				Game.currentSong.loop();
 			}
@@ -104,7 +104,7 @@ public class Level {
 
 			// Play music after level is loaded
 			if (Game.music) {
-				Game.currentSong = Game.sounds.level1;
+				Game.currentSong = Game.sounds.world1;
 				Game.currentSong.setVolume(0.5f);
 				Game.currentSong.loop();
 			}
@@ -492,19 +492,179 @@ public class Level {
 						egg2.id = 2;
 						egg2.setMask(9, 8, 14, 16);
 						Game.entities.add(egg2);
-					} else if (currentPixel == 0xFF00FCD9) {
+					} else if (currentPixel == 0xFFF8D802) {
+						// EGG number three
+						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.stoneblock2);
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
+						Egg egg3 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg3.id = 3;
+						egg3.setMask(9, 8, 14, 16);
+						Game.entities.add(egg3);
+					} else if (currentPixel == 0xFFF8D803) {
+						// EGG number four
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Egg egg4 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg4.id = 4;
+						egg4.setMask(9, 8, 14, 16);
+						Game.entities.add(egg4);
+					} else if (currentPixel == 0xFFF8D804) {
+						// EGG number five hidden area
+						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.stoneblock2);
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
+						Egg egg5 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg5.id = 5;
+						egg5.setMask(9, 8, 14, 16);
+						Game.entities.add(egg5);
+					} else if (currentPixel == 0xFF0000F9) {
+						// Sapphire wood wall
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
+						sapphire.type = Gem.SAPPHIRE;
+						sapphire.setMask(11, 6, 9, 14);
+						Game.entities.add(sapphire);
+					} else if (currentPixel == 0xFF0000F8) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
+						sapphire.type = Gem.SAPPHIRE;
+						sapphire.setMask(11, 6, 9, 14);
+						Game.entities.add(sapphire);
+					} else if (currentPixel == 0xFF0000F7) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartTop);
+						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
+						sapphire.type = Gem.SAPPHIRE;
+						sapphire.setMask(11, 6, 9, 14);
+						Game.entities.add(sapphire);
+					} else if (currentPixel == 0xFFF80000) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Gem ruby = new Gem(x * dimension, y * dimension, dimension, dimension);
+						ruby.type = Gem.RUBY;
+						ruby.setMask(11, 6, 9, 14);
+						Game.entities.add(ruby);
+					} else if (currentPixel == 0xFFF80001) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Gem ruby = new Gem(x * dimension, y * dimension, dimension, dimension);
+						ruby.type = Gem.RUBY;
+						ruby.setMask(11, 6, 9, 14);
+						Game.entities.add(ruby);
+					} else if (currentPixel == 0xFF009048) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Gem emerald = new Gem(x * dimension, y * dimension, dimension, dimension);
+						emerald.type = Gem.EMERALD;
+						emerald.setMask(10, 9, 12, 13);
+						Game.entities.add(emerald);
+					} else if (currentPixel == 0xFF009049) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.battlementTop);
+						Gem emerald = new Gem(x * dimension, y * dimension, dimension, dimension);
+						emerald.type = Gem.EMERALD;
+						emerald.setMask(10, 9, 12, 13);
+						Game.entities.add(emerald);
+					} else if (currentPixel == 0xFF009050) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
+						Gem emerald = new Gem(x * dimension, y * dimension, dimension, dimension);
+						emerald.type = Gem.EMERALD;
+						emerald.setMask(10, 9, 12, 13);
+						Game.entities.add(emerald);
+					}else if (currentPixel == 0xFF00FCD9) {
 						//Diamond Castle Tower middle
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
 						Gem diamond = new Gem(x * dimension, y * dimension, dimension, dimension);
 						diamond.type = Gem.DIAMOND;
 						diamond.setMask(8, 6, 18, 17);
 						Game.entities.add(diamond);
+					}else if (currentPixel == 0xFF00FCD8) {
+						//Diamond Hidden Area
+						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.stoneblock2);
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
+						Gem diamond = new Gem(x * dimension, y * dimension, dimension, dimension);
+						diamond.type = Gem.DIAMOND;
+						diamond.setMask(8, 6, 18, 17);
+						Game.entities.add(diamond);
+					} else if (currentPixel == 0xFF00FCD7) {
+						//Diamond Wood Wall
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Gem diamond = new Gem(x * dimension, y * dimension, dimension, dimension);
+						diamond.type = Gem.DIAMOND;
+						diamond.setMask(8, 6, 18, 17);
+						Game.entities.add(diamond);
+					} else if (currentPixel == 0xFF782400) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.battlement);
+						Archer archer = new Archer(x * dimension, (y * dimension) - 16, dimension, 48);
+						archer.setMask(10, 5, 11, 43);
+						Game.enemies.add(archer);
+					} else if (currentPixel == 0xFF484848) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
+						Knight knight = new Knight(x * dimension, (y * dimension) - 16, dimension, 48);
+						knight.setMask(11, 6, 10, 42);
+						Game.enemies.add(knight);
+					} else if (currentPixel == 0xFFD0D7EA) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Paladin paladin = new Paladin(x * dimension, (y * dimension) - 16, dimension, 48);
+						paladin.setMask(2, 16, 28, 18);
+						Game.enemies.add(paladin);
+					} else if (currentPixel == 0xFFF8FCD8) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Spear spear = new Spear(x * dimension, (y * dimension) - 32, dimension, 64);
+						spear.type = "botToTop";
+						Game.enemies.add(spear);
+					} else if (currentPixel == 0xFFF8FCD9) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Spear spear = new Spear(x * dimension, (y * dimension), dimension, 64);
+						spear.type = "topToBot";
+						Game.enemies.add(spear);
+					} else if (currentPixel == 0xFF482400) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Box box = new Box(x * dimension, (y * dimension), dimension, dimension);
+						box.position = new int[2];
+						box.position[0] = x * dimension;
+						box.position[1] = y * dimension;
+						Game.enemies.add(box);
+						Button.box = box;
+					} else if (currentPixel == 0xFF780030) {
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.castleTowerM);
+						Door door = new Door(x * dimension, (y * dimension), dimension, dimension);
+						door.tile = Tile.castleTowerM;
+						door.position = x + (y * levelW);
+						Game.enemies.add(door);
+					} else if (currentPixel == 0xFF780031) {
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.woodWall);
+						Door door = new Door(x * dimension, (y * dimension), dimension, dimension);
+						door.tile = Tile.woodWall;
+						door.position = x + (y * levelW);
+						Game.enemies.add(door);
+					} else if(currentPixel == 0xFFF80020) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Button button = new Button(x * dimension, (y * dimension), dimension, dimension);
+						Game.entities.add(button);
+					} else if (currentPixel == 0xFF000000) {
+						// Flagpole
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Flagpole flagpole = new Flagpole(x * dimension, y * dimension, dimension, dimension);
+						flagpole.setMask(16, 31, 1, 1);
+						Game.entities.add(flagpole);
+					} else if (currentPixel == 0xFFD8D800) {
+						// Gold floor upper left
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_ul);
 					} else if (currentPixel == 0xFFD8D801) {
 						// Gold floor upper middle
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_um);
+					} else if (currentPixel == 0xFFD8D802) {
+						// Gold floor upper right
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_ur);
+					} else if (currentPixel == 0xFFD8D803) {
+						// Gold floor middle right
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_mr);
+					} else if (currentPixel == 0xFFD8D804) {
+						// Gold floor lower right
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_lr);
 					} else if (currentPixel == 0xFFD8D805) {
 						// Gold floor lower middle
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_lm);
+					} else if (currentPixel == 0xFFD8D806) {
+						// Gold floor lower left
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_ll);
+					} else if (currentPixel == 0xFFD8D807) {
+						// Gold floor middle left
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.goldfloor_ml);
 					} else if (currentPixel == 0xFF787C78) {
 						// Stone block
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.stoneblock);
@@ -517,12 +677,56 @@ public class Level {
 					} else if (currentPixel == 0xFF904820) {
 						// Wood wall
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+					} else if (currentPixel == 0xFF98A0B5) {
+						// Battlement Top
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.battlementTop);
+					} else if (currentPixel == 0xFF98A0B6) {
+						// Battlement Bottom
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.battlementBot);
+					} else if (currentPixel == 0xFF98A0C3) {
+						// Battlement
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.battlement);
+					} else if (currentPixel == 0xFF98A0B7) {
+						// Rampart Top
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartTop);
+					} else if (currentPixel == 0xFF98A0B8) {
+						// Rampart Bottom
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartBot);
+					}  else if (currentPixel == 0xFF98A0B9) {
+						// Rampart Window Top Left
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartWindowTL);
+					} else if (currentPixel == 0xFF98A0C0) {
+						// Rampart Window Top Right
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartWindowTR);
+					} else if (currentPixel == 0xFF98A0C1) {
+						// Rampart Window Bottom Left
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartWindowBL);
+					} else if (currentPixel == 0xFF98A0C2) {
+						// Rampart Window Bottom Right
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.rampartWindowBR);
+					}else if (currentPixel == 0xFF788C98) {
+						// Secret area inside
+						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.stoneblock2);
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
+					} else if (currentPixel == 0xFFD8D813) {
+						// Secret area entrance
+						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.goldfloor_mr);
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.castleTowerM);
+					} else if (currentPixel == 0xFF906C20) {
+						// Torch
+						BufferedImage[] sprites = new BufferedImage[2];
+						sprites[0] = AnimatedTile.woodWallTorch1;
+						sprites[1] = AnimatedTile.woodWallTorch2;
+						animatedTiles[x + (y * levelW)] = new AnimatedTile(x * dimension, y * dimension, sprites);
 					} else if (currentPixel == 0xFFFFFFF1) {
 						// Invisible wood wall
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.woodWall);
 					} else if (currentPixel == 0xFFFFFFF2) {
 						// Invisible Castle Tower middle
 						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.castleTowerM);
+					} else if (currentPixel == 0xFFFFFFF3) {
+						// Invisible wall
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.transparent);
 					}
 
 				}

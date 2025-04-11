@@ -60,6 +60,26 @@ public class SpriteLoader {
 	static BufferedImage[] flagpole;
 	
 	/**
+	 * Spear
+	 */
+	static BufferedImage[] spear;
+	
+	/**
+	 * Box
+	 */
+	static BufferedImage box;
+	
+	/**
+	 * Button
+	 */
+	static BufferedImage button_on, button_off;
+	
+	/**
+	 * Door
+	 */
+	static BufferedImage door;
+	
+	/**
 	 * Loads all entities sprite once
 	 */
 	public SpriteLoader() {
@@ -217,6 +237,25 @@ public class SpriteLoader {
 		paladinDeath[6] = knightDeath[7];
 		paladinDeath[7] = knightDeath[8];
 		
+		
+		//Spear
+		spear = new BufferedImage[6];
+		spear[0] = entitySheet.getSprite(0, 320, 32, 64);
+		spear[1] = entitySheet.getSprite(32, 320, 32, 64);
+		spear[2] = entitySheet.getSprite(64, 320, 32, 64);
+		spear[3] = entitySheet.getSprite(96, 320, 32, 64);
+		spear[4] = spear[2];
+		spear[5] = spear[1];
+		
+		//Box
+		box = entitySheet.getSprite(288, 288, 32, 32);
+		
+		//Button
+		button_off = entitySheet.getSprite(160, 320, 32, 32);
+		button_on = entitySheet.getSprite(160+32, 320, 32, 32);
+		
+		//Door
+		door = entitySheet.getSprite(128, 320, 32, 32);
 		
 		//--------------------PARTICLES----------------------//
 		
