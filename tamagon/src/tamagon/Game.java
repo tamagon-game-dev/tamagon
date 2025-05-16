@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -102,7 +103,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	/**
 	 * Level number
 	 */
-	static int levelNumber = 2;
+	static int levelNumber = 3;
 	
 	/**
 	 * Player
@@ -113,6 +114,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	 * Checks if player is on a Secret Area
 	 */
 	static boolean secretArea = false;
+	
+	/**
+	 * Checks if the game is transitioning to the next level
+	 */
+	static boolean nextLevel = false;
 	
 
 	/**
@@ -199,7 +205,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		enemies = new ArrayList<Entity>();	
 
 		// Initializes the game's level
-		level = new Level("level2");
+		level = new Level("level3");
 	}
 
 	/**
@@ -378,7 +384,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		int playerLife = Player.life;
 		level = new Level("level" + levelNumber);
 		Player.life = playerLife;
-		Player.score = 0;
+		
+		if(!nextLevel) Player.score = 0;
 	}
 
 	/**
@@ -389,16 +396,31 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		requestFocus();
 
 		// Renders the game and applies it's logic
-		while (true) {
-			update();
-			render();
-
-			// Frames per second
-			try {
-				Thread.sleep(1000 / fps);
-			} catch (InterruptedException exception) {
-				exception.printStackTrace();
+		try {
+			
+			while (true) {
+				update();
+				render();
+	
+				// Frames per second
+				try {
+					Thread.sleep(1000 / fps);
+				} catch (InterruptedException exception) {
+					exception.printStackTrace();
+				}
 			}
+			
+		} catch (Exception e) {
+			
+			// Log the exception
+            try (PrintWriter out = new PrintWriter(new FileWriter("data/errors.log", true))) {
+                e.printStackTrace(out);
+                e.printStackTrace();
+            } catch (IOException io) {
+                System.err.println("Failed to log exception!");
+                io.printStackTrace();
+            }
+				
 		}
 
 	}

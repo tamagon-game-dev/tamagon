@@ -186,7 +186,15 @@ public class UserInterface {
 				Player.canAttack = true;
 				Game.levelNumber+= 1;
 				
+				//Temporary
+//				if (Game.levelNumber >= 3) {
+//					Game.gameState = "title";
+//					Game.levelNumber = 1;
+//					return;
+//				}
+				
 				//Next Level
+				Game.nextLevel = true;
 				Game.gameState = "restart";
 			}
 		}

@@ -49,7 +49,18 @@ public class Tile {
 			rampartWindowBL = Level.levelSprites.getSprite(160, 96, Level.dimension, Level.dimension),
 			rampartWindowBR = Level.levelSprites.getSprite(160+32, 96, Level.dimension, Level.dimension),
 			battlement = Level.levelSprites.getSprite(224, 64, Level.dimension, Level.dimension),
-			woodWall = Level.levelSprites.getSprite(0, 96, Level.dimension, Level.dimension);
+			woodWall = Level.levelSprites.getSprite(0, 96, Level.dimension, Level.dimension),
+			woodFloorUL = Level.levelSprites.getSprite(0, 128, Level.dimension, Level.dimension),
+			woodFloorUM = Level.levelSprites.getSprite(32*1, 128, Level.dimension, Level.dimension),
+			woodFloorUR = Level.levelSprites.getSprite(32*2, 128, Level.dimension, Level.dimension),
+			woodFloorL = Level.levelSprites.getSprite(0, 128+32, Level.dimension, Level.dimension),
+			woodFloorR = Level.levelSprites.getSprite(32*2, 128+32, Level.dimension, Level.dimension),
+			woodFloorBL = Level.levelSprites.getSprite(0, 128+64, Level.dimension, Level.dimension),
+			woodFloorBM = Level.levelSprites.getSprite(32*1, 128+64, Level.dimension, Level.dimension),
+			woodFloorBR = Level.levelSprites.getSprite(32*2, 128+64, Level.dimension, Level.dimension),
+			woodFloorCBR = Level.levelSprites.getSprite(128, 160, Level.dimension, Level.dimension),
+			woodFloorCUL = Level.levelSprites.getSprite(96, 128, Level.dimension, Level.dimension),
+			woodTiles = Level.levelSprites.getSprite(32, 160, Level.dimension, Level.dimension);
 
 	/**
 	 * Tile coordinates

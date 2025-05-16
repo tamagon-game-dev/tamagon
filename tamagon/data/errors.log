@@ -1,0 +1,28 @@
+java.lang.ArrayIndexOutOfBoundsException: Index 642 out of bounds for length 615
+	at tamagon.Entity.checkTileCollision(Entity.java:126)
+	at tamagon.Box.gravity(Box.java:35)
+	at tamagon.Box.update(Box.java:27)
+	at tamagon.Game.update(Game.java:306)
+	at tamagon.Game.run(Game.java:402)
+	at java.base/java.lang.Thread.run(Thread.java:832)
+java.lang.ArrayIndexOutOfBoundsException: Index 642 out of bounds for length 615
+	at tamagon.Entity.checkTileCollision(Entity.java:126)
+	at tamagon.Box.gravity(Box.java:36)
+	at tamagon.Box.update(Box.java:28)
+	at tamagon.Game.update(Game.java:306)
+	at tamagon.Game.run(Game.java:402)
+	at java.base/java.lang.Thread.run(Thread.java:832)
+java.lang.ArrayIndexOutOfBoundsException: Index 642 out of bounds for length 615
+	at tamagon.Entity.checkTileCollision(Entity.java:126)
+	at tamagon.Box.gravity(Box.java:36)
+	at tamagon.Box.update(Box.java:28)
+	at tamagon.Game.update(Game.java:306)
+	at tamagon.Game.run(Game.java:402)
+	at java.base/java.lang.Thread.run(Thread.java:832)
+java.lang.ArrayIndexOutOfBoundsException: Index 642 out of bounds for length 615
+	at tamagon.Entity.checkTileCollision(Entity.java:126)
+	at tamagon.Box.gravity(Box.java:36)
+	at tamagon.Box.update(Box.java:28)
+	at tamagon.Game.update(Game.java:306)
+	at tamagon.Game.run(Game.java:402)
+	at java.base/java.lang.Thread.run(Thread.java:832)

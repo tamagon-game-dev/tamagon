@@ -23,7 +23,8 @@ public class Level {
 	 */
 	static BufferedImage sky = backgrounds.getSprite(0, 0, 320, 448), hill = backgrounds.getSprite(0, 448, 320, 56),
 			castle = backgrounds.getSprite(0, 504, 320, 112), mountains = backgrounds.getSprite(0, 616, 320, 56),
-			clouds = backgrounds.getSprite(0, 672, 320, 112);
+			clouds = backgrounds.getSprite(0, 672, 320, 112),
+			castleInside = backgrounds.getSprite(320, 0, 320, 448);
 
 	/**
 	 * Decorations
@@ -53,7 +54,7 @@ public class Level {
 	/**
 	 * background animation variables
 	 */
-	static float bg1ScrollX, bg2ScrollX, bg3ScrollX, bg4ScrollX, bgY, bgY1, bgY2, bgY3, bgY4, bgYvalue, bgY1value,
+	static float bgScrollX, bg1ScrollX, bg2ScrollX, bg3ScrollX, bg4ScrollX, bgY, bgY1, bgY2, bgY3, bgY4, bgYvalue, bgY1value,
 			bgY2value, bgY3value, bgY4value;
 
 	/**
@@ -108,6 +109,17 @@ public class Level {
 				Game.currentSong.setVolume(0.5f);
 				Game.currentSong.loop();
 			}
+		} else if (name.equals("level3")) {
+			bgYvalue = (164 - 48) * Game.scale;
+			bgY = -(bgYvalue);
+			level3();
+
+			// Play music after level is loaded
+			if (Game.music) {
+				Game.currentSong = Game.sounds.world1;
+				Game.currentSong.setVolume(0.5f);
+				Game.currentSong.loop();
+			}
 		} else {
 			return;
 		}
@@ -129,6 +141,7 @@ public class Level {
 
 			// Initialize tiles array
 			tiles = new Tile[levelW * levelH];
+			tiles2 = new Tile[levelW * levelH];
 			animatedTiles = new AnimatedTile[levelW * levelH];
 
 			// Creating an array that will carry image's pixels
@@ -515,13 +528,6 @@ public class Level {
 						egg5.id = 5;
 						egg5.setMask(9, 8, 14, 16);
 						Game.entities.add(egg5);
-					} else if (currentPixel == 0xFF0000F9) {
-						// Sapphire wood wall
-						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
-						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
-						sapphire.type = Gem.SAPPHIRE;
-						sapphire.setMask(11, 6, 9, 14);
-						Game.entities.add(sapphire);
 					} else if (currentPixel == 0xFF0000F8) {
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
 						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
@@ -601,6 +607,28 @@ public class Level {
 						Paladin paladin = new Paladin(x * dimension, (y * dimension) - 16, dimension, 48);
 						paladin.setMask(2, 16, 28, 18);
 						Game.enemies.add(paladin);
+					} else if (currentPixel == 0xFFF8FCD6) {
+						//Spear + diamond wood wall
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Spear spear = new Spear(x * dimension, (y * dimension) - 32, dimension, 64);
+						spear.type = "botToTop";
+						Game.enemies.add(spear);
+						
+						Gem diamond = new Gem(x * dimension, y * dimension, dimension, dimension);
+						diamond.type = Gem.DIAMOND;
+						diamond.setMask(8, 6, 18, 17);
+						Game.entities.add(diamond);
+					} else if (currentPixel == 0xFFF8FCD7) {
+						//Spear + saphire wood wall
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Spear spear = new Spear(x * dimension, (y * dimension) - 32, dimension, 64);
+						spear.type = "botToTop";
+						Game.enemies.add(spear);
+						
+						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
+						sapphire.type = Gem.SAPPHIRE;
+						sapphire.setMask(11, 6, 9, 14);
+						Game.entities.add(sapphire);
 					} else if (currentPixel == 0xFFF8FCD8) {
 						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
 						Spear spear = new Spear(x * dimension, (y * dimension) - 32, dimension, 64);
@@ -737,6 +765,220 @@ public class Level {
 	}
 
 	/**
+	 * Loads the third level
+	 */
+	private void level3() {
+		// Grab map layout
+		try {
+			// Locating the level's image
+			BufferedImage level = ImageIO.read(getClass().getResource("/level3.png"));
+
+			// updating level's dimensions
+			levelW = level.getWidth();
+			levelH = level.getHeight();
+
+			// Initialize tiles array
+			tiles = new Tile[levelW * levelH];
+			tiles2 = new Tile[levelW * levelH];
+			animatedTiles = new AnimatedTile[levelW * levelH];
+
+			// Creating an array that will carry image's pixels
+			int[] pixels = new int[levelW * levelH];
+
+			// Setting image pixels into the pixels[] array
+			level.getRGB(0, 0, levelW, levelH, pixels, 0, levelW);
+
+			// Iterating through the level image's pixels.
+			for (int x = 0; x < levelW; x++) {
+				for (int y = 0; y < levelH; y++) {
+
+					// Store current pixel color data
+					int currentPixel = pixels[x + (y * levelW)];
+
+					if (currentPixel == 0xFF004810) {
+						// THE PLAYER
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Player player = new Player(x * dimension, y * dimension, dimension, dimension);
+						player.setMask(10, 5, 16, 27);
+						Game.entities.add(player);
+						Game.player = player;
+					}else if (currentPixel == 0xFFF8D800) {
+						// EGG number one
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Egg egg1 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg1.id = 1;
+						egg1.setMask(9, 8, 14, 16);
+						Game.entities.add(egg1);
+					}else if (currentPixel == 0xFFF8D801) {
+						// EGG number two
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Egg egg2 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg2.id = 2;
+						egg2.setMask(9, 8, 14, 16);
+						Game.entities.add(egg2);
+					}else if (currentPixel == 0xFFF8D802) {
+						// EGG number three
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodTiles);
+						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Egg egg3 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg3.id = 3;
+						egg3.setMask(9, 8, 14, 16);
+						Game.entities.add(egg3);
+					}else if (currentPixel == 0xFFF8D803) {
+						// EGG number four hidden area
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodTiles);
+						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						Egg egg4 = new Egg(x * dimension, y * dimension, dimension, dimension);
+						egg4.id = 4;
+						egg4.setMask(9, 8, 14, 16);
+						Game.entities.add(egg4);
+					}else if (currentPixel == 0xFF782400) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Archer archer = new Archer(x * dimension, (y * dimension) - 16, dimension, 48);
+						archer.setMask(10, 5, 11, 43);
+						Game.enemies.add(archer);
+					}else if (currentPixel == 0xFFD0D7EA) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Paladin paladin = new Paladin(x * dimension, (y * dimension) - 16, dimension, 48);
+						paladin.setMask(2, 16, 28, 18);
+						Game.enemies.add(paladin);
+					}else if (currentPixel == 0xFFF8FCD8) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Spear spear = new Spear(x * dimension, (y * dimension) - 32, dimension, 64);
+						spear.type = "botToTop";
+						Game.enemies.add(spear);
+					} else if (currentPixel == 0xFFF8FCD9) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Spear spear = new Spear(x * dimension, (y * dimension), dimension, 64);
+						spear.type = "topToBot";
+						Game.enemies.add(spear);
+					}else if (currentPixel == 0xFFF8FCD7) {
+						//Spear + sapphire
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Spear spear = new Spear(x * dimension, (y * dimension) - 32, dimension, 64);
+						spear.type = "botToTop";
+						Game.enemies.add(spear);
+						
+						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
+						sapphire.type = Gem.SAPPHIRE;
+						sapphire.setMask(11, 6, 9, 14);
+						Game.entities.add(sapphire);
+					}else if (currentPixel == 0xFFF8FCD6) {
+						//Spear + emerald
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Spear spear = new Spear(x * dimension, (y * dimension) - 32, dimension, 64);
+						spear.type = "botToTop";
+						Game.enemies.add(spear);
+						
+						Gem emerald = new Gem(x * dimension, y * dimension, dimension, dimension);
+						emerald.type = Gem.EMERALD;
+						emerald.setMask(10, 9, 12, 13);
+						Game.entities.add(emerald);
+					}else if(currentPixel == 0xFFF80020) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Button button = new Button(x * dimension, (y * dimension), dimension, dimension);
+						Game.entities.add(button);
+					}else if (currentPixel == 0xFF482400) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Box box = new Box(x * dimension, (y * dimension), dimension, dimension);
+						box.position = new int[2];
+						box.position[0] = x * dimension;
+						box.position[1] = y * dimension;
+						Game.enemies.add(box);
+						Button.box = box;
+					}else if (currentPixel == 0xFF780030) {
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.transparent);
+						Door door = new Door(x * dimension, (y * dimension), dimension, dimension);
+						door.tile = Tile.transparent;
+						door.position = x + (y * levelW);
+						Game.enemies.add(door);
+					}else if (currentPixel == 0xFF0000F8) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Gem sapphire = new Gem(x * dimension, y * dimension, dimension, dimension);
+						sapphire.type = Gem.SAPPHIRE;
+						sapphire.setMask(11, 6, 9, 14);
+						Game.entities.add(sapphire);
+					}else if (currentPixel == 0xFFF80000) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Gem ruby = new Gem(x * dimension, y * dimension, dimension, dimension);
+						ruby.type = Gem.RUBY;
+						ruby.setMask(11, 6, 9, 14);
+						Game.entities.add(ruby);
+					}else if (currentPixel == 0xFF009048) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Gem emerald = new Gem(x * dimension, y * dimension, dimension, dimension);
+						emerald.type = Gem.EMERALD;
+						emerald.setMask(10, 9, 12, 13);
+						Game.entities.add(emerald);
+					}else if (currentPixel == 0xFF00FCD8) {
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+						Gem diamond = new Gem(x * dimension, y * dimension, dimension, dimension);
+						diamond.type = Gem.DIAMOND;
+						diamond.setMask(8, 6, 18, 17);
+						Game.entities.add(diamond);
+					}else if (currentPixel == 0xFFF8D848) {
+						// Wood floor upper left
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.woodFloorUL);
+					}else if (currentPixel == 0xFFF8D847) {
+						// Wood floor upper middle
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.woodFloorUM);
+					}else if (currentPixel == 0xFFF8D846) {
+						// Wood floor upper left
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.woodFloorUR);
+					}else if (currentPixel == 0xFFF8D845) {
+						// Wood floor left
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.woodFloorL);
+					}else if (currentPixel == 0xFF904820) {
+						// Wood wall
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+					}else if (currentPixel == 0xFF904821) {
+						// Wood wall solid
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.woodWall);
+					}else if (currentPixel == 0xFFF8D844) {
+						// Wood floor right
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.woodFloorR);
+					}else if (currentPixel == 0xFFF8D843) {
+						// Wood floor bottom left
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.woodFloorBL);
+					}else if (currentPixel == 0xFFF8D842) {
+						// Wood floor bottom middle
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.woodFloorBM);
+					}else if (currentPixel == 0xFFF8D841) {
+						// Wood floor bottom left
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.woodFloorBR);
+					}else if (currentPixel == 0xFFF8D840) {
+						// Wood floor corner bottom right
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodFloorCBR);
+					}else if (currentPixel == 0xFFF8D839) {
+						// Wood floor corner bottom right
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodFloorCUL);
+					}else if (currentPixel == 0xFFF8D838) {
+						// Wood floor right secret area
+						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodFloorR);
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodTiles);
+					}else if (currentPixel == 0xFFF8D849) {
+						// Wood floor left secret area
+						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodFloorL);
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodTiles);
+					}else if (currentPixel == 0xFF484820) {
+						// wood wall hidden area
+						tiles2[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodWall);
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.woodTiles);
+					} else if (currentPixel == 0xFFFFFFF1) {
+						// Invisible wall
+						tiles[x + (y * levelW)] = new Collider(x * dimension, y * dimension, Tile.transparent);
+					} else {
+						// Transparent tile (avoids crazy blur effect)
+						tiles[x + (y * levelW)] = new Tile(x * dimension, y * dimension, Tile.transparent);
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Renders the level
 	 * 
 	 * @param g - Graphic component
@@ -821,15 +1063,24 @@ public class Level {
 		BufferedImage bg4 = null;
 
 		// World 1
-		if (Game.levelNumber >= 1 && Game.levelNumber <= 4) {
+		if (Game.levelNumber == 1 || Game.levelNumber == 2) {
 			bg = sky;
 			bg1 = hill;
 			bg2 = castle;
 			bg3 = mountains;
 			bg4 = clouds;
+		}else if (Game.levelNumber == 3){
+			bg = castleInside;
 		}
 
 		// Reset horizontal variables
+		if (bgScrollX <= -Game.width) {
+			bgScrollX = 0;
+		} else if (bgScrollX > Game.width) {
+			bgScrollX = 0;
+		}
+
+		
 		if (bg1ScrollX <= -Game.width) {
 			bg1ScrollX = 0;
 		} else if (bg1ScrollX > Game.width) {
@@ -871,7 +1122,9 @@ public class Level {
 
 		// ---------- BACKGROUNDS ------------ //
 		// Draw the sky
-		g.drawImage(bg, 0, (int) bgY, 320 * Game.scale, 448 * Game.scale, null);
+		g.drawImage(bg, (int) bgScrollX - Game.width, (int) bgY, 320 * Game.scale, 448 * Game.scale, null);
+		g.drawImage(bg, (int) bgScrollX, (int) bgY, 320 * Game.scale, 448 * Game.scale, null);
+		g.drawImage(bg, (int) bgScrollX + Game.width, (int) bgY, 320 * Game.scale, 448 * Game.scale, null);
 
 		// clouds
 		g.drawImage(bg4, (int) bg4ScrollX - Game.width, (int) bgY4, 320 * Game.scale, 112 * Game.scale, null);
@@ -897,10 +1150,12 @@ public class Level {
 		if (Player.isMoving && Camera.x != 0 && Camera.x != levelW * dimension * Game.scale - Game.width
 				&& Game.player.alive) {
 			if (Player.right) {
+				bgScrollX -= (Player.speed-1) * Game.scale;
 				bg1ScrollX -= Player.speed * Game.scale;
 				bg2ScrollX -= 1.5f * Game.scale;
 				bg3ScrollX -= 1 * Game.scale;
 			} else if (Player.left) {
+				bgScrollX += (Player.speed-1) * Game.scale;
 				bg1ScrollX += Player.speed * Game.scale;
 				bg2ScrollX += 1.5f * Game.scale;
 				bg3ScrollX += 1 * Game.scale;

@@ -24,6 +24,7 @@ public class Box extends Entity {
 
 	@Override
 	public void update() {
+		fallDeathCheck();
 		gravity();
 		movement();
 	}
@@ -51,6 +52,13 @@ public class Box extends Entity {
 				x -= Player.speed;
 			}
 		}
+	}
+	
+	/**
+	 * Checks if box is going out of bounds
+	 */
+	private void fallDeathCheck() {
+		if (y >= Level.levelH * Level.dimension - Level.dimension * 2) alive = false;
 	}
 
 	@Override
