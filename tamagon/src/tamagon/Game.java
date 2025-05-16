@@ -2,7 +2,7 @@ package tamagon;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -326,7 +326,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		}
 
 		// Gets the canva's graphics
-		Graphics graphics = gameCanvas.getGraphics();
+		Graphics2D graphics = (Graphics2D) gameCanvas.getGraphics();
 
 		if (Game.gameState.equals("playing")) {
 			
@@ -365,7 +365,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		graphics.dispose();
 
 		// Re-creates a new graphic component, using the current buffer this time
-		graphics = bufferStrategy.getDrawGraphics();
+		graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
 
 		// Draws the game canvas
 		graphics.drawImage(gameCanvas, 0, 0, width, height, null);

@@ -1,6 +1,6 @@
 package tamagon;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class Particle extends Entity {
@@ -34,7 +34,7 @@ public class Particle extends Entity {
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void render(Graphics2D g) {
 		// Setting direction
 		if (direction == 1) {
 			offsetW = w * Game.scale;

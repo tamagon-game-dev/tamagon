@@ -1,6 +1,6 @@
 package tamagon;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class Egg extends Entity {
@@ -89,7 +89,7 @@ public class Egg extends Entity {
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void render(Graphics2D g) {
 		BufferedImage[] sprites = null;
 
 		// Animation frames

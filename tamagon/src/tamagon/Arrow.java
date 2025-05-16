@@ -1,6 +1,6 @@
 package tamagon;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Arrow extends Projectile {
 
@@ -18,7 +18,7 @@ public class Arrow extends Projectile {
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void render(Graphics2D g) {
 
 		if (!alive) {
 			//Final animation execution

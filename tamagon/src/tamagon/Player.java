@@ -1,6 +1,6 @@
 package tamagon;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -119,7 +119,7 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void render(Graphics2D g) {
 		// Animation control
 		if (jump || isMoving || !alive)
 			animationFrames++;

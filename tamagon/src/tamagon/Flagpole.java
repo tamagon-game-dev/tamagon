@@ -1,6 +1,6 @@
 package tamagon;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Flagpole extends Entity {
 	
@@ -36,7 +36,7 @@ public class Flagpole extends Entity {
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void render(Graphics2D g) {
 		animationFrames++;
 		
 		// Animation frames

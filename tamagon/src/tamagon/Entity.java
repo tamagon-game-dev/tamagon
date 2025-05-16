@@ -2,6 +2,7 @@ package tamagon;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 public class Entity {
@@ -58,7 +59,7 @@ public class Entity {
 	 * 
 	 * @param g
 	 */
-	public void render(Graphics g) {
+	public void render(Graphics2D g) {
 		showHitBox(g);
 	}
 

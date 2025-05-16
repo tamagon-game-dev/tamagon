@@ -1,6 +1,6 @@
 package tamagon;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class Door extends Entity{
@@ -42,7 +42,7 @@ public class Door extends Entity{
 	}
 	
 	@Override
-	public void render(Graphics g) {
+	public void render(Graphics2D g) {
 		
 		if(active)
 			g.drawImage(SpriteLoader.door, (x * Game.scale - Camera.x), y * Game.scale - Camera.y, w * Game.scale, h * Game.scale, null);

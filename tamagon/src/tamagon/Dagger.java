@@ -1,6 +1,6 @@
 package tamagon;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Dagger extends Projectile {
 
@@ -17,7 +17,7 @@ public class Dagger extends Projectile {
 	}
 	
 	@Override
-	public void render(Graphics g) {
+	public void render(Graphics2D g) {
 		g.drawImage(SpriteLoader.dagger, (x * Game.scale - Camera.x) + offsetX,
 				y * Game.scale - Camera.y, offsetW, h * Game.scale, null);
 	}
